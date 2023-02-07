@@ -1,11 +1,29 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="css/index_style.css">
+<!--<link rel="stylesheet" href="css/index_style.css">-->
+
 <body>
 <div class="container">
-
     <header>
-        <iframe src="./header.html"></iframe>
+<!--        <div data-include-path="footer.html"></div>-->
+<!--        <script src = "js/header.js"></script>-->
+
+        <div class="nav_container">
+            <a href = "/StudyCafeManagement/common/LoginMain">
+                <h7 style ="color:white; margin:3px; font-size:40px; font-weight:bold;">베이직 스터디 카페</h7>
+            </a>
+
+            <div class="cafe_menus">
+                <img src="/img/logo.jpg" class="logo_image" width="40" height="40">
+                <a href="/StudyCafeManagement/seat/register?user_id=${sessionScope.user_id}" class="Seat">좌석</a>
+                <a href="/StudyCafeManagement/product/ProductList" class="Product">상품</a>
+                <a href="/StudyCafeManagement/board/BoardList" class="Community">커뮤니티</a>
+                <a href="/StudyCafeManagement/notice/NoticeList?user_id=${sessionScope.user_id}" class="Notice">공지사항</a>
+                <a href="/StudyCafeManagement/message/Chat?user_id=${sessionScope.user_id}" class="Message">메시지</a>
+                <h3 style = "display:inline">id = ${sessionScope.user_id}</h3>
+            </div>
+        </div>
+
     </header>
     <section>
         <div class="section-container">
@@ -79,7 +97,7 @@
                                 <fieldset>
                                     <label for = "id"></label>
                                     <input type="text" id="id" name="id" class="idInput" placeholder="아이디" maxlength="41" value=""><br>
-                                    <label for = "passwd"></label>
+                                    <label for = "password"></label>
                                     <input type = "password" id = "password" name = "password" class="passwdInput" placeholder="비밀번호" maxlength="41" value=""/><br>
                                     <input type = submit class="LoginButton" value = "로그인"/><br>
                                     <a href="findIdForm">아이디 찾기</a>
@@ -87,7 +105,7 @@
                                     <a href="findPasswordForm">비밀번호 찾기</a>
                                     <br>
                                     <span class="bar" aria-hidden="true"></span>
-                                    <a href="JoinForm">회원가입</a>
+                                    <a href="/member/join">회원가입</a>
                                 </fieldset>
                             </form>
                         </c:when>

@@ -8,7 +8,6 @@ public class Member {
     @Id
     private String id;
     private String password;
-    private String checkpw;
     private String name;
     private String gender;
     private Long phone;
@@ -30,14 +29,6 @@ public class Member {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getCheckpw() {
-        return checkpw;
-    }
-
-    public void setCheckpw(String checkpw) {
-        this.checkpw = checkpw;
     }
 
     public String getName() {

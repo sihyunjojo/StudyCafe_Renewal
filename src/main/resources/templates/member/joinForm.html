@@ -1,0 +1,101 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <script>
+        function gotoBack(){
+            location.href = "/";
+        }
+    </script>
+<!--<link rel="stylesheet", href="member/join.css">-->
+</head>
+<body>
+<header>
+
+<!--    <%@include file="../nav_noId.jsp" %>-->
+
+</header>
+<div class="border">
+    <form action ="join" method="POST">
+        <h1>회원가입</h1>
+        <!-- 아이디 -->
+        <div class="form-group">
+            <label for="id" style = "text-align: left;">아이디</label><br>
+            <input type="text"
+                   class="form-control" id="id" name="id" placeholder="ID"
+                   required>
+            <div class="check_font" id="id_check"></div>
+        </div>
+        <!-- 비밀번호 -->
+        <div class="form-group">
+            <label for="password">비밀번호</label><br>
+            <input type="password"
+                   class="form-control" id="password" name="password"
+                   placeholder="PASSWORD" required>
+            <div class="check_font" id="password_check"></div>
+        </div>
+        <!-- 비밀번호 재확인 -->
+        <div class="form-group">
+            <label for="checkpw">비밀번호 확인</label><br>
+            <input type="password"
+                   class="form-control" id="checkpw" name="checkpw"
+                   placeholder="Confirm Password" required>
+            <div class="check_font" id="checkpw_check"></div>
+        </div>
+        <!-- 이름 -->
+        <div class="form-group">
+            <label for="name">이름</label><br>
+            <input type="text"
+                   class="form-control" id="name" name="name"
+                   placeholder="Name" required>
+            <div class="check_font" id="name_check"></div>
+        </div>
+        <!-- 성별 -->
+        <div class="form-group">
+            <label for="gender">성별</label><br>
+            <input type="text"
+                   class="form-control" id="gender" name="gender"
+                   placeholder="gender" required>
+            <div class="check_font" id="gender_check"></div>
+        </div>
+        <!-- 휴대전화 -->
+        <div class="form-group">
+            <label for="phone">휴대전화 ('-' 없이 번호만 입력해주세요)</label><br>
+            <input type="number" class="form-control" id="phone" name="phone"
+                   placeholder="Phone Number" required>
+            <div class="check_font" id="phone_check"></div>
+        </div>
+        <!-- 주소 -->
+        <div class="form-group">
+            <label for="phone">주소</label><br>
+            <input type="text"
+                   class="form-control" id="address" name="address"
+                   placeholder="address" required>
+            <div class="check_font" id="address_check"></div>
+        </div>
+        <!-- 이메일 -->
+        <div class="form-group">
+            <label for="email">이메일</label><br>
+            <input type="text"
+                   class="form-control" name="email" id="email"
+                   placeholder="E-mail" required>
+            <div class="check_font" id="email_check"></div>
+        </div>
+        <!-- 생년월일 -->
+        <div class="form-group required">
+            <label for="birth">생년월일</label><br>
+            <input type="text"
+                   class="form-control" id="birth" name="birth"
+                   placeholder="ex) 19980203" required>
+            <div class="check_font" id="birth_check"></div>
+        </div>
+            <input type="submit" value="가입"/>
+<!--        <input type = "submit" value = "가입" style = "background-color : #FFAF00;-->
+<!--			width : 300px; height : 50px; border : 1px; border-radius: 0%;-->
+<!--			font-family: 'Do Hyeon', sans-serif;-->
+<!--			font-size:20px; "/>-->
+        <button onclick="gotoBack()">취소하기</button>
+    </form>
+</div>
+</body>
+</html>
