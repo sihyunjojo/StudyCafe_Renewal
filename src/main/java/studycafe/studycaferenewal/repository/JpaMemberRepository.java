@@ -1,5 +1,7 @@
 package studycafe.studycaferenewal.repository;
 
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Member;
 
 import javax.persistence.EntityManager;
@@ -22,7 +24,7 @@ public class JpaMemberRepository implements MemberRepository{
 
     //이름과 휴대폰번호로 멤버를 찾아주는 (이미 있는 회원입니다.) 음.. 필요없는거 같은데 우선 나둬바바
     @Override
-    public Optional<Member> findByNameAndPhone(String name, Long phone) {
+    public Optional<Member> findByNameAndPhone(String name, String phone) {
         List<Member> result = em.createQuery("select m from Member m where m.name = :name and m.phone = :phone", Member.class)
                 .setParameter("name",name).setParameter("phone",phone)
                 .getResultList();

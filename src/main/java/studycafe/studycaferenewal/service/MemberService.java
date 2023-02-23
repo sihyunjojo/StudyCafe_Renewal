@@ -1,12 +1,15 @@
 package studycafe.studycaferenewal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.repository.MemberRepository;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 

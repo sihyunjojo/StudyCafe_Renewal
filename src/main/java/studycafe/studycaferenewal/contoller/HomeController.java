@@ -10,13 +10,13 @@ import studycafe.studycaferenewal.service.MemberService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.PrintWriter;
 
 @Controller
 public class HomeController {
 
     private final MemberService memberService;
 
+    @Autowired
     public HomeController(MemberService memberService) {
         this.memberService = memberService;
     }
@@ -44,7 +44,10 @@ public class HomeController {
 
         return "home";
     }
+
 }
+
+
 
 //    @RequestMapping(value = "/login", method = RequestMethod.POST)
 //    public ModelAndView Login(@RequestParam("id") String id, @RequestParam("password") String password,

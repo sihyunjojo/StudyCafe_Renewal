@@ -1,20 +1,17 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
 <!--<link rel="stylesheet" href="css/index_style.css">-->
 
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
 <body>
 <div class="container">
     <header>
-<!--        <div data-include-path="footer.html"></div>-->
-<!--        <script src = "js/header.js"></script>-->
-
-        <div class="nav_container">
-            <a href = "/StudyCafeManagement/common/LoginMain">
-                <h7 style ="color:white; margin:3px; font-size:40px; font-weight:bold;">베이직 스터디 카페</h7>
-            </a>
-
+        <div>
+            <a href = "/StudyCafeManagement/common/LoginMain"> 베이직 스터디 카페 </a>
             <div class="cafe_menus">
-                <img src="/img/logo.jpg" class="logo_image" width="40" height="40">
+                <img src="/img/logo.jpg" width="40px" height="40px">
                 <a href="/StudyCafeManagement/seat/register?user_id=${sessionScope.user_id}" class="Seat">좌석</a>
                 <a href="/StudyCafeManagement/product/ProductList" class="Product">상품</a>
                 <a href="/StudyCafeManagement/board/BoardList" class="Community">커뮤니티</a>
@@ -23,8 +20,9 @@
                 <h3 style = "display:inline">id = ${sessionScope.user_id}</h3>
             </div>
         </div>
-
     </header>
+
+
     <section>
         <div class="section-container">
             <div class="temp-box">
@@ -100,12 +98,12 @@
                                     <label for = "password"></label>
                                     <input type = "password" id = "password" name = "password" class="passwdInput" placeholder="비밀번호" maxlength="41" value=""/><br>
                                     <input type = submit class="LoginButton" value = "로그인"/><br>
-                                    <a href="findIdForm">아이디 찾기</a>
+                                    <a href="/member/idquiry">아이디 찾기</a>
                                     <span class="bar" aria-hidden="true">|</span>
-                                    <a href="findPasswordForm">비밀번호 찾기</a>
+                                    <a href="/member/pwquiry">비밀번호 찾기</a>
                                     <br>
                                     <span class="bar" aria-hidden="true"></span>
-                                    <a href="/member/join">회원가입</a>
+                                    <a href="/member/new">회원가입</a>
                                 </fieldset>
                             </form>
                         </c:when>
@@ -123,13 +121,6 @@
             <div class="temp-box">
                 공지사항
                 <hr>
-
-
-                <%-- 	<%
-                if (count == 0) {
-                %> --%>
-
-
                 <table class="type01">
                     <tr>
                         <th scope="row">글번호</th>
@@ -172,6 +163,7 @@
                 </div>
 
             </div>
+
 
             <div class="temp-box">
                 상품 - BEST
