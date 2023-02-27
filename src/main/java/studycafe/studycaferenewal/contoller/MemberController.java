@@ -3,8 +3,7 @@ package studycafe.studycaferenewal.contoller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.MemberService;
@@ -16,6 +15,7 @@ import java.io.PrintWriter;
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/member")
 public class MemberController {
     private final MemberService memberService;
 
@@ -24,67 +24,63 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("member/new")
+    @GetMapping("/new")
     public String JoinForm() {
         return "member/JoinForm";
     }
 
 
-    @PostMapping("member/new")
+    @PostMapping("/new")
     public String JoinForm(HttpServletRequest request, HttpServletResponse response,Member member) throws Exception {
         memberService.join(member);
 //        response.sendRedirect("/");
         return "redirect:/";
     }
 
-    @GetMapping("/member/idquiry")
+    @GetMapping("/idquiry")
     public String findIdForm (){
         return "/member/FindIdForm";
     }
 
-    @PostMapping("/member/idquiry")
-    public void findIdForm (HttpServletRequest request,HttpServletResponse response, ModelAndView mav) throws IOException {
+    @PostMapping("/idquiry")
+    public String findIdForm (@RequestParam("user_name") String userName, @RequestParam("user_phone") String userPhone,HttpServletResponse response, Model model) throws IOException {
         Member member = new Member();
-
-        member.setName(request.getParameter("user_name"));
-        member.setPhone(request.getParameter("user_phone"));
-
-        System.out.println("member = " + member.getName() + member.getPhone());
+        member.setName(userName);
+        member.setPhone(userPhone);
 
         Optional<Member> result = memberService.FindMemberByNameAndPhone(member);
-        System.out.println("result = " + result);
-        mav.addObject("member", result);
 
-        if (result != null){
-            response.sendRedirect("/member/idquiryresult");
-            System.out.println("response = " + response);
+        if (result.isPresent()){
+            model.addAttribute("member", result.get());
+            return "member/SuccessFindId";
         } else {
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('경고!! 헤당하는 회원이 없습니다!!');</scrpt>");
-            out.flush();
-            response.sendRedirect("/");
+//            PrintWriter out = response.getWriter();
+//            model.addAttribute("msg", "경고!! 헤당하는 회원이 없습니다!!");
+//            out.flush();
+            return "member/FailFindId";
         }
 
     }
 
-    @GetMapping("/member/idquiryresult")
-    public String SuccessFindId(HttpServletRequest request, HttpServletResponse response, Model model){
-        return "/member/SuccessFindId";
-    }
-
-    @GetMapping("/member/pwquiryresult")
-    public String SuccessFindPassword(){
-        return "/member/SuccessFindPassword";
-    }
-
-    @GetMapping("/member/pwquiry")
+    @GetMapping("/pwquiry")
     public String findPasswordForm (){
         return "/member/FindPasswordForm";
     }
 
-    @PostMapping("/member/pwquiry")
-    public void findPasswordForm(HttpServletRequest request, HttpServletResponse response, Model model) {
+    @PostMapping("/pwquiry")
+    public String findPasswordForm(@RequestParam("user_id") String usesrId, Model model) {
         Member member = new Member();
+        member.setId(usesrId);
+
+        Optional<Member> result = memberService.checkById(member);
+        System.out.println("result = " + result);
+
+        if (result.isPresent()) {
+            model.addAttribute("member", result.get());
+            return "member/SuccessFindPassword";
+        } else {
+            return "member/FailFindPassword";
+        }
     }
 
 

@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.View;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.MemberService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -28,12 +30,13 @@ public class HomeController {
     }
 
     @PostMapping("/")
-    public String homeForm(Model model, String id, String password, HttpSession session, HttpServletResponse response) throws Exception {
+    public String homeForm(Model model, View view, String id, String password, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws Exception {
         Member member = new Member();
         member.setId(id);
         member.setPassword(password);
 
         memberService.checkMember(member, session);
+        //view.render(model,request,response);
 //        response.setContentType("text/html; charset=UTF-8");
 //        PrintWriter out = response.getWriter();
 
