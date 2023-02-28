@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Optional;
 
 @Controller
@@ -49,17 +47,12 @@ public class MemberController {
         member.setPhone(userPhone);
 
         Optional<Member> result = memberService.FindMemberByNameAndPhone(member);
+        model.addAttribute("member", result);
 
-        if (result.isPresent()){
-            model.addAttribute("member", result.get());
-            return "member/SuccessFindId";
-        } else {
+        return "/member/FindIdResult";
 //            PrintWriter out = response.getWriter();
 //            model.addAttribute("msg", "경고!! 헤당하는 회원이 없습니다!!");
 //            out.flush();
-            return "member/FailFindId";
-        }
-
     }
 
     @GetMapping("/pwquiry")
@@ -73,14 +66,9 @@ public class MemberController {
         member.setId(usesrId);
 
         Optional<Member> result = memberService.checkById(member);
-        System.out.println("result = " + result);
+        model.addAttribute("member", result);
 
-        if (result.isPresent()) {
-            model.addAttribute("member", result.get());
-            return "member/SuccessFindPassword";
-        } else {
-            return "member/FailFindPassword";
-        }
+        return "/member/FindPasswordResult";
     }
 
 
