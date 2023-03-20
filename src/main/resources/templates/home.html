@@ -1,32 +1,21 @@
 <!DOCTYPE html>
-<!--<link rel="stylesheet" href="css/index_style.css">-->
-
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
+    <link href="../css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<!--    <link rel="stylesheet" href="css/index_style.css">-->
+</head>
+
 <body>
 <div class="container">
-    <header>
-        <div>
-            <a href = "/StudyCafeManagement/common/LoginMain"> 베이직 스터디 카페 </a>
-            <div class="cafe_menus">
-                <img src="/img/logo.jpg" width="40px" height="40px">
-                <a href="/StudyCafeManagement/seat/register?user_id=${sessionScope.user_id}" class="Seat">좌석</a>
-                <a href="/StudyCafeManagement/product/ProductList" class="Product">상품</a>
-                <a href="/StudyCafeManagement/board/BoardList" class="Community">커뮤니티</a>
-                <a href="/StudyCafeManagement/notice/NoticeList?user_id=${sessionScope.user_id}" class="Notice">공지사항</a>
-                <a href="/StudyCafeManagement/message/Chat?user_id=${sessionScope.user_id}" class="Message">메시지</a>
-                <h3 style = "display:inline">id = ${sessionScope.user_id}</h3>
-            </div>
-        </div>
-    </header>
 
+    <div th:insert="~{header :: insert}"></div>
 
     <section>
         <div class="section-container">
             <div class="temp-box">
-                커뮤니티
+                <h3>커뮤니티</h3>
                 <hr>
 
                 <table class="type01">

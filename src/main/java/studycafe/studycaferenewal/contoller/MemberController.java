@@ -1,5 +1,6 @@
 package studycafe.studycaferenewal.contoller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +15,9 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/member")
+@RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
-
-    @Autowired
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
-    }
 
     @GetMapping("/new")
     public String JoinForm() {
@@ -29,7 +26,7 @@ public class MemberController {
 
 
     @PostMapping("/new")
-    public String JoinForm(HttpServletRequest request, HttpServletResponse response,Member member) throws Exception {
+    public String JoinForm(Member member) throws Exception {
         memberService.join(member);
 //        response.sendRedirect("/");
         return "redirect:/";
@@ -41,11 +38,7 @@ public class MemberController {
     }
 
     @PostMapping("/idquiry")
-    public String findIdForm (@RequestParam("user_name") String userName, @RequestParam("user_phone") String userPhone,HttpServletResponse response, Model model) throws IOException {
-        Member member = new Member();
-        member.setName(userName);
-        member.setPhone(userPhone);
-
+    public String findIdForm (Member member, Model model) throws IOException {
         Optional<Member> result = memberService.FindMemberByNameAndPhone(member);
         model.addAttribute("member", result);
 
@@ -61,10 +54,7 @@ public class MemberController {
     }
 
     @PostMapping("/pwquiry")
-    public String findPasswordForm(@RequestParam("user_id") String usesrId, Model model) {
-        Member member = new Member();
-        member.setId(usesrId);
-
+    public String findPasswordForm(Member member, Model model) {
         Optional<Member> result = memberService.checkById(member);
         model.addAttribute("member", result);
 

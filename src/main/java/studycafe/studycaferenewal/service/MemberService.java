@@ -1,7 +1,7 @@
 package studycafe.studycaferenewal.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.repository.MemberRepository;
@@ -10,13 +10,9 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Transactional
+@RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-
-    @Autowired
-    public MemberService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
 
     /**
      * 회원가입
@@ -46,10 +42,12 @@ public class MemberService {
 
     //public int checkMemberPassword(Member member);
     //public Member getFindPasswordMember(Member member);
+
     //세션을 없애고 세션에 속해있던 값들 삭제함
     public void logoutMember(HttpSession session){
         session.invalidate();
     }
+
     //public int checkUniqueId(Member member);
     // memeber의 이름과 같은걸 찾아서
     // ifPresent()는 null이 아니면 실행해줌.

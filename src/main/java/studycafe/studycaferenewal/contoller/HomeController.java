@@ -30,11 +30,7 @@ public class HomeController {
     }
 
     @PostMapping("/")
-    public String homeForm(Model model, View view, String id, String password, HttpSession session, HttpServletResponse response, HttpServletRequest request) throws Exception {
-        Member member = new Member();
-        member.setId(id);
-        member.setPassword(password);
-
+    public String homeForm(Member member, HttpSession session) throws Exception {
         memberService.checkMember(member, session);
         //view.render(model,request,response);
 //        response.setContentType("text/html; charset=UTF-8");

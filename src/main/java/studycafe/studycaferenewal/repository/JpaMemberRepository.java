@@ -1,19 +1,17 @@
 package studycafe.studycaferenewal.repository;
 
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import studycafe.studycaferenewal.domain.Member;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
+@RequiredArgsConstructor
 public class JpaMemberRepository implements MemberRepository{
     private final EntityManager em;
-
-    public JpaMemberRepository(EntityManager em) {
-        this.em = em;
-    }
 
     // Member DB내부에 저장시켜줌.
     @Override
