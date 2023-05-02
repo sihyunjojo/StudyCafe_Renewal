@@ -15,7 +15,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
     @Override
     public Member save(Member member) {
-        store.put(member.getId(), member);
+        store.put(member.getUserId(), member);
         return member;
     }
 
@@ -25,7 +25,7 @@ public class MemoryMemberRepository implements MemberRepository{
     }
 
     @Override
-    public Optional<Member> findById(String id) {
+    public Optional<Member> findByUserId(String id) {
         return Optional.empty();
     }
 

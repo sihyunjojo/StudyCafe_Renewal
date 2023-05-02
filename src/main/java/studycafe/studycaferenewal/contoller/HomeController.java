@@ -2,15 +2,11 @@ package studycafe.studycaferenewal.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.View;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.MemberService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -23,7 +19,6 @@ public class HomeController {
         this.memberService = memberService;
     }
 
-
     @GetMapping("/")
     public String home(){
         return "home";
@@ -32,6 +27,7 @@ public class HomeController {
     @PostMapping("/")
     public String homeForm(Member member, HttpSession session) throws Exception {
         memberService.checkMember(member, session);
+
         //view.render(model,request,response);
 //        response.setContentType("text/html; charset=UTF-8");
 //        PrintWriter out = response.getWriter();

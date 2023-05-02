@@ -1,6 +1,7 @@
 package studycafe.studycaferenewal.contoller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+@Slf4j
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -24,11 +26,13 @@ public class MemberController {
         return "member/JoinForm";
     }
 
-
     @PostMapping("/new")
     public String JoinForm(Member member) throws Exception {
+        log.info("member", member);
+        log.info("membername", member.getName());
+        log.info("memberId", member.getUserId());
+
         memberService.join(member);
-//        response.sendRedirect("/");
         return "redirect:/";
     }
 
