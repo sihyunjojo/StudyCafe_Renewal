@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <title>Title</title>
+<title>Title</title>
 <head>
-  <meta charset="UTF-8">
-  <title></title>
+    <meta charset="UTF-8">
+    <title></title>
+    <div th:insert="~{template/styleCss :: css_copy}"></div>
 </head>
 <body>
-  <div class="border">
+<header th:insert="~{template/header :: header_copy}"></header>
+<div class="border">
 
     <form>
-      <th:block th:if="${member.isPresent()}">
-        <h5 th:text="|회원님의 아이디는 ${member.get().getUserId()} 입니다.|"></h5>
-      </th:block>
-      <th:block th:unless="${member.isPresent()}">
-        <h5> 정보에 맞는 아이디를 찾을 수 없습니다.</h5>
-        <a href = "/member/idquiry">아이디 찾기</a>
-      </th:block>
+        <th:block th:if="${member.isPresent()}">
+            <h5 th:text="|회원님의 아이디는 ${member.get().getUserId()} 입니다.|"></h5>
+        </th:block>
+        <th:block th:unless="${member.isPresent()}">
+            <h5> 정보에 맞는 아이디를 찾을 수 없습니다.</h5>
+            <a href="/member/idquiry">아이디 찾기</a>
+        </th:block>
     </form>
 
     <a href="/">메인화면</a>
 
-  </div>
+</div>
 </body>
 </html>

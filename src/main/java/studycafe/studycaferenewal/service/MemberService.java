@@ -20,7 +20,11 @@ public class MemberService {
      * 회원가입
      */
     public String join(Member member) {
-        validateDuplicatedMember(member); // 중복회원 검증
+        try {
+            validateDuplicatedMember(member); // 중복회원 검증
+        } catch (IllegalStateException e) {
+            return null;
+        }
         memberRepository.save(member); // db에 멤버값 넣어줌
         return member.getUserId();
     }
@@ -54,7 +58,7 @@ public class MemberService {
     // memeber의 이름과 같은걸 찾아서
     // ifPresent()는 null이 아니면 실행해줌.
     private void validateDuplicatedMember(Member member) {
-        log.info("userId", member.getUserId());
+        log.info("userId = {}", member.getUserId());
         memberRepository.findByUserId(member.getUserId())// member과 같은 이름이 있는지 찾앗을때
                 .ifPresent(member1 -> {    // null이 아니니까(값이존재하면 ifPresent()인자 함수 실행
                     throw new IllegalStateException("이미 존재하는 회원입니다.");  //

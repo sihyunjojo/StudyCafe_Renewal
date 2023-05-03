@@ -2,16 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
-    <link href="../css/bootstrap.min.css"
-          th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-<!--    <link rel="stylesheet" href="css/index_style.css">-->
+    <div th:insert="~{template/styleCss :: css_copy}"></div>
+    <!--    <link rel="stylesheet" href="css/index_style.css">-->
 </head>
 
 <body>
 <div class="container">
-
-    <div th:insert="~{header :: insert}"></div>
-
+    <div th:insert="~{template/header :: header_copy}"></div>
     <section>
         <div class="section-container">
             <div class="temp-box">
@@ -35,7 +32,7 @@
                             <td class="even">
                                 <fmt:parseDate value="${board.board_time }" var="today" pattern="yyyy-MM-dd">
                                 </fmt:parseDate>
-                                <fmt:formatDate value="${today }" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>
                             </td>
                             <td class="even">${board.board_readcount}</td>
                         </tr>
@@ -45,7 +42,8 @@
                 <div>
                     <ul>
                         <c:if test="${boardPageMaker.prev}">
-                            <li><a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.startPage - 1)}">&laquo;</a></li>
+                            <li><a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.startPage - 1)}">&laquo;</a>
+                            </li>
                         </c:if>
 
                         <c:forEach begin="${boardPageMaker.startPage}" end="${boardPageMaker.endPage}" var="idx">
@@ -55,11 +53,12 @@
                         </c:forEach>
 
                         <c:if test="${boardPageMaker.next && boardPageMaker.endPage > 0}">
-                            <li><a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.endPage + 1)}">&raquo;</a></li>
+                            <li>
+                                <a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.endPage + 1)}">&raquo;</a>
+                            </li>
                         </c:if>
                     </ul>
                 </div>
-
 
 
             </div>
@@ -78,32 +77,29 @@
                 로그인
                 <hr>
                 <section id="loginFormArea">
-                    <c:choose>
-                        <c:when test="${sessionScope.user_id == null}">
-                            <form action="login" method = "POST">
-                                <fieldset>
-                                    <label for = "id"></label>
-                                    <input type="text" id="id" name="id" class="idInput" placeholder="아이디" maxlength="41" value=""><br>
-                                    <label for = "password"></label>
-                                    <input type = "password" id = "password" name = "password" class="passwdInput" placeholder="비밀번호" maxlength="41" value=""/><br>
-                                    <input type = submit class="LoginButton" value = "로그인"/><br>
-                                    <a href="/member/idquiry">아이디 찾기</a>
-                                    <span class="bar" aria-hidden="true">|</span>
-                                    <a href="/member/pwquiry">비밀번호 찾기</a>
-                                    <br>
-                                    <span class="bar" aria-hidden="true"></span>
-                                    <a href="/member/new">회원가입</a>
-                                </fieldset>
-                            </form>
-                        </c:when>
-                        <c:otherwise>
-                            <br>${sessionScope.user_name}님이 로그인중입니다.<br>
-                            <h2>${sessionScope.user_name}(${sessionScope.user_id})님
-                                환영합니다.</h2>
-                            <a href="${path}/StudyCafeManagement/common/logout">로그아웃</a>
-                            <br>
-                        </c:otherwise>
-                    </c:choose>
+                    <th:block th:if="${member == null}">
+                        <form action="login" method="Post">
+                            <fieldset>
+                                <label for="id"></label>
+                                <input type="text" id="id" name="id" class="idInput" placeholder="아이디"><br>
+                                <label for="password"></label>
+                                <input type="password" id="password" name="password" class="passwdInput" placeholder="비밀번호" /><br>
+                                <button th:onclick="|locatuon.href='@{login}'|" type="submit">로그인</button>
+                                <button th:onclick="|location.href='@{/member/idquriy}'|">아이디 찾기</button>
+                                <span class="bar" aria-hidden="true">|</span>
+                                <button th:onclick="|location.href='@{/member/pwquriy}'|">비밀번호 찾기</button>
+                                <br>
+                                <span class="bar" aria-hidden="true"></span>
+                                <button th:onclick="|location.href='@{/member/new}'|">회원가입</button>
+                            </fieldset>
+                        </form>
+                    </th:block>
+                    <th:block th:if="${member}">
+                        <h4 class="mb-3" th:text="|로그인: ${member.name}|">로그인 사용자 이름</h4>
+                        <h4 th:text="|${member.name}님이 로그인 중 입니다.|"></h4>
+                        <a href="${path}/StudyCafeManagement/common/logout">로그아웃</a>
+                        <br>
+                    </th:block>
                 </section>
             </div>
 
@@ -121,12 +117,14 @@
                     <c:forEach var="notice" items="${noticeList }">
                         <tr>
                             <td class="even">${notice.notice_number }</td>
-                            <td class="even"><a href="/StudyCafeManagement/notice/NoticeDetail?notice_number=${notice.notice_number }&user_id=${sessionScope.user_id}">${notice.notice_title}</a></td>
+                            <td class="even"><a
+                                    href="/StudyCafeManagement/notice/NoticeDetail?notice_number=${notice.notice_number }&user_id=${sessionScope.user_id}">${notice.notice_title}</a>
+                            </td>
                             <td class="even">${notice.user_id}</td>
                             <td class="even">
                                 <fmt:parseDate value="${notice.notice_time }" var="today" pattern="yyyy-MM-dd">
                                 </fmt:parseDate>
-                                <fmt:formatDate value="${today }" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>
                             </td>
                             <td class="even">${notice.notice_readcount}</td>
                         </tr>
@@ -136,7 +134,8 @@
                 <div>
                     <ul>
                         <c:if test="${noticePageMaker.prev}">
-                            <li><a href="LoginMain${noticePageMaker.makeNoticeQuery(noticePageMaker.startPage - 1)}">&laquo;</a></li>
+                            <li><a href="LoginMain${noticePageMaker.makeNoticeQuery(noticePageMaker.startPage - 1)}">&laquo;</a>
+                            </li>
                         </c:if>
 
                         <c:forEach begin="${noticePageMaker.startPage}" end="${noticePageMaker.endPage}" var="idx">
@@ -146,7 +145,8 @@
                         </c:forEach>
 
                         <c:if test="${noticePageMaker.next && noticePageMaker.endPage > 0}">
-                            <li><a href="LoginMain${noticePageMaker.makeNoticeQuery(noticePageMaker.endPage + 1)}">&raquo;</a></li>
+                            <li><a href="LoginMain${noticePageMaker.makeNoticeQuery(noticePageMaker.endPage + 1)}">&raquo;</a>
+                            </li>
                         </c:if>
                     </ul>
                 </div>

@@ -2,8 +2,10 @@ package studycafe.studycaferenewal.contoller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.MemberService;
 
@@ -25,8 +27,13 @@ public class HomeController {
     }
 
     @PostMapping("/")
-    public String homeForm(Member member, HttpSession session) throws Exception {
-        memberService.checkMember(member, session);
+    public String homeForm(@Login Member member, Model model) throws Exception {
+        if (member == null) {
+            return "home";
+        }
+        model.addAttribute("member", member);
+        return "home";
+//        memberService.checkMember(member, session);
 
         //view.render(model,request,response);
 //        response.setContentType("text/html; charset=UTF-8");
@@ -36,8 +43,6 @@ public class HomeController {
 //            out.println("<script>alert('���!! �Է��Ͻ� ������ ��ġ���� �ʽ��ϴ�.');</script>");
 //            out.flush();
 //        }
-
-        return "home";
     }
 
 }
@@ -82,7 +87,8 @@ public class HomeController {
 //
 //        return mav;
 //    }
-//
+
+
 //    @RequestMapping(value = "/LoginMain", method = RequestMethod.GET)
 //    public ModelAndView LoginMain(@RequestParam(defaultValue = "null") String page,
 //                                  @RequestParam(defaultValue = "null") String perPageNum, @RequestParam(defaultValue = "null") String kind)

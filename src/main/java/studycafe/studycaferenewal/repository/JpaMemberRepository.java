@@ -44,15 +44,15 @@ public class JpaMemberRepository implements MemberRepository{
     //id를 통해서 멤버 리턴해줌
     @Override
     public Optional<Member> findByUserId(String userId) {
-//        List<Member> result = query
-//            .select(member) //static import QItem. 지운거임
-//            .from(member)
-//            .where(member.userId.eq(userId))
-//            .fetch();
+        List<Member> result = query
+            .select(member) //static import QItem. 지운거임
+            .from(member)
+            .where(member.userId.eq(userId))
+            .fetch();
 
-        List<Member> result = em.createQuery("select m from Member m where m.userId = :userId", Member.class)
-                .setParameter("userId",userId)
-                .getResultList();
+//        List<Member> result = em.createQuery("select m from Member m where m.userId = :userId", Member.class)
+//                .setParameter("userId",userId)
+//                .getResultList();
 
         return result.stream().findAny();
     }

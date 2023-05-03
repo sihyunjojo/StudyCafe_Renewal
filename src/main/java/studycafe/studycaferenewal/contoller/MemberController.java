@@ -22,17 +22,20 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/new")
-    public String JoinForm() {
+    public String JoinForm(Model model) {
+        model.addAttribute("member", new Member());
         return "member/JoinForm";
     }
 
     @PostMapping("/new")
-    public String JoinForm(Member member) throws Exception {
-        log.info("member", member);
-        log.info("membername", member.getName());
-        log.info("memberId", member.getUserId());
-
-        memberService.join(member);
+    public String JoinForm(Member member, Model model){
+        String userId = memberService.join(member);
+        log.info(userId);
+        if (userId == null) {
+            model.addAttribute("error", "이미 사용 중인 아이디입니다.");
+            model.addAttribute("member", member);
+            return "member/JoinForm";
+        }
         return "redirect:/";
     }
 
