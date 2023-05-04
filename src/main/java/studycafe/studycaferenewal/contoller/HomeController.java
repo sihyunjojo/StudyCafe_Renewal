@@ -27,12 +27,14 @@ public class HomeController {
     }
 
     @PostMapping("/")
-    public String homeForm(@Login Member member, Model model) throws Exception {
-        if (member == null) {
+    public String homeForm(@Login Member loginmember, Model model) throws Exception {
+        if (loginmember == null) {
             return "home";
         }
-        model.addAttribute("member", member);
+
+        model.addAttribute("loginMember", loginmember);
         return "home";
+
 //        memberService.checkMember(member, session);
 
         //view.render(model,request,response);

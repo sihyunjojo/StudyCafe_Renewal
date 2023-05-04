@@ -12,99 +12,45 @@
     <section>
         <div class="section-container">
             <div class="temp-box">
-                <h3>커뮤니티</h3>
-                <hr>
-
-                <table class="type01">
-                    <tr>
-                        <th scope="row">글번호</th>
-                        <th scope="row">제목</th>
-                        <th scope="row">글쓴이</th>
-                        <th scope="row">작성일</th>
-                        <th scope="row">조회수</th>
-                    </tr>
-                    <c:forEach var="board" items="${boardList }">
-                        <tr>
-                            <td class="even">${board.board_number }</td>
-                            <td class="even"><a href="/StudyCafeManagement/board/BoardDetail?board_number=${board.board_number }&user_id=${sessionScope.user_id}
-					&writer=${board.user_id }">${board.board_title}</a></td>
-                            <td class="even">${board.user_id}</td>
-                            <td class="even">
-                                <fmt:parseDate value="${board.board_time }" var="today" pattern="yyyy-MM-dd">
-                                </fmt:parseDate>
-                                <fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>
-                            </td>
-                            <td class="even">${board.board_readcount}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-
-                <div>
-                    <ul>
-                        <c:if test="${boardPageMaker.prev}">
-                            <li><a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.startPage - 1)}">&laquo;</a>
-                            </li>
-                        </c:if>
-
-                        <c:forEach begin="${boardPageMaker.startPage}" end="${boardPageMaker.endPage}" var="idx">
-                            <li>
-                                <a href="LoginMain${boardPageMaker.makeBoardQuery(idx)}">${idx}</a>
-                            </li>
-                        </c:forEach>
-
-                        <c:if test="${boardPageMaker.next && boardPageMaker.endPage > 0}">
-                            <li>
-                                <a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.endPage + 1)}">&raquo;</a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </div>
-
-
-            </div>
-
-            <div class="temp-box">
-                좌석
-                <hr>
-                <img src="img/seat.JPG" class="Seat_image" width=230px height=230px
-                     style="margin: 50px;"> <input type="button" value="예약"
-                                                   onclick="fn_res_form()"
-                                                   style="float: center; margin: 50px; font-size: 50px;">
-
-            </div>
-
-            <div class="temp-box">
-                로그인
+                <h3>로그인</h3>
                 <hr>
                 <section id="loginFormArea">
-                    <th:block th:if="${member == null}">
-                        <form action="login" method="Post">
+                    <th:block th:if="${loginMember == null}">
+                        <form th:action="login" th:object="${loginMember}" method="Post">
                             <fieldset>
-                                <label for="id"></label>
-                                <input type="text" id="id" name="id" class="idInput" placeholder="아이디"><br>
-                                <label for="password"></label>
-                                <input type="password" id="password" name="password" class="passwdInput" placeholder="비밀번호" /><br>
-                                <button th:onclick="|locatuon.href='@{login}'|" type="submit">로그인</button>
-                                <button th:onclick="|location.href='@{/member/idquriy}'|">아이디 찾기</button>
-                                <span class="bar" aria-hidden="true">|</span>
-                                <button th:onclick="|location.href='@{/member/pwquriy}'|">비밀번호 찾기</button>
+                                <input type="text" id="userId" name="userId" placeholder="아이디"/><br>
+                                <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호"/>
                                 <br>
-                                <span class="bar" aria-hidden="true"></span>
+                                <button type="submit">로그인</button>
+                                <br>
+                                <button onclick="location.href='FindIdForm.html'"
+                                        th:onclick="|location.href='@{/member/idquiry}'|"
+                                        type="button">아이디 찾기
+                                </button>
+                                <span class="bar" aria-hidden="true">|</span>
+                                <button onclick="location.href='FindPasswordForm.html'"
+                                        th:onclick="|location.href='@{/member/pwquiry}'|"
+                                        type="button">비밀번호 찾기
+                                </button>
+                                <br>
                                 <button th:onclick="|location.href='@{/member/new}'|">회원가입</button>
                             </fieldset>
                         </form>
                     </th:block>
-                    <th:block th:if="${member}">
-                        <h4 class="mb-3" th:text="|로그인: ${member.name}|">로그인 사용자 이름</h4>
-                        <h4 th:text="|${member.name}님이 로그인 중 입니다.|"></h4>
-                        <a href="${path}/StudyCafeManagement/common/logout">로그아웃</a>
-                        <br>
+
+                    <th:block th:if="${loginMember}">
+                        <h4 th:text="|${loginMember.name}님이 로그인 중 입니다.|"/>
+                        <form th:action="@{/logout}" method="post">
+                            <button class="w-100 btn btn-dark btn-lg" th:onclick="|location.href='@{/logout}'|"
+                                    type="submit"/>
+                        </form>
                     </th:block>
                 </section>
             </div>
 
             <div class="temp-box">
-                공지사항
+                <br>
+                <h3>공지사항</h3>
                 <hr>
                 <table class="type01">
                     <tr>
@@ -153,6 +99,57 @@
 
             </div>
 
+            <div class="temp-box">
+                <h3>커뮤니티</h3>
+                <hr>
+                <table class="type01">
+                    <tr>
+                        <th scope="row">글번호</th>
+                        <th scope="row">제목</th>
+                        <th scope="row">글쓴이</th>
+                        <th scope="row">작성일</th>
+                        <th scope="row">조회수</th>
+                    </tr>
+                    <c:forEach var="board" items="${boardList }">
+                        <tr>
+                            <td class="even">${board.board_number }</td>
+                            <td class="even"><a href="/StudyCafeManagement/board/BoardDetail?board_number=${board.board_number }&user_id=${sessionScope.user_id}
+					&writer=${board.user_id }">${board.board_title}</a></td>
+                            <td class="even">${board.user_id}</td>
+                            <td class="even">
+                                <fmt:parseDate value="${board.board_time }" var="today" pattern="yyyy-MM-dd">
+                                </fmt:parseDate>
+                                <fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>
+                            </td>
+                            <td class="even">${board.board_readcount}</td>
+                        </tr>
+                    </c:forEach>
+                </table>
+
+                <div>
+                    <ul>
+                        <c:if test="${boardPageMaker.prev}">
+                            <li><a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.startPage - 1)}">&laquo;</a>
+                            </li>
+                        </c:if>
+
+                        <c:forEach begin="${boardPageMaker.startPage}" end="${boardPageMaker.endPage}" var="idx">
+                            <li>
+                                <a href="LoginMain${boardPageMaker.makeBoardQuery(idx)}">${idx}</a>
+                            </li>
+                        </c:forEach>
+
+                        <c:if test="${boardPageMaker.next && boardPageMaker.endPage > 0}">
+                            <li>
+                                <a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.endPage + 1)}">&raquo;</a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </div>
+
+
+            </div>
+
 
             <div class="temp-box">
                 상품 - BEST
@@ -192,7 +189,15 @@
                     </tr>
                 </table>
 
+            </div>
 
+            <div class="temp-box">
+                좌석
+                <hr>
+                <img src="img/seat.JPG" class="Seat_image" width=230px height=230px
+                     style="margin: 50px;"> <input type="button" value="예약"
+                                                   onclick="fn_res_form()"
+                                                   style="float: center; margin: 50px; font-size: 50px;">
             </div>
 
         </div>
