@@ -23,17 +23,18 @@
                                 <br>
                                 <button type="submit">로그인</button>
                                 <br>
-                                <button onclick="location.href='FindIdForm.html'"
-                                        th:onclick="|location.href='@{/member/idquiry}'|"
-                                        type="button">아이디 찾기
+                                <button onclick="location.href='FindIdForm.html'"                                        >아이디 찾기
+                                    <!--                                        th:onclick="|location.href='@{/member/idquiry}'|"-->
                                 </button>
                                 <span class="bar" aria-hidden="true">|</span>
-                                <button onclick="location.href='FindPasswordForm.html'"
-                                        th:onclick="|location.href='@{/member/pwquiry}'|"
+                                <button th:onclick="|location.href='@{/member/pwquiry}'|"
                                         type="button">비밀번호 찾기
                                 </button>
                                 <br>
-                                <button th:onclick="|location.href='@{/member/new}'|">회원가입</button>
+                                <button th:onclick="|location.href='@{/member/new}'|"
+                                        type="button">회원가입
+                                </button>
+
                             </fieldset>
                         </form>
                     </th:block>
