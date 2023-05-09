@@ -51,7 +51,12 @@
                     <a href="/StudyCafeManagement/message/Chat?user_id=${sessionScope.user_id}" class="nav-link">메시지</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:value="${session.id}">id = ${sessionScope.user_id}</a>
+                    <th:block th:if="${loginMember == null}">
+                        <a th:href="@{/login}" class="nav-link"> 로그인 </a>
+                    </th:block>
+                    <th:block th:unless="${loginMember == null}">
+                        <a th:href= "@{/member/info}" th:text="|${loginMember.name}님 정보|" class="nav-link"> member정보 </a>
+                    </th:block>
                 </li>
             </ul>
         </header>

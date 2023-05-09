@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
@@ -21,13 +22,20 @@ public class HomeController {
         this.memberService = memberService;
     }
 
+//    @GetMapping("/")
+    public String homeForm(){
+        return "home";
+    }
+
     @GetMapping("/")
-    public String home(){
+    public String homeLoginV5ArgumentResolver(@Login Member loginMember, Model model) {
+        //세션이 유지되면 로그인으로 이동
+        model.addAttribute("loginMember", loginMember);
         return "home";
     }
 
     @PostMapping("/")
-    public String homeForm(@Login Member loginmember, Model model) throws Exception {
+    public String home(@Login Member loginmember, Model model) throws Exception {
         if (loginmember == null) {
             return "home";
         }

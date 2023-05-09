@@ -15,16 +15,18 @@
                 <h3>로그인</h3>
                 <hr>
                 <section id="loginFormArea">
+
                     <th:block th:if="${loginMember == null}">
                         <form th:action="login" th:object="${loginMember}" method="Post">
                             <fieldset>
-                                <input type="text" id="userId" name="userId" placeholder="아이디"/><br>
-                                <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호"/>
+                                <input type="text" id="userId" name="userId" placeholder="아이디" required/><br>
+                                <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호"
+                                       required/>
                                 <br>
                                 <button type="submit">로그인</button>
                                 <br>
-                                <button onclick="location.href='FindIdForm.html'"                                        >아이디 찾기
-                                    <!--                                        th:onclick="|location.href='@{/member/idquiry}'|"-->
+                                <button th:onclick="|location.href='@{/member/idquiry}'|"
+                                        type="button">아이디 찾기
                                 </button>
                                 <span class="bar" aria-hidden="true">|</span>
                                 <button th:onclick="|location.href='@{/member/pwquiry}'|"
@@ -39,13 +41,16 @@
                         </form>
                     </th:block>
 
-                    <th:block th:if="${loginMember}">
+                    <th:block th:unless="${loginMember == null}">
                         <h4 th:text="|${loginMember.name}님이 로그인 중 입니다.|"/>
                         <form th:action="@{/logout}" method="post">
-                            <button class="w-100 btn btn-dark btn-lg" th:onclick="|location.href='@{/logout}'|"
-                                    type="submit"/>
+                            <button th:onclick="|location.href='@{/logout}'|"
+                                    type="submit">로그아웃
+                            </button>
+
                         </form>
                     </th:block>
+
                 </section>
             </div>
 

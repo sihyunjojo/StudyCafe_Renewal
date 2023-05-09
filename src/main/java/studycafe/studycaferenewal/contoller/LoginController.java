@@ -1,6 +1,5 @@
 package studycafe.studycaferenewal.contoller;
 
-import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,24 +15,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import java.lang.annotation.Retention;
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class LogionController {
+public class LoginController {
     private final LoginService loginService;
+
+    @GetMapping("/login")
+    public String loginForm(@ModelAttribute LoginForm form){
+        return "/login/LoginForm";
+    }
 
     //@ModelAttribute가 form에서 loginForm객체 내부의 필드와 이름이 같은 값을 가져와서 객체에 넣어줌
     @PostMapping("/login")
-    public String loginForm(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
+    public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                             @RequestParam(defaultValue = "/") String redirectURL,
                             HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "home";
         }
 
-        Member loginMember = loginService.login(form.getUserId(), form.getUserPassword());
+        Member loginMember = loginService.login(form.getLoginId(), form.getLoginPassword());
+        log.info("loginMember = {}", loginMember);
 
         if (loginMember == null) {
             // 클라이언트에 에러 보여줄 때 사용하자!!!!
@@ -49,10 +52,14 @@ public class LogionController {
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
+        log.info("request = {}", request);
+
         HttpSession session = request.getSession();
+        log.info("session = {}", session);
         if (session != null) {
             session.invalidate();
         }
+
         return "redirect:/";
     }
 }

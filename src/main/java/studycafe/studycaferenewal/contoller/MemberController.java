@@ -2,15 +2,12 @@ package studycafe.studycaferenewal.contoller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.MemberService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -24,17 +21,17 @@ public class MemberController {
     @GetMapping("/new")
     public String JoinForm(Model model) {
         model.addAttribute("member", new Member());
-        return "member/JoinForm";
+        return "/member/AddMemberForm";
     }
 
     @PostMapping("/new")
-    public String JoinForm(Member member, Model model){
+    public String Join(Member member, Model model){
         String userId = memberService.join(member);
         log.info(userId);
         if (userId == null) {
             model.addAttribute("error", "이미 사용 중인 아이디입니다.");
             model.addAttribute("member", member);
-            return "member/JoinForm";
+            return "/member/AddMemberForm";
         }
         return "redirect:/";
     }
@@ -45,7 +42,7 @@ public class MemberController {
     }
 
     @PostMapping("/idquiry")
-    public String findIdForm (Member member, Model model) throws IOException {
+    public String findId (Member member, Model model) throws IOException {
         Optional<Member> result = memberService.FindMemberByNameAndPhone(member);
         model.addAttribute("member", result);
 
@@ -61,16 +58,17 @@ public class MemberController {
     }
 
     @PostMapping("/pwquiry")
-    public String findPasswordForm(Member member, Model model) {
+    public String findPassword(Member member, Model model) {
         Optional<Member> result = memberService.checkById(member);
         model.addAttribute("member", result);
 
         return "/member/FindPasswordResult";
     }
 
-
-
-
-
+    @GetMapping("/info")
+    public String InfoForm(Model model) {
+        model.addAttribute("member", new Member());
+        return "/member/MemberInfo";
+    }
 
 }
