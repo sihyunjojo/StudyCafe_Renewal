@@ -15,7 +15,7 @@
                 <h3>로그인</h3>
                 <hr>
                 <section id="loginFormArea">
-
+                <div th:text="${loginMember == null}"></div>
                     <th:block th:if="${loginMember == null}">
                         <form th:action="login" th:object="${loginMember}" method="Post">
                             <fieldset>

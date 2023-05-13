@@ -1,17 +1,19 @@
 package studycafe.studycaferenewal.contoller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.MemberService;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @Controller
 public class HomeController {
 
@@ -22,30 +24,45 @@ public class HomeController {
         this.memberService = memberService;
     }
 
+    //    @GetMapping("/")
+//    public String homeForm() {
+//        return "home";
+//    }
+
+    // 됨
 //    @GetMapping("/")
-    public String homeForm(){
+    public String homeForm(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model) {
+        log.info("loginMember = {}", loginMember);
+
+        if (loginMember != null) {
+            model.addAttribute("loginMember", loginMember);
+        }
+
         return "home";
     }
 
     @GetMapping("/")
     public String homeLoginV5ArgumentResolver(@Login Member loginMember, Model model) {
-        //세션이 유지되면 로그인으로 이동
+        if (loginMember == null) {
+            return "home";
+        }
+
         model.addAttribute("loginMember", loginMember);
         return "home";
     }
 
-    @PostMapping("/")
-    public String home(@Login Member loginmember, Model model) throws Exception {
-        if (loginmember == null) {
-            return "home";
-        }
-
-        model.addAttribute("loginMember", loginmember);
-        return "home";
+//    @PostMapping("/")
+//    public String home(@Login Member loginmember, Model model) throws Exception {
+//        if (loginmember == null) {
+//            return "home";
+//        }
+//
+//        model.addAttribute("loginMember", loginmember);
+//        return "home";
 
 //        memberService.checkMember(member, session);
 
-        //view.render(model,request,response);
+    //view.render(model,request,response);
 //        response.setContentType("text/html; charset=UTF-8");
 //        PrintWriter out = response.getWriter();
 
@@ -53,9 +70,9 @@ public class HomeController {
 //            out.println("<script>alert('���!! �Է��Ͻ� ������ ��ġ���� �ʽ��ϴ�.');</script>");
 //            out.flush();
 //        }
-    }
-
 }
+
+//}
 
 
 

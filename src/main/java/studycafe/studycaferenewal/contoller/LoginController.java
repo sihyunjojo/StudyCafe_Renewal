@@ -31,11 +31,15 @@ public class LoginController {
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                             @RequestParam(defaultValue = "/") String redirectURL,
                             HttpServletRequest request) {
+        log.info("login start");
+        log.info("LoginForm  = {}.{}", form.getUserId(), form.getUserPassword());
+
         if (bindingResult.hasErrors()) {
+            log.info("Error = {}", bindingResult);
             return "home";
         }
 
-        Member loginMember = loginService.login(form.getLoginId(), form.getLoginPassword());
+        Member loginMember = loginService.login(form.getUserId(), form.getUserPassword());
         log.info("loginMember = {}", loginMember);
 
         if (loginMember == null) {
@@ -52,9 +56,9 @@ public class LoginController {
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
-        log.info("request = {}", request);
+        log.info("Logout request = {}", request);
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         log.info("session = {}", session);
         if (session != null) {
             session.invalidate();
