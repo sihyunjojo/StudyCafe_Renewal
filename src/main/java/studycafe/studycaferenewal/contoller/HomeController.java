@@ -1,5 +1,6 @@
 package studycafe.studycaferenewal.contoller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,22 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.service.JpaMemberService;
 import studycafe.studycaferenewal.service.MemberService;
-
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
     private final MemberService memberService;
-
-    @Autowired
-    public HomeController(MemberService memberService) {
-        this.memberService = memberService;
-    }
 
     //    @GetMapping("/")
 //    public String homeForm() {

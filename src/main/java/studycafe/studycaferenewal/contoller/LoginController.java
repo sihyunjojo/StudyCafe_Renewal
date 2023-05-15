@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.service.JpaLoginService;
 import studycafe.studycaferenewal.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +33,13 @@ public class LoginController {
                             @RequestParam(defaultValue = "/") String redirectURL,
                             HttpServletRequest request) {
         log.info("login start");
-        log.info("LoginForm  = {}.{}", form.getUserId(), form.getUserPassword());
+        log.info("url = {}" , redirectURL);
+
+        String nowURL = request.getRequestURI();
 
         if (bindingResult.hasErrors()) {
             log.info("Error = {}", bindingResult);
-            return "home";
+            return "redirect:" + nowURL;
         }
 
         Member loginMember = loginService.login(form.getUserId(), form.getUserPassword());
@@ -45,7 +48,7 @@ public class LoginController {
         if (loginMember == null) {
             // 클라이언트에 에러 보여줄 때 사용하자!!!!
 //            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다");
-            return "home";
+            return "redirect:" + nowURL;
         }
 
         HttpSession session = request.getSession();

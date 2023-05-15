@@ -8,7 +8,7 @@ import studycafe.studycaferenewal.argumentresolver.LoginMemberArgumentResolver;
 import java.util.List;
 
 @Configuration
-public class Webconfig implements WebMvcConfigurer {
+public class OptionConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginMemberArgumentResolver());
