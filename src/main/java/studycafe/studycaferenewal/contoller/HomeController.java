@@ -18,11 +18,6 @@ public class HomeController {
 
     private final MemberService memberService;
 
-    //    @GetMapping("/")
-//    public String homeForm() {
-//        return "home";
-//    }
-
     // 됨
 //    @GetMapping("/")
     public String homeForm(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model) {
@@ -44,17 +39,6 @@ public class HomeController {
         model.addAttribute("loginMember", loginMember);
         return "home";
     }
-
-//    @PostMapping("/")
-//    public String home(@Login Member loginmember, Model model) throws Exception {
-//        if (loginmember == null) {
-//            return "home";
-//        }
-//
-//        model.addAttribute("loginMember", loginmember);
-//        return "home";
-
-//        memberService.checkMember(member, session);
 
     //view.render(model,request,response);
 //        response.setContentType("text/html; charset=UTF-8");

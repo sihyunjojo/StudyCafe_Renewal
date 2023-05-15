@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.repository.MemberRepository;
 import studycafe.studycaferenewal.service.MemberService;
 
 import java.io.IOException;
@@ -65,9 +67,15 @@ public class MemberController {
         return "/member/FindPasswordResult";
     }
 
+    @GetMapping("/edit")
+    public String EditForm(Member member, Model model) {
+        model.addAttribute("loginMember", member);
+        return "/member/EditMemberForm";
+    }
+
     @GetMapping("/info")
-    public String InfoForm(Model model) {
-        model.addAttribute("member", new Member());
+    public String InfoForm(@Login Member member, Model model) {
+        model.addAttribute("loginMember", member);
         return "/member/MemberInfo";
     }
 
