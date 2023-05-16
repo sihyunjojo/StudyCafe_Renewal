@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.repository.JpaMemberRepository;
 
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Slf4j
@@ -30,21 +29,34 @@ public class SpringDataJpaMemberService implements MemberService{
         return member.getUserId();
     }
 
-    //session에 id와 name 값을 설정해주는 메서드
-    public void checkMember(Member member, HttpSession session){
-        validateDuplicatedMember(member);
-        session.setAttribute("id",member.getId());
-        session.setAttribute("name",member.getName());
-    }
-
     //public Member viewMember(Member member);
 
-    public Optional<Member> checkById(Member member){
+    @Override
+    public Optional<Member> findById(Member member) {
+        return memberRepository.findById(member.getId());
+    }
+
+    public Optional<Member> findByUserId(Member member){
         return memberRepository.findFirstByUserId(member.getUserId());
     }
 
-    public Optional<Member> FindMemberByNameAndPhone(Member member){
+    public Optional<Member> findMemberByNameAndPhone(Member member){
         return memberRepository.findFirstByNameAndPhone(member.getName(), member.getPhone());
+    }
+
+    @Override
+    public void update(Member updateMember) {
+        Member findMember = memberRepository.findFirstByUserId(updateMember.getUserId()).orElseThrow(); //값이 없으며 에러를 내라. 요고군
+
+        findMember.setUserPassword(updateMember.getUserPassword());
+        findMember.setName(updateMember.getName());
+        findMember.setGender(updateMember.getGender());
+        findMember.setPhone(updateMember.getPhone());
+        findMember.setBirth(updateMember.getBirth());
+        findMember.setAddress(updateMember.getAddress());
+        findMember.setEmail(updateMember.getEmail());
+
+        log.info("findMember ={}", findMember);
     }
 
     //public int checkMemberPassword(Member member);

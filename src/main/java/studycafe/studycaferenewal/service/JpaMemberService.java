@@ -12,7 +12,7 @@ import java.util.Optional;
 @Slf4j
 @Transactional
 @RequiredArgsConstructor
-public class JpaMemberService {
+public class JpaMemberService implements MemberService{
     private final MemberRepository memberRepository;
 
     /**
@@ -28,22 +28,27 @@ public class JpaMemberService {
         return member.getUserId();
     }
 
-    //session에 id와 name 값을 설정해주는 메서드
-    public void checkMember(Member member, HttpSession session){
-        validateDuplicatedMember(member);
-        session.setAttribute("id",member.getId());
-        session.setAttribute("name",member.getName());
-    }
-
     //public Member viewMember(Member member);
 
-    public Optional<Member> checkById(Member member){
+
+    @Override
+    public Optional<Member> findById(Member member) {
+        return memberRepository.findById(member.getId());
+    }
+
+    public Optional<Member> findByUserId(Member member){
         return memberRepository.findByUserId(member.getUserId());
     }
 
-    public Optional<Member> FindMemberByNameAndPhone(Member member){
+    public Optional<Member> findMemberByNameAndPhone(Member member){
         return memberRepository.findByNameAndPhone(member.getName(), member.getPhone());
     }
+
+    @Override
+    public void update(Member UpdateMember) {
+
+    }
+
 
     //public int checkMemberPassword(Member member);
     //public Member getFindPasswordMember(Member member);

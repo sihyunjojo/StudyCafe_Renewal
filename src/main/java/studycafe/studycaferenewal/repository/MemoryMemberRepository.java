@@ -20,6 +20,11 @@ public class MemoryMemberRepository implements MemberRepository{
     }
 
     @Override
+    public Optional<Member> findById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<Member> findByNameAndPhone(String name, String phone) {
         return Optional.empty();
     }

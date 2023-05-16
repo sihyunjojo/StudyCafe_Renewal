@@ -8,8 +8,10 @@ import java.util.Optional;
 public interface MemberService {
 
     public String join(Member member);
-    public Optional<Member> checkById(Member member);
-    public Optional<Member> FindMemberByNameAndPhone(Member member);
+    public Optional<Member> findById(Member member);
+    public Optional<Member> findByUserId(Member member);
+    public Optional<Member> findMemberByNameAndPhone(Member member);
+    public void update(Member updateMember);
 
 }
 

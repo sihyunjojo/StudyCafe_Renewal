@@ -28,6 +28,12 @@ public class JpaQueryMemberRepository implements MemberRepository{
         return member;
     }
 
+    @Override
+    public Optional<Member> findById(Long id) {
+        Member member = em.find(Member.class, id);
+        return Optional.ofNullable(member);
+    }
+
     //이름과 휴대폰번호로 멤버를 찾아주는 (이미 있는 회원입니다.) 음.. 필요없는거 같은데 우선 나둬바바
     @Override
     public Optional<Member> findByNameAndPhone(String name, String phone) {

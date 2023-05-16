@@ -9,11 +9,13 @@ public interface MemberRepository {
     //필요없는거 같다
     //public Long getLoginMember(Member member);
     public Member save(Member member);
+    public Optional<Member> findById(Long id);
+    public Optional<Member> findByUserId(String id);
     public Optional<Member> findByNameAndPhone(String name, String phone);
     //필요없는 기능같다
     //public Optional<Member> getFindIdMember(Long id);
     //public Long getMemberPassword(Member member); 밑에껄로 대체
-    public Optional<Member> findByUserId(String id);
+
     //필요가 없는 기능같다.
     //public Member getFindPasswordMember(Member member);
     public Optional<Member> findByIdAndPassword(String id, String password);
