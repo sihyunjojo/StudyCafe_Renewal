@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.repository;
+package studycafe.studycaferenewal.repository.member;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import static studycafe.studycaferenewal.domain.QMember.member;
 
 @Slf4j
 @Repository
-public class JpaQueryMemberRepository implements MemberRepository{
+public class JpaQueryMemberRepository implements MemberRepository {
     private final EntityManager em;
     private final JPAQueryFactory query;
 

@@ -2,23 +2,16 @@ package studycafe.studycaferenewal.contoller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
-import studycafe.studycaferenewal.service.JpaMemberService;
-import studycafe.studycaferenewal.service.MemberService;
 
 @Slf4j
 @Controller
-@RequiredArgsConstructor
 public class HomeController {
 
-    private final MemberService memberService;
-
-    // 됨
 //    @GetMapping("/")
     public String homeForm(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model) {
         log.info("loginMember = {}", loginMember);

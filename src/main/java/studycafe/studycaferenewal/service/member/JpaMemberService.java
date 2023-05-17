@@ -1,18 +1,18 @@
-package studycafe.studycaferenewal.service;
+package studycafe.studycaferenewal.service.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Member;
-import studycafe.studycaferenewal.repository.MemberRepository;
+import studycafe.studycaferenewal.repository.member.MemberRepository;
+import studycafe.studycaferenewal.repository.member.dto.UpdateMemberDto;
 
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Slf4j
 @Transactional
 @RequiredArgsConstructor
-public class JpaMemberService implements MemberService{
+public class JpaMemberService implements MemberService {
     private final MemberRepository memberRepository;
 
     /**
@@ -45,8 +45,9 @@ public class JpaMemberService implements MemberService{
     }
 
     @Override
-    public void update(Member UpdateMember) {
+    public Optional<Member> update(Member loginMember, UpdateMemberDto UpdateMember) {
 
+        return null;
     }
 
 

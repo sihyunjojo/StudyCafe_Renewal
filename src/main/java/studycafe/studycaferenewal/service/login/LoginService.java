@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.service;
+package studycafe.studycaferenewal.service.login;
 
 import studycafe.studycaferenewal.domain.Member;
 

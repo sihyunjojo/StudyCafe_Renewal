@@ -42,10 +42,7 @@
                     <a href="/StudyCafeManagement/product/ProductList" class="nav-link">상품</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/StudyCafeManagement/board/BoardList" class="nav-link">커뮤니티</a>
-                </li>
-                <li class="nav-item">
-                    <a href="/StudyCafeManagement/notice/NoticeList?user_id=${sessionScope.user_id}" class="nav-link">공지사항</a>
+                    <a th:href="@{/board}" class="nav-link">게시판</a>
                 </li>
                 <li class="nav-item">
                     <a href="/StudyCafeManagement/message/Chat?user_id=${sessionScope.user_id}" class="nav-link">메시지</a>

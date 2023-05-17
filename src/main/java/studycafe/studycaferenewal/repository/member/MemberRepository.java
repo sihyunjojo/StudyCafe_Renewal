@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.repository;
+package studycafe.studycaferenewal.repository.member;
 
 import studycafe.studycaferenewal.domain.Member;
 

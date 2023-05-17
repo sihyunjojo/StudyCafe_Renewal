@@ -9,8 +9,10 @@
 <body>
 <div class="container">
     <div th:insert="~{template/header :: header_copy}"></div>
+
     <section>
         <div class="section-container">
+
             <div class="temp-box">
                 <h3>로그인</h3>
                 <hr>
@@ -46,18 +48,18 @@
                             <button th:onclick="|location.href='@{/logout}'|"
                                     type="submit">로그아웃
                             </button>
-
                         </form>
                     </th:block>
-
+                    
                 </section>
             </div>
+            <br>
 
-            <div class="temp-box">
-                <br>
-                <h3>공지사항</h3>
+        <div class="temp-box">
+                <h3>게시판</h3>
                 <hr>
-                <table class="type01">
+                <table>
+                    <thead>
                     <tr>
                         <th scope="row">글번호</th>
                         <th scope="row">제목</th>
@@ -65,99 +67,43 @@
                         <th scope="row">작성일</th>
                         <th scope="row">조회수</th>
                     </tr>
-                    <c:forEach var="notice" items="${noticeList }">
-                        <tr>
-                            <td class="even">${notice.notice_number }</td>
-                            <td class="even"><a
-                                    href="/StudyCafeManagement/notice/NoticeDetail?notice_number=${notice.notice_number }&user_id=${sessionScope.user_id}">${notice.notice_title}</a>
-                            </td>
-                            <td class="even">${notice.user_id}</td>
-                            <td class="even">
-                                <fmt:parseDate value="${notice.notice_time }" var="today" pattern="yyyy-MM-dd">
-                                </fmt:parseDate>
-                                <fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>
-                            </td>
-                            <td class="even">${notice.notice_readcount}</td>
-                        </tr>
-                    </c:forEach>
-                </table>
-
-                <div>
-                    <ul>
-                        <c:if test="${noticePageMaker.prev}">
-                            <li><a href="LoginMain${noticePageMaker.makeNoticeQuery(noticePageMaker.startPage - 1)}">&laquo;</a>
-                            </li>
-                        </c:if>
-
-                        <c:forEach begin="${noticePageMaker.startPage}" end="${noticePageMaker.endPage}" var="idx">
-                            <li>
-                                <a href="LoginMain${noticePageMaker.makeNoticeQuery(idx)}">${idx}</a>
-                            </li>
-                        </c:forEach>
-
-                        <c:if test="${noticePageMaker.next && noticePageMaker.endPage > 0}">
-                            <li><a href="LoginMain${noticePageMaker.makeNoticeQuery(noticePageMaker.endPage + 1)}">&raquo;</a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="temp-box">
-                <h3>커뮤니티</h3>
-                <hr>
-                <table class="type01">
-                    <tr>
-                        <th scope="row">글번호</th>
-                        <th scope="row">제목</th>
-                        <th scope="row">글쓴이</th>
-                        <th scope="row">작성일</th>
-                        <th scope="row">조회수</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="board : ${boards}">
+                        <td><a href="board.html" th:href="|@{/boards/{board.id}|}" th:text="${board.id}"> 0 </a>
+                        </td>
+                        <td><a href="board.html" th:href="|@{/boards/{board.id}|}" th:text="${board.title}">제목</a></td>
+                        <td th:text="${board.userName}"> 작성자 </td>
+                        <td th:text="${board.createdDate}"> 작성일 </td>
+                        <th th:text="${board.readCount}"> 1 </th>
                     </tr>
-                    <c:forEach var="board" items="${boardList }">
-                        <tr>
-                            <td class="even">${board.board_number }</td>
-                            <td class="even"><a href="/StudyCafeManagement/board/BoardDetail?board_number=${board.board_number }&user_id=${sessionScope.user_id}
-					&writer=${board.user_id }">${board.board_title}</a></td>
-                            <td class="even">${board.user_id}</td>
-                            <td class="even">
-                                <fmt:parseDate value="${board.board_time }" var="today" pattern="yyyy-MM-dd">
-                                </fmt:parseDate>
-                                <fmt:formatDate value="${today }" pattern="yyyy-MM-dd"/>
-                            </td>
-                            <td class="even">${board.board_readcount}</td>
-                        </tr>
-                    </c:forEach>
+                    </tbody>
                 </table>
+<!--                아랫단 번호 -->
+<!--                <div>-->
+<!--                    <ul>-->
+<!--                        <c:if test="${boardPageMaker.prev}">-->
+<!--                            <li><a href="LoginMain${boardPageMaker.makeboardQuery(boardPageMaker.startPage - 1)}">&laquo;</a>-->
+<!--                            </li>-->
+<!--                        </c:if>-->
 
-                <div>
-                    <ul>
-                        <c:if test="${boardPageMaker.prev}">
-                            <li><a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.startPage - 1)}">&laquo;</a>
-                            </li>
-                        </c:if>
+<!--                        <c:forEach begin="${boardPageMaker.startPage}" end="${boardPageMaker.endPage}" var="idx">-->
+<!--                            <li>-->
+<!--                                <a href="LoginMain${boardPageMaker.makeboardQuery(idx)}">${idx}</a>-->
+<!--                            </li>-->
+<!--                        </c:forEach>-->
 
-                        <c:forEach begin="${boardPageMaker.startPage}" end="${boardPageMaker.endPage}" var="idx">
-                            <li>
-                                <a href="LoginMain${boardPageMaker.makeBoardQuery(idx)}">${idx}</a>
-                            </li>
-                        </c:forEach>
-
-                        <c:if test="${boardPageMaker.next && boardPageMaker.endPage > 0}">
-                            <li>
-                                <a href="LoginMain${boardPageMaker.makeBoardQuery(boardPageMaker.endPage + 1)}">&raquo;</a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </div>
-
-
+<!--                        <c:if test="${boardPageMaker.next && boardPageMaker.endPage > 0}">-->
+<!--                            <li><a href="LoginMain${boardPageMaker.makeboardQuery(boardPageMaker.endPage + 1)}">&raquo;</a>-->
+<!--                            </li>-->
+<!--                        </c:if>-->
+<!--                    </ul>-->
+<!--                </div>-->
             </div>
 
-
+            <br>
             <div class="temp-box">
-                상품 - BEST
+                <h3>상품 - BEST</h3>
                 <hr>
 
                 <table class="type02">
@@ -204,7 +150,6 @@
                                                    onclick="fn_res_form()"
                                                    style="float: center; margin: 50px; font-size: 50px;">
             </div>
-
         </div>
     </section>
 </div> <!-- /container -->

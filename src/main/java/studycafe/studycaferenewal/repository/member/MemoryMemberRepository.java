@@ -1,14 +1,15 @@
-package studycafe.studycaferenewal.repository;
+package studycafe.studycaferenewal.repository.member;
 
 import org.springframework.stereotype.Repository;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.repository.member.MemberRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class MemoryMemberRepository implements MemberRepository{
+public class MemoryMemberRepository implements MemberRepository {
 
     private static final Map<String, Member> store = new HashMap<>();//static
     private static long sequence = 0L; //static

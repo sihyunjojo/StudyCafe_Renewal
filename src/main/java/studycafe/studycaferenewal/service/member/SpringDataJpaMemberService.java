@@ -1,11 +1,12 @@
-package studycafe.studycaferenewal.service;
+package studycafe.studycaferenewal.service.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Member;
-import studycafe.studycaferenewal.repository.JpaMemberRepository;
+import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
+import studycafe.studycaferenewal.repository.member.dto.UpdateMemberDto;
 
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class SpringDataJpaMemberService implements MemberService{
+public class SpringDataJpaMemberService implements MemberService {
     private final JpaMemberRepository memberRepository;
 
     /**
@@ -33,6 +34,7 @@ public class SpringDataJpaMemberService implements MemberService{
 
     @Override
     public Optional<Member> findById(Member member) {
+        log.info("member={}", member);
         return memberRepository.findById(member.getId());
     }
 
@@ -45,8 +47,8 @@ public class SpringDataJpaMemberService implements MemberService{
     }
 
     @Override
-    public void update(Member updateMember) {
-        Member findMember = memberRepository.findFirstByUserId(updateMember.getUserId()).orElseThrow(); //값이 없으며 에러를 내라. 요고군
+    public Optional<Member> update(Member loginMember, UpdateMemberDto updateMember) {
+        Member findMember = memberRepository.findFirstByUserId(loginMember.getUserId()).orElseThrow(); //값이 없으며 에러를 내라. 요고군
 
         findMember.setUserPassword(updateMember.getUserPassword());
         findMember.setName(updateMember.getName());
@@ -57,6 +59,8 @@ public class SpringDataJpaMemberService implements MemberService{
         findMember.setEmail(updateMember.getEmail());
 
         log.info("findMember ={}", findMember);
+
+        return Optional.of(findMember);
     }
 
     //public int checkMemberPassword(Member member);

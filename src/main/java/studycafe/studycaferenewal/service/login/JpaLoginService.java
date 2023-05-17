@@ -1,13 +1,13 @@
-package studycafe.studycaferenewal.service;
+package studycafe.studycaferenewal.service.login;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import studycafe.studycaferenewal.domain.Member;
-import studycafe.studycaferenewal.repository.MemberRepository;
+import studycafe.studycaferenewal.repository.member.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
-public class JpaLoginService implements LoginService{
+public class JpaLoginService implements LoginService {
     private final MemberRepository memberRepository;
 
     public Member login(String loginId, String password) {

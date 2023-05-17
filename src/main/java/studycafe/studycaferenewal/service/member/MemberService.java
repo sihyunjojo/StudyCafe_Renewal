@@ -1,8 +1,8 @@
-package studycafe.studycaferenewal.service;
+package studycafe.studycaferenewal.service.member;
 
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.repository.member.dto.UpdateMemberDto;
 
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public interface MemberService {
@@ -11,7 +11,7 @@ public interface MemberService {
     public Optional<Member> findById(Member member);
     public Optional<Member> findByUserId(Member member);
     public Optional<Member> findMemberByNameAndPhone(Member member);
-    public void update(Member updateMember);
+    public Optional<Member> update(Member loginmember, UpdateMemberDto updateMember);
 
 }
 

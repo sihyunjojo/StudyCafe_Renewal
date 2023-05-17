@@ -1,9 +1,9 @@
-package studycafe.studycaferenewal.contoller;
+package studycafe.studycaferenewal.repository.member.dto;
 
 import lombok.Data;
 
 @Data
-public class MemberUpdateForm {
+public class UpdateMemberDto {
 
     private String userPassword;
     private String checkPassword;
@@ -14,11 +14,11 @@ public class MemberUpdateForm {
     private String email;
     private String birth;
 
-    public MemberUpdateForm() {
+    public UpdateMemberDto() {
 
     }
 
-    public MemberUpdateForm(String userPassword,String checkPassword, String name, String gender, String phone, String address, String email, String birth) {
+    public UpdateMemberDto(String userPassword, String checkPassword, String name, String gender, String phone, String address, String email, String birth) {
         this.userPassword = userPassword;
         this.checkPassword = checkPassword;
         this.name = name;
