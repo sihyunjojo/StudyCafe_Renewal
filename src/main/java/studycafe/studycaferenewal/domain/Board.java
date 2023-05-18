@@ -2,10 +2,8 @@ package studycafe.studycaferenewal.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -14,10 +12,10 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userLoginId;
+    private Long userId;
     private String title;
     private String kind;
-    private String createdDate;
+    private LocalDateTime createdDate;
     private String content;
     private String attachmentFile;
     private String popup;
@@ -28,9 +26,9 @@ public class Board {
 
     }
 
-    public Board(Long id, String userLoginId, String title, String kind, String createdDate, String content, String attachmentFile, String popup, Integer readCount, Integer pageNumber) {
+    public Board(Long id, Long userId, String title, String kind, LocalDateTime createdDate, String content, String attachmentFile, String popup, Integer readCount, Integer pageNumber) {
         this.id = id;
-        this.userLoginId = userLoginId;
+        this.userId = userId;
         this.title = title;
         this.kind = kind;
         this.createdDate = createdDate;
@@ -40,4 +38,10 @@ public class Board {
         this.readCount = readCount;
         this.pageNumber = pageNumber;
     }
+
+    @PrePersist
+    public void prePersist() {
+        this.createdDate = LocalDateTime.now();
+    }
+
 }

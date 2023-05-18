@@ -10,7 +10,7 @@
 <body>
 <header th:insert="~{template/header :: header_copy}"></header>
 <div class="border">
-    <form  th:object="${member}" th:action="@{new}" method="POST">
+    <form th:action="@{new}" th:object="${member}"  method="POST">
         <h1>회원가입</h1>
         <th:block th:if="${error == '이미 사용 중인 아이디입니다.'}">
             <h2 th:text="${error}"></h2>

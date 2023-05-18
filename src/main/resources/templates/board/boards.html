@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>회원가입</title>'
+    <title>메인 게시판</title>'
     <head th:insert="~{template/styleCss :: css_copy}"></head>
     <!--<link rel="stylesheet", href="member/join.css">-->
 </head>
@@ -11,7 +11,7 @@
 <header th:insert="~{template/header :: header_copy}"></header>
 
     <div class="container">
-        <h3> 게시판 </h3>
+        <h3> 메인 게시판 </h3>
         <hr>
 
         <div>
@@ -33,9 +33,9 @@
 
                 <tbody>
                 <tr th:each="board : ${boards}">
-                    <td><a href="board.html" th:href="|@{/boards/{board.id}|}" th:text="${board.id}"> 0 </a>
+                    <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.id}"> 0 </a>
                     </td>
-                    <td><a href="board.html" th:href="|@{/boards/{board.id}|}" th:text="${board.title}">제목</a></td>
+                    <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
                     <td th:text="${board.userName}"> 작성자 </td>
                     <td th:text="${board.createdDate}"> 작성일 </td>
                     <th th:text="${board.readCount}"> 1 </th>

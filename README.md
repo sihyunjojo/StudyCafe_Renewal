@@ -27,6 +27,7 @@ intercept와 exception은 나중에 작업하기로 결정.
 # 수정해야할 것들
 intercepter 넣을때, requestURL이용해서 checkpw고쳐서 addMemberForm과 editMemberForm에서 비밀번호 확인버튼 동적으로 작동시켜야함.
 jpa랑 쿼리 dsl 재대로 
+5/18 : 게시판에 권한 없으면 글 못 쓰게하기
 # 환경 
 spring boot 2.7.8  
 java 11  
