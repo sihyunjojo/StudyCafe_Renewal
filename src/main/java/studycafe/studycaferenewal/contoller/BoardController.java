@@ -23,12 +23,20 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public String board(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
+    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
         //boardSearch 검색할때 쓰일것
         List<Board> boards = boardService.findBoards();
-        List<BoardForm> boardForms = boardService.getBoardForms(boards);
+        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
         model.addAttribute("boards", boardForms);
         return "board/boards";
+    }
+
+    @GetMapping("/{boardId}")
+    public String board(@PathVariable long boardId, Model model) {
+        Board board = boardService.findById(boardId).orElseThrow();
+        BoardForm boardForm = boardService.boardToBoardForm(board);
+        model.addAttribute("board", boardForm);
+        return "board/board";
     }
 
     @GetMapping("/add")
@@ -46,11 +54,19 @@ public class BoardController {
         return "redirect:/board"; // 일단 home으로 보내주자 나중에 board목록으로 보내주고
     }
 
-    @GetMapping("/{boardId}")
-    public String Board(@PathVariable long boardId, Model model) {
+    @GetMapping("/{boardId}/edit")
+    public String EditForm(@PathVariable Long boardId, Model model) {
         Board board = boardService.findById(boardId).orElseThrow();
-        BoardForm boardForm = boardService.getBoardForm(board);
+        BoardForm boardForm = boardService.boardToBoardForm(board);
         model.addAttribute("board", boardForm);
-        return "board/board";
+        return "board/editBoardForm";
+    }
+
+    @PostMapping("/{boardId}/edit")
+    public String Edit(BoardForm boardForm, @PathVariable Long boardId){
+        Board board = boardService.boardFormToBoard(boardForm);
+        boardService.updateBoard(board,boardForm);
+
+        return "redirect:board/board";
     }
 }

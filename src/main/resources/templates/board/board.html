@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <title>게시판</title>'
-  <head th:insert="~{template/styleCss :: css_copy}"></head>
-  <!--<link rel="stylesheet", href="board/join.css">-->
+    <meta charset="UTF-8">
+    <title>게시판</title>'
+    <head th:insert="~{template/styleCss :: css_copy}"></head>
+    <!--<link rel="stylesheet", href="board/join.css">-->
 </head>
 <body>
 <header th:insert="~{template/header :: header_copy}"></header>
@@ -15,43 +15,44 @@
     <!--            <h2 th:text="${error}"></h2>-->
     <!--        </th:block>-->
     <div class="form-group">
-      <label for="title">제목</label><br>
-      <input type="text"
-             class="form-control" id="title" name="title"
-             th:value="${board.title}" readonly>
+        <label for="title">제목</label><br>
+        <input type="text"
+               class="form-control" id="title" name="title"
+               th:value="${board.title}" readonly>
     </div>
     <div class="form-group">
-      <label for="userName">작성자</label><br>
-      <input type="text"
-             class="form-control" id="userName" name="userName"
-             th:value="${board.userName}" readonly>
+        <label for="userName">작성자</label><br>
+        <input type="text"
+               class="form-control" id="userName" name="userName"
+               th:value="${board.userName}" readonly>
     </div>
     <div class="form-group">
-      <label for="createdDate">작성일자</label><br>
-      <input type="text"
-             class="form-control" id="createdDate" name="createdDate"
-             th:value="${board.createdDate}" readonly>
+        <label for="createdDate">작성일자</label><br>
+        <input type="datetime-local"
+               class="form-control" id="createdDate" name="createdDate"
+               th:value="${board.createdDate}" readonly>
     </div>
     <div class="form-group">
-      <label for="readCount">조회수</label><br>
-      <input type="text"
-             class="form-control" id="readCount" name="readCount"
-             th:value="${board.readCount}" readonly>
+        <label for="readCount">조회수</label><br>
+        <input type="text"
+               class="form-control" id="readCount" name="readCount"
+               th:value="${board.readCount}" readonly>
     </div>
     <div class="form-group">
-      <label for="content">내용</label><br>
-      <input type="text"
-             class="form-control" id="content" name="content"
-             th:value="${board.content}" readonly>
+        <label for="content">내용</label><br>
+        <input type="text"
+               class="form-control" id="content" name="content"
+               th:value="${board.content}" readonly>
     </div>
     <div class="form-group">
-      <label for="attachmentFile">첨부파일</label><br>
-      <input type="text"
-             class="form-control" id="attachmentFile" name="attachmentFile"
-             th:value="${board.attachmentFile}" readonly>
+        <label for="attachmentFile">첨부파일</label><br>
+        <input type="text"
+               class="form-control" id="attachmentFile" name="attachmentFile"
+               th:value="${board.attachmentFile}" readonly>
     </div>
-  <button th:onclick="|location.href='@{/board/edit}'|"> 수정 </button>
-  <button th:onclick="|location.href='@{/board}'|">메인 게시판</button>
+    <div th:text="${board.id}"></divth:text></div>
+    <button th:onclick="|location.href='/board/${boardId}/edit'|">수정하기</button>
+    <button th:onclick="|location.href='@{/board}'|">메인 게시판</button>
 </div>
 </body>
 </html>

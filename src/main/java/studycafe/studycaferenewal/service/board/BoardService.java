@@ -8,6 +8,7 @@ import studycafe.studycaferenewal.domain.Board;
 import studycafe.studycaferenewal.repository.board.JpaBoardRepository;
 import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +35,16 @@ public class BoardService {
         return boardRepository.findById(boardId);
     }
 
-    public List<BoardForm> getBoardForms(List<Board> boards) {
+    public void updateBoard(Board board, BoardForm boardForm) {
+        board.setTitle(boardForm.getTitle());
+        board.setContent(boardForm.getContent());
+        board.setAttachmentFile(boardForm.getAttachmentFile());
+        board.setCreatedDate(board.getCreatedDate()); //이거 자동으로 되게 못하
+
+    }
+
+
+    public List<BoardForm> boardsToBoardForms(List<Board> boards) {
         List<BoardForm> boardForms = new ArrayList<>();
 
         log.info("board={}", boards);
@@ -56,7 +66,7 @@ public class BoardService {
         return boardForms;
     }
 
-    public BoardForm getBoardForm(Board board) {
+    public BoardForm boardToBoardForm(Board board) {
         BoardForm boardForm = new BoardForm();
         boardForm.setId(board.getId());
         boardForm.setUserName(memberRepository.findById(board.getUserId()).orElseThrow().getName());
@@ -71,6 +81,23 @@ public class BoardService {
         boardForm.setPageNumber(board.getPageNumber());
 
         return boardForm;
+    }
+
+    public Board boardFormToBoard(BoardForm boardForm) {
+        Board board = new Board();
+        board.setId(boardForm.getId());
+        board.setUserId(boardRepository.findById(boardForm.getId()).orElseThrow().getUserId()); //boardform의 id와 board의 id가 같으니까 같은 board를 가져와서, board의 getuserid
+
+        board.setTitle(boardForm.getTitle());
+        board.setKind(boardForm.getKind());
+        board.setContent(boardForm.getContent());
+        board.setCreatedDate(boardForm.getCreatedDate());
+        board.setAttachmentFile(boardForm.getAttachmentFile());
+        board.setPopup(boardForm.getPopup());
+        board.setReadCount(boardForm.getReadCount());
+        board.setPageNumber(boardForm.getPageNumber());
+
+        return board;
     }
 
 }

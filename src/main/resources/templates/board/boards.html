@@ -37,7 +37,7 @@
                     </td>
                     <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
                     <td th:text="${board.userName}"> 작성자 </td>
-                    <td th:text="${board.createdDate}"> 작성일 </td>
+                    <td type="datetime-local" th:text="${board.createdDate}"> 작성일 </td>
                     <th th:text="${board.readCount}"> 1 </th>
                 </tr>
                 </tbody>

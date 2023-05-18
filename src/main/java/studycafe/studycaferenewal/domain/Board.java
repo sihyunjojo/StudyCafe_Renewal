@@ -41,7 +41,9 @@ public class Board {
 
     @PrePersist
     public void prePersist() {
-        this.createdDate = LocalDateTime.now();
+        if (this.createdDate == null) {
+            this.createdDate = LocalDateTime.now();
+        }
     }
 
 }
