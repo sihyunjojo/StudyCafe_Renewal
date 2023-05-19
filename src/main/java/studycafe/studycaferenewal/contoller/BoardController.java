@@ -34,13 +34,18 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public String board(@PathVariable long boardId, Model model) {
         Board board = boardService.findById(boardId).orElseThrow();
+        boardService.increaseReadCount(board);
         BoardForm boardForm = boardService.boardToBoardForm(board);
         model.addAttribute("board", boardForm);
+
         return "board/board";
     }
 
     @GetMapping("/add")
     public String addForm(@Login Member member, Model model) {
+        if (member == null) {
+            return "redirect:/login";
+        }
         model.addAttribute("board", new Board());
         model.addAttribute("loginMember", member);
         log.info("loginmember={}", member);
@@ -55,7 +60,7 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}/edit")
-    public String EditForm(@PathVariable Long boardId, Model model) {
+    public String editForm(@PathVariable Long boardId, Model model) {
         Board board = boardService.findById(boardId).orElseThrow();
         BoardForm boardForm = boardService.boardToBoardForm(board);
         model.addAttribute("board", boardForm);
@@ -63,10 +68,16 @@ public class BoardController {
     }
 
     @PostMapping("/{boardId}/edit")
-    public String Edit(BoardForm boardForm, @PathVariable Long boardId){
-        Board board = boardService.boardFormToBoard(boardForm);
-        boardService.updateBoard(board,boardForm);
+    public String edit(BoardForm boardForm, @PathVariable Long boardId) {
+//        Board board = boardService.boardFormToBoard(boardForm);
+        boardService.updateBoard(boardId, boardForm);
 
-        return "redirect:board/board";
+        return "redirect:/board";
+    }
+
+    @GetMapping("/{boardId}/delete")
+    public String delete(@PathVariable long boardId) {
+        boardService.deleteBoard(boardId);
+        return "redirect:/board"; // 삭제 후 목록 페이지로 리다이렉트
     }
 }

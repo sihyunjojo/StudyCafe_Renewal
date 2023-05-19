@@ -37,7 +37,9 @@
                     </td>
                     <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
                     <td th:text="${board.userName}"> 작성자 </td>
-                    <td type="datetime-local" th:text="${board.createdDate}"> 작성일 </td>
+                    <td>
+                        <input type="datetime-local" class="form-control" th:value="${board.createdDate}" readonly>
+                    </td>
                     <th th:text="${board.readCount}"> 1 </th>
                 </tr>
                 </tbody>

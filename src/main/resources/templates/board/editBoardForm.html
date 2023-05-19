@@ -10,47 +10,36 @@
 <body>
 <header th:insert="~{template/header :: header_copy}"></header>
 <div class="border">
-    <form th:action method="POST">
+    <form th:action th:object="${board}" method="POST">
         <h1>게시판 수정 </h1>
 
         <div class="form-group">
             <label for="title">제목</label><br>
-            <input type="text"
-                   class="form-control" id="title" name="title"
-                   th:value="${board.title}" required>
+            <input type="text" class="form-control" id="title" th:field="*{title}" required/>
         </div>
         <div class="form-group">
             <label for="userName">작성자</label><br>
-            <input type="text"
-                   class="form-control" id="userName" name="userName"
-                   th:value="${board.userName}" readonly>
+            <input type="text" class="form-control" id="userName" th:field="*{userName}" readonly/>
         </div>
         <div class="form-group">
-            <label for="createdDate">작성 일자</label><br>
-            <input type="datetime-local"
-                   class="form-control" id="createdDate" name="createdDate"
-                   th:value="${board.createdDate}" readonly>
+            <label for="createdDate">작성일자</label><br>
+            <input type="text" class="form-control" id="createdDate" th:field="*{createdDate}" readonly/>
         </div>
         <div class="form-group">
             <label for="readCount">조회수</label><br>
-            <input type="text"
-                   class="form-control" id="readCount" name="readCount"
-                   th:value="${board.readCount}" readonly>
+            <input type="text" class="form-control" id="readCount" th:field="*{readCount}" readonly/>
         </div>
         <div class="form-group">
             <label for="content">내용</label><br>
-            <input type="text"
-                   class="form-control" id="content" name="content"
-                   th:value="${board.content}" required>
+            <input type="text" class="form-control" id="content" th:field="*{content}" required/>
         </div>
         <div class="form-group">
             <label for="attachmentFile">첨부파일</label><br>
-            <input type="text"
-                   class="form-control" id="attachmentFile" name="attachmentFile"
-                   th:value="${board.attachmentFile}">
+            <input type="text" class="form-control" id="attachmentFile" th:field="*{attachmentFile}"/>
+
         </div>
         <button type="submit">완료</button>
-        <button th:onclick="|location.href='@{/board}'|" type="button">메인 게시판</button>
+        <button th:onclick="|location.href='@{/}'|" type="button">메인 게시판</button>
     </form>
 </div>
 </body>

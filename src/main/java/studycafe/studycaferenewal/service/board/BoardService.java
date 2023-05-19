@@ -28,6 +28,7 @@ public class BoardService {
     }
 
     public void addBoard(Board board) {
+        board.setReadCount(0);
         boardRepository.save(board);
     }
 
@@ -35,14 +36,22 @@ public class BoardService {
         return boardRepository.findById(boardId);
     }
 
-    public void updateBoard(Board board, BoardForm boardForm) {
+    public void updateBoard(Long boardId, BoardForm boardForm) {
+        Board board = boardRepository.findById(boardId).orElseThrow();
+
         board.setTitle(boardForm.getTitle());
         board.setContent(boardForm.getContent());
         board.setAttachmentFile(boardForm.getAttachmentFile());
-        board.setCreatedDate(board.getCreatedDate()); //이거 자동으로 되게 못하
-
+        board.setCreatedDate(LocalDateTime.now());
     }
 
+    public void deleteBoard(long boardId) {
+        boardRepository.deleteById(boardId);
+    }
+
+    public void increaseReadCount(Board board) {
+        board.setReadCount(board.getReadCount()+1);
+    }
 
     public List<BoardForm> boardsToBoardForms(List<Board> boards) {
         List<BoardForm> boardForms = new ArrayList<>();
@@ -84,6 +93,7 @@ public class BoardService {
     }
 
     public Board boardFormToBoard(BoardForm boardForm) {
+        log.info("Boardform={}", boardForm);
         Board board = new Board();
         board.setId(boardForm.getId());
         board.setUserId(boardRepository.findById(boardForm.getId()).orElseThrow().getUserId()); //boardform의 id와 board의 id가 같으니까 같은 board를 가져와서, board의 getuserid
@@ -99,5 +109,4 @@ public class BoardService {
 
         return board;
     }
-
 }
