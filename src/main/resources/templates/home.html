@@ -72,7 +72,8 @@
                         <td class="even"><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.id}">
                             0 </a>
                         </td>
-                        <td class="even"><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
+                        <td class="even"><a href="board.html" th:href="@{|/board/${board.id}|}"
+                                            th:text="${board.title}">제목</a></td>
                         <td class="even" th:text="${board.userName}"> 작성자</td>
                         <td class="even" th:text="${board.createdDate}"> 작성일</td>
                         <th class="even" th:text="${board.readCount}"> 1</th>
@@ -107,18 +108,19 @@
                 <hr>
 
                 <table class="type02">
-                    <tr
-                            style="border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; border-color: black;">
-                        <div>
-                            <td><img src="" class="logo_image" width="150" height="200">
-                            </td>
-                            <td><img src="" class="logo_image" width="150" height="200">
-                            </td>
-                            <td><img src="" class="logo_image" width="150" height="200">
-                            </td>
-                            <td><img src="" class="logo_image" width="150" height="200">
-                            </td>
-                        </div>
+                    <tr style="border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; border-color: black;">
+                        <td>
+                            <div class="image-wrapper"><img src="" class="logo_image" width="150" height="200"></div>
+                        </td>
+                        <td>
+                            <div class="image-wrapper"><img src="" class="logo_image" width="150" height="200"></div>
+                        </td>
+                        <td>
+                            <div class="image-wrapper"><img src="" class="logo_image" width="150" height="200"></div>
+                        </td>
+                        <td>
+                            <div class="image-wrapper"><img src="" class="logo_image" width="150" height="200"></div>
+                        </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold;">BEST1</td>

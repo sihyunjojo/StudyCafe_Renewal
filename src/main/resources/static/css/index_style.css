@@ -1,3 +1,5 @@
+
+
 .temp-box {
     width: 100%;
     height: 100%;
@@ -35,7 +37,6 @@
 }
 
 table.type02 {
-    text-align: center;
 }
 
 table.type02 tr {
@@ -49,17 +50,22 @@ table.type02 td {
 }
 
 table.type01 {
-    text-align: left;
-    line-height: 1.5;
+
 }
 
 table.type01 th {
+    margin: auto;
     vertical-align: top;
+    text-align: inherit;
+    text-align: -webkit-match-parent
 }
 
 table.type01 td {
-    /*font-weight: normal;*/
+    margin: auto;
     vertical-align: top;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0
 }
 
 table.type01 .even {
@@ -67,17 +73,20 @@ table.type01 .even {
 }
 
 ul {
-    list-style:none;
-    float:left;
-    display:inline;
+    list-style: none;
+    float: left;
+    display: inline;
 }
+
 ul li {
-    float:left;
+    float: left;
 }
+
 ul li a {
-    color:#000;
+    color: #000;
 }
+
 ul li a:hover, ul li a:focus {
-    color:#fff;
-    background-color:#f40;
+    color: #fff;
+    background-color: #f40;
 }

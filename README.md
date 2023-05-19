@@ -27,6 +27,7 @@ intercept와 exception은 나중에 작업하기로 결정.
 # 수정해야할 것들
 intercepter 넣을때, requestURL이용해서 checkpw고쳐서 addMemberForm과 editMemberForm에서 비밀번호 확인버튼 동적으로 작동시켜야함.
 jpa랑 쿼리 dsl 재대로
+공지사항은 게시판 맨위로 
 
 5/18 : 게시판에 권한 없으면 글 못 쓰게하기
 5/19 : 게시판 수정,삭제 권한 부여

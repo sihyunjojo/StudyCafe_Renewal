@@ -1,6 +1,17 @@
-img {
-    vertical-align: middle;
+div.image-wrapper {
+    text-align: center;
+    background: white;
 }
 a {
     text-decoration: none;
+}
+table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: var(--bs-table-color);
+    vertical-align: top;
+    border-color: var(--bs-table-border-color)
+}
+td{
+    background: #efefef;
 }
