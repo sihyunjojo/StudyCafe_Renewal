@@ -29,6 +29,7 @@ intercepter 넣을때, requestURL이용해서 checkpw고쳐서 addMemberForm과 
 jpa랑 쿼리 dsl 재대로
 
 5/18 : 게시판에 권한 없으면 글 못 쓰게하기
+5/19 : 게시판 수정,삭제 권한 부여
 # 환경 
 spring boot 2.7.8  
 java 11  

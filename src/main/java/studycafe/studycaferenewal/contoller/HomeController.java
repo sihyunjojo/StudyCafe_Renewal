@@ -6,30 +6,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
+import studycafe.studycaferenewal.domain.Board;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.service.board.BoardForm;
+import studycafe.studycaferenewal.service.board.BoardService;
+
+import java.util.List;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
+
+    private final BoardService boardService;
 
 //    @GetMapping("/")
     public String homeForm(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model) {
-        log.info("loginMember = {}", loginMember);
-
         if (loginMember != null) {
             model.addAttribute("loginMember", loginMember);
         }
-
         return "home";
     }
 
     @GetMapping("/")
     public String homeLoginV5ArgumentResolver(@Login Member loginMember, Model model) {
-        if (loginMember == null) {
-            return "home";
+        if (loginMember != null) {
+            model.addAttribute("loginMember", loginMember);
         }
 
-        model.addAttribute("loginMember", loginMember);
+        List<Board> boards = boardService.findBoards();
+        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
+        model.addAttribute("boards", boardForms);
+
         return "home";
     }
 
