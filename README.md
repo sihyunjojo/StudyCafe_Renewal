@@ -22,15 +22,25 @@ intercept와 exception은 나중에 작업하기로 결정.
 기존 코드는 공지사항과 커뮤니티를 따로 구분되어 있지만, 이번에는 하나 table로 관리하기로 결정.
 기존 작성일자인 board.time을 **날짜와 시간을 정확하게 저장하기 위해서** varchar가 아닌 timestamp로 사용하기로 결정.
 
-
+## 5/20
+username을 검색기능에 추가하기 위해서 username을 db에 넣었다. 
+이게 맞는 결과일까??
+그러니 username을 사용하기 위한 boardForm이 현재 애매해졌다
+그치만 추후에 10개나 20개 마다 아래 버튼을 만들어서 페이지를 넘어가게 해줄때 쓸 수 있을거 같다.
 
 # 수정해야할 것들
 intercepter 넣을때, requestURL이용해서 checkpw고쳐서 addMemberForm과 editMemberForm에서 비밀번호 확인버튼 동적으로 작동시켜야함.
 jpa랑 쿼리 dsl 재대로
 공지사항은 게시판 맨위로 
+게시판 추천 수
+게시판 권한에 따라서 특정 종류 게시판 쓰기,수정 접근 안되게하기
+formatter로 datetime바꾸기
+게시판 10개나 20개 마다 아래 버튼을 만들어서 페이지를 넘어가게 해줄때 쓰기
+
 
 5/18 : 게시판에 권한 없으면 글 못 쓰게하기
 5/19 : 게시판 수정,삭제 권한 부여
+
 # 환경 
 spring boot 2.7.8  
 java 11  

@@ -14,9 +14,26 @@
         <h3> 메인 게시판 </h3>
         <hr>
 
+
         <div>
-            <button th:onclick="|location.href='@{board/add}'|" type="button">글 작성</button>
-            <button th:onclick="|location.href='@{/}'|" type="button">메인 화면</button>
+            <form th:object="${boardSearch}" method="get" class="form-inline">
+                <button th:onclick="|location.href='@{board/add}'|" type="button" >글 작성</button>
+
+                <div class="row" style="float: right; margin-right: 0px">
+                    <div class="col">
+                        <input type="text" th:field="*{title}" class="form-control" placeholder="제목"/>
+                    </div>
+                    <div class="col">
+                        <input type="text" th:field="*{userName}" class="form-control" placeholder="글작성자"/>
+                    </div>
+                    <div class="col">
+                        <input type="text" th:field="*{type}" class="form-control" placeholder="게시판 종류"/>
+                    </div>
+                    <div class="col">
+                        <button type="submit">검색</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <section>
@@ -38,7 +55,7 @@
                     <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
                     <td th:text="${board.userName}"> 작성자 </td>
                     <td>
-                        <input type="datetime-local" class="form-control" th:value="${board.createdDate}" readonly>
+                        <input type="datetime-local" class="form-control" style="border: none; outline: none;" th:value="${board.createdDate}" readonly>
                     </td>
                     <th th:text="${board.readCount}"> 1 </th>
                 </tr>
@@ -84,6 +101,8 @@
 <!--                    </c:if>-->
 <!--                </ul>-->
 <!--            </div>-->
+
+            <div style="float: right;"> <button th:onclick="|location.href='@{/}'|" type="button" class="btn btn-secondary mb-2">메인 화면</button> </div>
 
         </section>
     </div>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Board;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.repository.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
 

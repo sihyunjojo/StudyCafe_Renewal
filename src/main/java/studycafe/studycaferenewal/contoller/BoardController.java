@@ -25,7 +25,7 @@ public class BoardController {
     @GetMapping
     public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
         //boardSearch 검색할때 쓰일것
-        List<Board> boards = boardService.findBoards();
+        List<Board> boards = boardService.findSearchBoards(boardSearch);
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
         model.addAttribute("boards", boardForms);
         return "board/boards";

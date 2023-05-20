@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Board;
+import studycafe.studycaferenewal.repository.board.JpaBoardQueryRepository;
 import studycafe.studycaferenewal.repository.board.JpaBoardRepository;
+import studycafe.studycaferenewal.repository.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
 
 import java.time.LocalDateTime;
@@ -21,14 +23,21 @@ public class BoardService {
 
     private final JpaBoardRepository boardRepository;
     private final JpaMemberRepository memberRepository;
+    private final JpaBoardQueryRepository boardQueryRepository;
 
     public List<Board> findBoards() {
         List<Board> boards = boardRepository.findAll();
         return boards;
     }
 
+    public List<Board> findSearchBoards(BoardSearchCond cond) {
+        List<Board> boards = boardQueryRepository.findAll(cond);
+        return boards;
+    }
+
     public void addBoard(Board board) {
         board.setReadCount(0);
+        board.setUserName(memberRepository.findById(board.getUserId()).orElseThrow().getName());
         boardRepository.save(board);
     }
 
@@ -50,7 +59,7 @@ public class BoardService {
     }
 
     public void increaseReadCount(Board board) {
-        board.setReadCount(board.getReadCount()+1);
+        board.setReadCount(board.getReadCount() + 1);
     }
 
     public List<BoardForm> boardsToBoardForms(List<Board> boards) {

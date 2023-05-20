@@ -24,17 +24,17 @@
                                        required/>
                                 <br>
                                 <button th:onclick="|location.href='@{/member/idquiry}'|"
-                                        type="button">아이디 찾기
+                                        type="button" class="btn-light">아이디 찾기
                                 </button>
                                 <span class="bar" aria-hidden="true">|</span>
                                 <button th:onclick="|location.href='@{/member/pwquiry}'|"
-                                        type="button">비밀번호 찾기
+                                        type="button" class="btn-light">비밀번호 찾기
                                 </button>
                                 <br>
                                 <button type="submit"> 로그인</button>
                                 <span class="bar" aria-hidden="true">|</span>
                                 <button th:onclick="|location.href='@{/member/new}'|"
-                                        type="button">회원가입
+                                        type="button" class="btn-light mb-2">회원가입
                                 </button>
 
                             </fieldset>
@@ -44,7 +44,7 @@
                     <th:block th:unless="${loginMember == null}">
                         <h4 th:text="|${loginMember.name}님이 로그인 중 입니다.|"/>
                         <form th:action="@{/logout}" method="post">
-                            <button th:onclick="|location.href='@{/logout}'|"
+                            <button th:onclick="|location.href='@{/logout}'|" class="btn-light"
                                     type="submit">로그아웃
                             </button>
                         </form>
@@ -152,6 +152,7 @@
                                                    onclick="fn_res_form()"
                                                    style="float: center; margin: 50px; font-size: 50px;">
             </div>
+
         </div>
     </section>
 </div> <!-- /container -->

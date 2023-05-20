@@ -3,6 +3,7 @@ package studycafe.studycaferenewal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import studycafe.studycaferenewal.repository.board.JpaBoardQueryRepository;
 import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
 import studycafe.studycaferenewal.repository.member.JpaQueryMemberRepository;
 import studycafe.studycaferenewal.repository.member.MemberRepository;
@@ -30,9 +31,14 @@ public class ConstructConfig {
     public LoginService loginService() {
         return new SpringDataJpaLoginService(jpaMemberRepository);
     }
+
     @Bean
     public MemberRepository memberRepository(){
         return new JpaQueryMemberRepository(em);
     }
 
+    @Bean
+    public JpaBoardQueryRepository jpaBoardQueryRepository(){
+        return new JpaBoardQueryRepository(em);
+    }
 }
