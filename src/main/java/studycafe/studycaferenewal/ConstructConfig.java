@@ -7,6 +7,7 @@ import studycafe.studycaferenewal.repository.board.JpaBoardQueryRepository;
 import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
 import studycafe.studycaferenewal.repository.member.JpaQueryMemberRepository;
 import studycafe.studycaferenewal.repository.member.MemberRepository;
+import studycafe.studycaferenewal.repository.product.JpaProductQueryRepository;
 import studycafe.studycaferenewal.service.login.LoginService;
 import studycafe.studycaferenewal.service.login.SpringDataJpaLoginService;
 import studycafe.studycaferenewal.service.member.MemberService;
@@ -40,5 +41,10 @@ public class ConstructConfig {
     @Bean
     public JpaBoardQueryRepository jpaBoardQueryRepository(){
         return new JpaBoardQueryRepository(em);
+    }
+
+    @Bean
+    public JpaProductQueryRepository jpaProductQueryRepository(){
+        return new JpaProductQueryRepository(em);
     }
 }

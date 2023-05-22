@@ -108,44 +108,35 @@
                 <hr>
 
                 <table class="type02">
-                    <tr style="border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; border-color: black;">
-                        <td>
-                            <div class="image-wrapper"><img src="" class="logo_image" width="150" height="200"></div>
-                        </td>
-                        <td>
-                            <div class="image-wrapper"><img src="" class="logo_image" width="150" height="200"></div>
-                        </td>
-                        <td>
-                            <div class="image-wrapper"><img src="" class="logo_image" width="150" height="200"></div>
-                        </td>
-                        <td>
-                            <div class="image-wrapper"><img src="" class="logo_image" width="150" height="200"></div>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td th:each="prduct, iterationStat : ${products}" th:text="'BEST-' + ${iterationStat.count}">10000</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td th:each="product : ${products}">
+                            <a href="product.html" th:href="@{|/product/${product.id}|}">
+                                <img th:src="@{|/img/${product.image}|}" th:alt="${product.image}" alt="이미지">
+                            </a>
                         </td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">BEST1</td>
-                        <td style="font-weight: bold;">BEST2</td>
-                        <td style="font-weight: bold;">BEST3</td>
-                        <td style="font-weight: bold;">BEST4</td>
+                        <td>상품명</td>
+                        <td th:each="product : ${products}" th:text="${product.name}">상품명</td>
                     </tr>
                     <tr>
-                        <td>이름1</td>
-                        <td>이름2</td>
-                        <td>이름3</td>
-                        <td>이름4</td>
+                        <td>가격</td>
+                        <td th:each="product : ${products}" th:text="${product.price} + '₩'">10000</td>
                     </tr>
                     <tr>
-                        <td>가격1</td>
-                        <td>가격2</td>
-                        <td>가격3</td>
-                        <td>가격4</td>
+                        <td>좋아요 수</td>
+                        <td th:each="product : ${products}" th:text="${product.likeCount}">좋아요 수</td>
                     </tr>
+                    </tbody>
                 </table>
-
-            </div>
-
             <div class="temp-box">
-                좌석
+                <h3>>좌석</h3
                 <hr>
                 <img src="img/seat.JPG" class="Seat_image" width=230px height=230px
                      style="margin: 50px;"> <input type="button" value="예약"

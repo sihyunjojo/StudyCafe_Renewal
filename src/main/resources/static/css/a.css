@@ -15,3 +15,7 @@ table {
 td{
     background: #efefef;
 }
+td a img{
+    height: 50px;
+    max-width: 100%;
+}

@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Board;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.domain.Product;
 import studycafe.studycaferenewal.repository.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
+import studycafe.studycaferenewal.service.product.ProductService;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class HomeController {
 
     private final BoardService boardService;
+    private final ProductService productService;
 
 //    @GetMapping("/")
     public String homeForm(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model) {
@@ -38,6 +41,9 @@ public class HomeController {
         List<Board> boards = boardService.findBoards();
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
         model.addAttribute("boards", boardForms);
+
+        List<Product> products = productService.findProducts();
+        model.addAttribute("products", products);
 
         return "home";
     }
