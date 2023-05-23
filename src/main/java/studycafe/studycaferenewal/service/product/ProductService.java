@@ -29,6 +29,9 @@ public class ProductService {
         return productQueryRepository.findAll(cond);
     }
 
+    public List<Product> findProductsTop5LikeCount(ProductSearchCond cond){
+        return productQueryRepository.findTop5LikeCount(cond);}
+
     public Optional<Product> findById(long productId) {
         return productRepository.findById(productId);
     }

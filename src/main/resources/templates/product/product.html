@@ -58,9 +58,9 @@
     </div>
     <div class="form-group">
         <label for="likeCount">좋아요 수</label><br>
-        <input type="text"
+        <button type="text"
                class="form-control" id="likeCount" name="likeCount"
-               th:value="${product.likeCount}" readonly>
+               th:value="${product.likeCount}" th:onclick="">
     </div>
     <div class="form-group">
         <label for="updateTime">등록/수정 날짜</label><br>

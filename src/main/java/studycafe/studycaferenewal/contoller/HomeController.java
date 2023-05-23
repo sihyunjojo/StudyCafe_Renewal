@@ -10,6 +10,7 @@ import studycafe.studycaferenewal.domain.Board;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.domain.Product;
 import studycafe.studycaferenewal.repository.board.dto.BoardSearchCond;
+import studycafe.studycaferenewal.repository.product.dto.ProductSearchCond;
 import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
 import studycafe.studycaferenewal.service.product.ProductService;
@@ -33,7 +34,7 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String homeLoginV5ArgumentResolver(@Login Member loginMember, Model model) {
+    public String homeLoginV5ArgumentResolver(@Login Member loginMember, @ModelAttribute("productSearch") ProductSearchCond productSearch, Model model) {
         if (loginMember != null) {
             model.addAttribute("loginMember", loginMember);
         }
@@ -42,7 +43,7 @@ public class HomeController {
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
         model.addAttribute("boards", boardForms);
 
-        List<Product> products = productService.findProducts();
+        List<Product> products = productService.findProductsTop5LikeCount(productSearch);
         model.addAttribute("products", products);
 
         return "home";
