@@ -9,6 +9,7 @@ import studycafe.studycaferenewal.repository.product.JpaProductQueryRepository;
 import studycafe.studycaferenewal.repository.product.JpaProductRepository;
 import studycafe.studycaferenewal.repository.product.dto.ProductSearchCond;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,7 @@ public class ProductService {
         product.setQuantity(updateproduct.getQuantity());
         product.setPrice(updateproduct.getPrice());
         product.setImage(updateproduct.getImage());
-
+        product.setUpdateTime(LocalDateTime.now());
 
     }
 

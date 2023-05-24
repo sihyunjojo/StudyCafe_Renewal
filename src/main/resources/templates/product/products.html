@@ -12,6 +12,7 @@
 
 <div class="container">
     <h3> 메인 상품 </h3>
+    <div style="float: right;"> <button th:onclick="|location.href='@{/cart}'|" type="button" class="btn btn-secondary mb-2">장바구니</button> </div>
     <hr>
 
 
@@ -25,11 +26,11 @@
                     <input type="text" th:field="*{category}" class="form-control" placeholder="카테고리"/>
                 </div>
                 <div class="col">
-                    <input type="text" th:field="*{maxPrice}" class="form-control" placeholder="최대 가격"/>
+                    <input type="text" th:field="*{minPrice}" class="form-control" placeholder="최소 가격"/>
                 </div>
                 ~
                 <div class="col">
-                    <input type="text" th:field="*{minPrice}" class="form-control" placeholder="최소 가격"/>
+                    <input type="text" th:field="*{maxPrice}" class="form-control" placeholder="최대 가격"/>
                 </div>
                 <div class="col">
                     <input type="text" th:field="*{like_count}" class="form-control" placeholder="좋아요 수"/>

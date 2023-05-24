@@ -7,27 +7,21 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class CartProduct {
+public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long cartId;
-    private Long productId;
-    private Integer quantity;
-    private Integer totalPrice;
+    private Long userId;;
     private LocalDateTime updateTime;
 
-    public CartProduct() {
+    public Cart() {
     }
 
-    public CartProduct(Long id, Long cartId, Long productId, Integer quantity, Integer totalPrice, LocalDateTime updateTime) {
+    public Cart(Long id, Long userId, LocalDateTime updateTime) {
         this.id = id;
-        this.cartId = cartId;
-        this.productId = productId;
-        this.quantity = quantity;
-        this.totalPrice = totalPrice;
+        this.userId = userId;
         this.updateTime = updateTime;
     }
 
@@ -38,4 +32,3 @@ public class CartProduct {
         }
     }
 }
-

@@ -12,7 +12,7 @@ public class BoardForm {
     private String title;
     private String kind;
     private String content;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdTime;
     private String attachmentFile;
     private String popup;
     private Integer readCount;

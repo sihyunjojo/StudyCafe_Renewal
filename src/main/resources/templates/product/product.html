@@ -11,6 +11,8 @@
 <header th:insert="~{template/header :: header_copy}"></header>
 <div class="border">
     <h1>상품</h1>
+    <button th:onclick="|location.href='/cart/${productId}/add'|">장바구니에 넣기</button>
+    <hr>
     <!--        <th:block th:if="${error == '이미 사용 중인 아이디입니다.'}">-->
     <!--            <h2 th:text="${error}"></h2>-->
     <!--        </th:block>-->

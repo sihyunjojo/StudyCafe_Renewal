@@ -1,0 +1,92 @@
+package studycafe.studycaferenewal.service.cart;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import studycafe.studycaferenewal.domain.Cart;
+import studycafe.studycaferenewal.domain.CartProduct;
+import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.domain.Product;
+import studycafe.studycaferenewal.repository.cart.JpaCartProductRepository;
+import studycafe.studycaferenewal.repository.cart.JpaCartRepository;
+import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
+import studycafe.studycaferenewal.repository.product.JpaProductRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Slf4j
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class CartService {
+
+    private final JpaCartRepository cartRepository;
+    private final JpaCartProductRepository cartProductRepository;
+    private final JpaProductRepository productRepository;
+    private final JpaMemberRepository memberRepository;
+
+    public List<CartProduct>  findCartProducts(Member member) {
+        Long memberId = memberRepository.findFirstByUserId(member.getUserId()).orElseThrow().getId();
+        Optional<Cart> cart = cartRepository.findFirstByUserId(memberId);
+
+        if (cart.isEmpty()) {
+            Cart newCart = addCart(member);
+            return null;
+        }
+
+        List<CartProduct> cartProducts = cartProductRepository.findAllByCartId(cart.orElseThrow().getId());
+        return cartProducts;
+    }
+
+    public Cart addCart(Member member) {
+        Cart cart = new Cart();
+        cart.setUserId(memberRepository.findFirstByUserId(member.getUserId()).orElseThrow().getId());
+
+        cartRepository.save(cart);
+        return cart;
+    }
+
+    public void addCartProduct(Member member, long itemId) {
+        Long memberId = memberRepository.findFirstByUserId(member.getUserId()).orElseThrow().getId();
+
+        Cart findcart = cartRepository.findFirstByUserId(memberId).orElseThrow();
+        Product findproduct = productRepository.findById(itemId).orElseThrow();
+
+        Optional<CartProduct> existingProduct = cartProductRepository.findFirstByCartIdAndProductId(findcart.getId(), findproduct.getId());
+
+        if (existingProduct.isEmpty()) {
+            CartProduct cartProduct = new CartProduct();
+
+            cartProduct.setCartId(findcart.getId());
+            cartProduct.setProductId(itemId);
+            cartProduct.setQuantity(1); // 추후에 값을 받아와서 해야함.
+            cartProduct.setTotalPrice(findproduct.getPrice());
+            cartProductRepository.save(cartProduct);
+        }
+    }
+
+    public List<CartProductForm> cartProductToCartProductForm(List<CartProduct> cartProducts) {
+        List<CartProductForm> cartProductForms = new ArrayList<>();
+
+        for (CartProduct cartProduct : cartProducts) {
+            CartProductForm cartProductForm = new CartProductForm();
+            Product findProduct = productRepository.findById(cartProduct.getProductId()).orElseThrow();
+
+            log.info("findproduct ={}", findProduct);
+//            cartProductForm.setCheck(false);
+            cartProductForm.setProductId(findProduct.getId());
+            cartProductForm.setImage(findProduct.getImage());
+            cartProductForm.setName(findProduct.getName());
+            cartProductForm.setNeededQuantity(cartProduct.getQuantity());
+            cartProductForm.setTotalPrice(cartProduct.getTotalPrice());
+            cartProductForms.add(cartProductForm);
+        }
+
+        return cartProductForms;
+    }
+
+
+}

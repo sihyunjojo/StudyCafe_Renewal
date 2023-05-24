@@ -16,7 +16,7 @@ public class Board {
     private String userName;
     private String title;
     private String kind;
-    private LocalDateTime createdDate;
+    private LocalDateTime createdTime;
     private String content;
     private String attachmentFile;
     private String popup;
@@ -27,13 +27,13 @@ public class Board {
 
     }
 
-    public Board(Long id, Long userId, String userName, String title, String kind, LocalDateTime createdDate, String content, String attachmentFile, String popup, Integer readCount, Integer pageNumber) {
+    public Board(Long id, Long userId, String userName, String title, String kind, LocalDateTime createdTime, String content, String attachmentFile, String popup, Integer readCount, Integer pageNumber) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.title = title;
         this.kind = kind;
-        this.createdDate = createdDate;
+        this.createdTime = createdTime;
         this.content = content;
         this.attachmentFile = attachmentFile;
         this.popup = popup;
@@ -43,8 +43,8 @@ public class Board {
 
     @PrePersist
     public void prePersist() {
-        if (this.createdDate == null) {
-            this.createdDate = LocalDateTime.now();
+        if (this.createdTime == null) {
+            this.createdTime = LocalDateTime.now();
         }
     }
 

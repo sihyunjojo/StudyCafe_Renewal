@@ -51,7 +51,7 @@ public class BoardService {
         board.setTitle(boardForm.getTitle());
         board.setContent(boardForm.getContent());
         board.setAttachmentFile(boardForm.getAttachmentFile());
-        board.setCreatedDate(LocalDateTime.now());
+        board.setCreatedTime(LocalDateTime.now());
     }
 
     public void deleteBoard(long boardId) {
@@ -74,13 +74,14 @@ public class BoardService {
             boardForm.setTitle(board.getTitle());
             boardForm.setKind(board.getKind());
             boardForm.setContent(board.getContent());
-            boardForm.setCreatedDate(board.getCreatedDate());
+            boardForm.setCreatedTime(board.getCreatedTime());
             boardForm.setAttachmentFile(board.getAttachmentFile());
             boardForm.setPopup(board.getPopup());
             boardForm.setReadCount(board.getReadCount());
             boardForm.setPageNumber(board.getPageNumber());
             boardForms.add(boardForm);
         }
+
         return boardForms;
     }
 
@@ -92,7 +93,7 @@ public class BoardService {
         boardForm.setTitle(board.getTitle());
         boardForm.setKind(board.getKind());
         boardForm.setContent(board.getContent());
-        boardForm.setCreatedDate(board.getCreatedDate());
+        boardForm.setCreatedTime(board.getCreatedTime());
         boardForm.setAttachmentFile(board.getAttachmentFile());
         boardForm.setPopup(board.getPopup());
         boardForm.setReadCount(board.getReadCount());
@@ -110,7 +111,7 @@ public class BoardService {
         board.setTitle(boardForm.getTitle());
         board.setKind(boardForm.getKind());
         board.setContent(boardForm.getContent());
-        board.setCreatedDate(boardForm.getCreatedDate());
+        board.setCreatedTime(boardForm.getCreatedTime());
         board.setAttachmentFile(boardForm.getAttachmentFile());
         board.setPopup(boardForm.getPopup());
         board.setReadCount(boardForm.getReadCount());

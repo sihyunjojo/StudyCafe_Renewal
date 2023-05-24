@@ -6,7 +6,7 @@ create table board
     user_name varchar,
     title varchar,
     kind     varchar,
-    created_date timestamp,
+    created_time timestamp,
     content    varchar,
     attachment_file varchar,
     popup     varchar,
