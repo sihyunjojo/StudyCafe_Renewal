@@ -10,7 +10,6 @@ import studycafe.studycaferenewal.domain.CartProduct;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.cart.CartProductForm;
 import studycafe.studycaferenewal.service.cart.CartService;
-import studycafe.studycaferenewal.service.member.MemberService;
 
 import java.util.List;
 
@@ -20,7 +19,6 @@ import java.util.List;
 @RequestMapping("/cart")
 @RequiredArgsConstructor
 public class CartController {
-    private final MemberService memberService;
     private final CartService cartService;
 
     // 장바구니 보여주기
@@ -45,11 +43,23 @@ public class CartController {
             return "redirect:/login";
         }
 
-        cartService.addCartProduct(member,itemId);
+        cartService.addCartProduct(member, itemId);
 
         // 원할때는 장바구니로 보내주는 코드
         // 원하지 않으면 상품 페이지 그대로
         return "redirect:/cart";
+    }
+
+    @GetMapping("/{itemId}/delete")
+    public String delete(@Login Member member,@PathVariable long itemId) {
+        if (member == null) {
+            return "redirect:/login";
+        }
+
+        cartService.deleteCartProduct(member, itemId);
+        return "redirect:/cart";
+        // 여기도 비동기 코드도 해야할거 같기도하고,,
+        // 좋아요 같이 해야할거같은데
     }
 //
 //    // 장바구니에서 수량 변경
@@ -60,10 +70,6 @@ public class CartController {
 //        return "redirect:/";
 //    }
 //
-//    // 장바구니에서 삭제
-//    @GetMapping("/{productId}/delete")
-//    public String delete(@PathVariable long productId) {
-//        // 여기도 비동기 코드도 해야할거 같기도하고,,
-//        // 좋아요 같이 해야할거같은데
-//    }
+    // 장바구니에서 삭제
+
 }

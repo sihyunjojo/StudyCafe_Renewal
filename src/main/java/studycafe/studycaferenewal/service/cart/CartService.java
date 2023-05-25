@@ -55,9 +55,9 @@ public class CartService {
         Cart findcart = cartRepository.findFirstByUserId(memberId).orElseThrow();
         Product findproduct = productRepository.findById(itemId).orElseThrow();
 
-        Optional<CartProduct> existingProduct = cartProductRepository.findFirstByCartIdAndProductId(findcart.getId(), findproduct.getId());
+        Optional<CartProduct> existingCartProduct = cartProductRepository.findFirstByCartIdAndProductId(findcart.getId(), findproduct.getId());
 
-        if (existingProduct.isEmpty()) {
+        if (existingCartProduct.isEmpty()) {
             CartProduct cartProduct = new CartProduct();
 
             cartProduct.setCartId(findcart.getId());
@@ -66,6 +66,17 @@ public class CartService {
             cartProduct.setTotalPrice(findproduct.getPrice());
             cartProductRepository.save(cartProduct);
         }
+    }
+
+    public void deleteCartProduct(Member member, long productId) {
+        Long memberId = memberRepository.findFirstByUserId(member.getUserId()).orElseThrow().getId();
+
+        Cart findcart = cartRepository.findFirstByUserId(memberId).orElseThrow();
+        Product findproduct = productRepository.findById(productId).orElseThrow();
+
+        Optional<CartProduct> findCartProduct = cartProductRepository.findFirstByCartIdAndProductId(findcart.getId(), findproduct.getId());
+        cartProductRepository.delete(findCartProduct.orElseThrow());
+
     }
 
     public List<CartProductForm> cartProductToCartProductForm(List<CartProduct> cartProducts) {
@@ -87,6 +98,4 @@ public class CartService {
 
         return cartProductForms;
     }
-
-
 }
