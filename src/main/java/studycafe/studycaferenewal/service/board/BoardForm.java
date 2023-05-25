@@ -16,5 +16,6 @@ public class BoardForm {
     private String attachmentFile;
     private String popup;
     private Integer readCount;
+    private Integer likeCount;
     private Integer pageNumber;
 }

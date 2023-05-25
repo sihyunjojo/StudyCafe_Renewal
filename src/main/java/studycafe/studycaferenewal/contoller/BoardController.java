@@ -75,8 +75,15 @@ public class BoardController {
         return "redirect:/board";
     }
 
+    @PostMapping("/{boardId}/edit/likeCount")
+    public String editLikeCount(BoardForm boardForm, @PathVariable Long boardId) {
+        // 이걸하려면 멤버마다 그 보드에 대한 like를 유지하고 있는지에 대한 db 컬럼이 필요하다.
+        return "redirect:/board";
+    }
+
     @GetMapping("/{boardId}/delete")
     public String delete(@PathVariable long boardId) {
+
         boardService.deleteBoard(boardId);
         return "redirect:/board"; // 삭제 후 목록 페이지로 리다이렉트
     }

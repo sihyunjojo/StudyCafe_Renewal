@@ -36,6 +36,7 @@ public class BoardService {
     }
 
     public void addBoard(Board board) {
+        board.setLikeCount(0);
         board.setReadCount(0);
         board.setUserName(memberRepository.findById(board.getUserId()).orElseThrow().getName());
         boardRepository.save(board);
@@ -62,6 +63,14 @@ public class BoardService {
         board.setReadCount(board.getReadCount() + 1);
     }
 
+    public void increaseLikeCount(Board board) {
+        board.setLikeCount(board.getLikeCount() + 1);
+    }
+
+    public void decreaseLikeCount(Board board) {
+        board.setLikeCount(board.getLikeCount() - 1);
+    }
+
     public List<BoardForm> boardsToBoardForms(List<Board> boards) {
         List<BoardForm> boardForms = new ArrayList<>();
 
@@ -78,6 +87,7 @@ public class BoardService {
             boardForm.setAttachmentFile(board.getAttachmentFile());
             boardForm.setPopup(board.getPopup());
             boardForm.setReadCount(board.getReadCount());
+            boardForm.setLikeCount(board.getLikeCount());
             boardForm.setPageNumber(board.getPageNumber());
             boardForms.add(boardForm);
         }
@@ -97,6 +107,7 @@ public class BoardService {
         boardForm.setAttachmentFile(board.getAttachmentFile());
         boardForm.setPopup(board.getPopup());
         boardForm.setReadCount(board.getReadCount());
+        boardForm.setLikeCount(board.getLikeCount());
         boardForm.setPageNumber(board.getPageNumber());
 
         return boardForm;
@@ -115,6 +126,7 @@ public class BoardService {
         board.setAttachmentFile(boardForm.getAttachmentFile());
         board.setPopup(boardForm.getPopup());
         board.setReadCount(boardForm.getReadCount());
+        board.setLikeCount(boardForm.getLikeCount());
         board.setPageNumber(boardForm.getPageNumber());
 
         return board;

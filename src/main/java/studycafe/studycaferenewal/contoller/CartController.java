@@ -50,6 +50,30 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    @GetMapping("/{itemId}/edit/up")
+    public String editUp(@Login Member member, @PathVariable long itemId) {
+        if (member == null) {
+            return "redirect:/login";
+        }
+
+        cartService.editUpQuantityCartProduct(member, itemId);
+        return "redirect:/cart";
+        // 여기도 비동기 코드도 해야할거 같기도하고,,
+        // 좋아요 같이 해야할거같은데
+    }
+
+    @GetMapping("/{itemId}/edit/down")
+    public String editDown(@Login Member member, @PathVariable long itemId) {
+        if (member == null) {
+            return "redirect:/login";
+        }
+
+        cartService.editDownQuantityCartProduct(member, itemId);
+        return "redirect:/cart";
+        // 여기도 비동기 코드도 해야할거 같기도하고,,
+        // 좋아요 같이 해야할거같은데
+    }
+
     @GetMapping("/{itemId}/delete")
     public String delete(@Login Member member,@PathVariable long itemId) {
         if (member == null) {

@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static studycafe.studycaferenewal.domain.QProduct.product;
+
 @Slf4j
 @Service
 @Transactional
@@ -62,5 +64,17 @@ public class ProductService {
 
     public void increaseReadCount(Product product) {
         product.setReadCount(product.getReadCount() + 1);
+    }
+
+    public void upLikeCountProduct(Long productId) {
+        Product findProduct = productRepository.findById(productId).orElseThrow();
+        findProduct.setLikeCount(findProduct.getLikeCount() + 1);
+    }
+
+    public void downLikeCountProduct(Long productId) {
+        Product findProduct = productRepository.findById(productId).orElseThrow();
+        if (findProduct.getLikeCount() > 0) {
+            findProduct.setLikeCount(findProduct.getLikeCount() - 1);
+        }
     }
 }

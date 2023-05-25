@@ -35,7 +35,7 @@
                th:value="${product.quantity}" readonly>
     </div>
     <div class="form-group">
-        <label for="price">가</label><br>
+        <label for="price">가격</label><br>
         <input type="text"
                class="form-control" id="price" name="price"
                th:value="${product.price}" readonly>
@@ -60,9 +60,9 @@
     </div>
     <div class="form-group">
         <label for="likeCount">좋아요 수</label><br>
-        <button type="text"
+        <input type="text"
                class="form-control" id="likeCount" name="likeCount"
-               th:value="${product.likeCount}" th:onclick="">
+               th:value="${product.likeCount}" th:onclick="" readonly>
     </div>
     <div class="form-group">
         <label for="updateTime">등록/수정 날짜</label><br>

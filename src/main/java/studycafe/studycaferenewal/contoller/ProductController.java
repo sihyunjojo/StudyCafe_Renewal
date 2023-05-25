@@ -70,6 +70,18 @@ public class ProductController {
         return "redirect:/product";
     }
 
+    @GetMapping("/{productId}/edit/likeCountUp")
+    public String upLikeCountEdit(@PathVariable Long productId) {
+        productService.upLikeCountProduct(productId);
+        return "redirect:/product";
+    }
+
+    @GetMapping("/{productId}/edit/likeCountDown")
+    public String downLikeCountEdit(@PathVariable Long productId) {
+        productService.downLikeCountProduct(productId);
+        return "redirect:/product";
+    }
+
     @GetMapping("/{productId}/delete")
     public String delete(@PathVariable long productId) {
         productService.deleteProduct(productId);

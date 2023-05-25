@@ -36,7 +36,11 @@
           <img th:src="@{|/img/${cartProduct.image}|}" th:alt="${cartProduct.image}" alt="이미지">
         </a></td>
         <td><a href="board.html" th:href="@{|/product/${cartProduct.productId}|}" th:text="${cartProduct.name}">이름</a></td>
-        <td th:text="${cartProduct.neededQuantity}"> 상품 수량 </td>
+        <td>
+          <button th:onclick="|location.href='/cart/${cartProduct.productId}/edit/up'|" type="button"> up </button>
+          <span th:text="${ cartProduct.neededQuantity }"> 상품 수량 </span>
+          <button th:onclick="|location.href='/cart/${cartProduct.productId}/edit/down'|" type="button"> down </button>
+        </td>
         <td th:text="${cartProduct.totalPrice}"> 총 가격 </td>
         <th><button th:onclick="|location.href='/cart/${cartProduct.productId}/delete'|" type="button"> X </button></th>
 <!--        <button th:onclick="|location.href='/board/${boardId}/delete'|" onclick="return confirm('정말로 삭제하겠습니까?')">삭제하기</button>-->

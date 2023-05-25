@@ -11,6 +11,7 @@ create table board
     attachment_file varchar,
     popup     varchar,
     read_count integer,
+    like_count integer,
     page_number  integer,
 
     primary key (id)
