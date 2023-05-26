@@ -19,6 +19,10 @@ td a img{
     max-width: 100%;
 }
 
+table.type01 .even{
+    background: #efefef;
+}
+
 table.type02 td{
     background: #efefef;
 }

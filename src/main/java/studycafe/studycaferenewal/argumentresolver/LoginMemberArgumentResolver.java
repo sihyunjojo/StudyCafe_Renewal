@@ -6,6 +6,7 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import studycafe.studycaferenewal.SessionConst;
 import studycafe.studycaferenewal.domain.Member;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +38,6 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
             return null;
         }
 
-        return session.getAttribute("loginMember");
+        return session.getAttribute(SessionConst.LOGIN_MEMBER);
     }
 }

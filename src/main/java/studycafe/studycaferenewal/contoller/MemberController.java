@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
+
 @Slf4j
 @Controller
 @RequestMapping("/member")
@@ -68,10 +70,10 @@ public class MemberController {
 
     @GetMapping("/edit")
     public String EditForm(@Login Member member, Model model) {
-        if (member == null) {
-            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
-        }
-        model.addAttribute("loginMember", member);
+//        if (member == null) {
+//            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
+//        }
+        model.addAttribute(LOGIN_MEMBER, member);
         return "/member/editMemberForm";
     }
 
@@ -82,18 +84,18 @@ public class MemberController {
         Member updatedMember = memberService.update(loginMember, updateMember).orElseThrow();
 
         HttpSession session = request.getSession();
-        session.setAttribute("loginMember", updatedMember);
+        session.setAttribute(LOGIN_MEMBER, updatedMember);
 
-        log.info("교체 성공 session member ={}", session.getAttribute("loginMember"));
+        log.info("교체 성공 session member ={}", session.getAttribute(LOGIN_MEMBER));
 
         return "redirect:/member/info";
     }
 
     @PostMapping("/checkPw")
     public String CheckPw(@Login Member member, @ModelAttribute UpdateMemberDto form, Model model) {
-        if (member == null) {
-            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
-        }
+//        if (member == null) {
+//            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
+//        }
         model.addAttribute("loginMember", member);
 
         log.info("same = {}", form.getCheckPassword().equals(form.getUserPassword()));
@@ -112,13 +114,12 @@ public class MemberController {
 
     @GetMapping("/info")
     public String InfoForm(@Login Member member, Model model) {
-
         log.info("member = {}", member);
 
-        if (member == null) {
-            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
-        }
-        model.addAttribute("loginMember", member);
+//        if (member == null) {
+//            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
+//        }
+        model.addAttribute(LOGIN_MEMBER, member);
         return "/member/memberInfo";
     }
 

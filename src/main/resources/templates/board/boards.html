@@ -16,9 +16,26 @@
 
 
         <div>
-            <form th:object="${boardSearch}" method="get" class="form-inline">
-                <button th:onclick="|location.href='@{board/add}'|" type="button" >글 작성</button>
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='addBoardForm.html'"
+                    th:onclick="|location.href='@{board/add}'|"
+                    type="button">글 작성</button>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary float-end"
+                            onclick="location.href='addForm.html'"
+                            th:onclick="|location.href='@{board/add}'|"
+                            type="button" th:text="#{page.addItem}">상품 등록</button>
+                </div>
+            </div>
+<!--            button th:onclick="|location.href='@{board/add}'|" type="button" ></button-->
 
+            <!--            <button class="btn btn-primary float-end"-->
+<!--                    onclick="location.href='addForm.html'"-->
+<!--                    th:onclick="|location.href='@{/items/add}'|"-->
+<!--                    type="button" th:text="#{page.addItem}">상품 등록</button>-->
+
+            <form th:object="${boardSearch}" method="get" class="form-inline">
                 <div class="row" style="float: right; margin-right: 0px">
                     <div class="col">
                         <input type="text" th:field="*{title}" class="form-control" placeholder="제목"/>

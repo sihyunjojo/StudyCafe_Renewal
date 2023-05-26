@@ -9,7 +9,7 @@
 <div class="container">
     <div class="py-5 text-center">
         <h2>로그인</h2></div>
-    <form th:action="login" th:object="${loginForm}" method="Post">
+    <form th:action th:object="${loginForm}" method="Post">
 <!--        <div th:if="${#fields.hasGlobalErrors()}">-->
 <!--            <p class="field-error" th:each="err : ${#fields.globalErrors()}"-->
 <!--               th:text="${err}">전체 오류 메시지</p></div>-->

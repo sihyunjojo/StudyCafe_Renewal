@@ -10,7 +10,6 @@ import studycafe.studycaferenewal.repository.board.JpaBoardRepository;
 import studycafe.studycaferenewal.repository.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -60,8 +59,8 @@ public class BoardService {
 
         boards.addAll(0, notices);
 
-        log.info("notice={}", notices);
-        log.info("boards={}", boards);
+
+
 
         return boards;
     }
@@ -105,7 +104,7 @@ public class BoardService {
     public List<BoardForm> boardsToBoardForms(List<Board> boards) {
         List<BoardForm> boardForms = new ArrayList<>();
 
-        log.info("board={}", boards);
+
         for (Board board : boards) {
             BoardForm boardForm = new BoardForm();
             boardForm.setId(board.getId());
@@ -145,7 +144,7 @@ public class BoardService {
     }
 
     public Board boardFormToBoard(BoardForm boardForm) {
-        log.info("Boardform={}", boardForm);
+
         Board board = new Board();
         board.setId(boardForm.getId());
         board.setUserId(boardRepository.findById(boardForm.getId()).orElseThrow().getUserId()); //boardform의 id와 board의 id가 같으니까 같은 board를 가져와서, board의 getuserid

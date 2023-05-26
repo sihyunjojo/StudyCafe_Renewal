@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import studycafe.studycaferenewal.SessionConst;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Board;
 import studycafe.studycaferenewal.domain.Member;
@@ -17,6 +18,8 @@ import studycafe.studycaferenewal.service.product.ProductService;
 
 import java.util.List;
 
+import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -26,9 +29,9 @@ public class HomeController {
     private final ProductService productService;
 
 //    @GetMapping("/")
-    public String homeForm(@SessionAttribute(name = "loginMember", required = false) Member loginMember, Model model) {
+    public String homeForm(@SessionAttribute(name = LOGIN_MEMBER, required = false) Member loginMember, Model model) {
         if (loginMember != null) {
-            model.addAttribute("loginMember", loginMember);
+            model.addAttribute(LOGIN_MEMBER, loginMember);
         }
         return "home";
     }
@@ -36,7 +39,7 @@ public class HomeController {
     @GetMapping("/")
     public String homeLoginV5ArgumentResolver(@Login Member loginMember, @ModelAttribute("productSearch") ProductSearchCond productSearch, Model model) {
         if (loginMember != null) {
-            model.addAttribute("loginMember", loginMember);
+            model.addAttribute(LOGIN_MEMBER, loginMember);
         }
 
         List<Board> boards = boardService.findBoards();

@@ -13,6 +13,8 @@ import studycafe.studycaferenewal.service.cart.CartService;
 
 import java.util.List;
 
+import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
+
 
 @Slf4j
 @Controller
@@ -27,7 +29,7 @@ public class CartController {
         if (member == null) {
             return "redirect:/login";
         }
-        model.addAttribute("loginMember", member);
+        model.addAttribute(LOGIN_MEMBER, member);
 
         List<CartProduct> cartProducts = cartService.findCartProducts(member);
         List<CartProductForm> cartProductForms = cartService.cartProductToCartProductForm(cartProducts);
@@ -39,9 +41,9 @@ public class CartController {
     // 장바구니에 상품 추가
     @GetMapping("/{itemId}/add")
     public String addCartProduct(@Login Member member, @PathVariable long itemId) {
-        if (member == null) {
-            return "redirect:/login";
-        }
+//        if (member == null) {
+//            return "redirect:/login";
+//        }
 
         cartService.addCartProduct(member, itemId);
 
@@ -52,9 +54,9 @@ public class CartController {
 
     @GetMapping("/{itemId}/edit/up")
     public String editUp(@Login Member member, @PathVariable long itemId) {
-        if (member == null) {
-            return "redirect:/login";
-        }
+//        if (member == null) {
+//            return "redirect:/login";
+//        }
 
         cartService.editUpQuantityCartProduct(member, itemId);
         return "redirect:/cart";

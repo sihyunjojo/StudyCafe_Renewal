@@ -3,7 +3,6 @@
 <head>
     <title>Home</title>
     <div th:insert="~{template/styleCss :: css_copy}"></div>
-    <link rel="stylesheet" href="css/index_style.css">
 </head>
 
 <body>
@@ -24,14 +23,14 @@
                                        required/>
                                 <br>
                                 <button th:onclick="|location.href='@{/member/idquiry}'|"
-                                        type="button" class="btn-light">아이디 찾기
+                                        type="button" class="btn-light mb-2">아이디 찾기
                                 </button>
                                 <span class="bar" aria-hidden="true">|</span>
                                 <button th:onclick="|location.href='@{/member/pwquiry}'|"
-                                        type="button" class="btn-light">비밀번호 찾기
+                                        type="button" class="btn-light mb-2">비밀번호 찾기
                                 </button>
                                 <br>
-                                <button type="submit"> 로그인</button>
+                                <button type="submit" class="btn-light mb-2"> 로그인</button>
                                 <span class="bar" aria-hidden="true">|</span>
                                 <button th:onclick="|location.href='@{/member/new}'|"
                                         type="button" class="btn-light mb-2">회원가입

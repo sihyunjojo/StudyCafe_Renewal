@@ -62,16 +62,29 @@ home best 상품에도 상품 카테고리 검색은 만들기
 
 ## 5/26
 공지사항은 게시판 맨위로
+게시판 권한에 따라서 특정 종류 게시판 쓰기,수정 접근 안되게하기
+- 안 됬던 이유가 권한이 없던 페이지의 경로에서 redirectURI로 보냈을때, redirectURI가 요청 메서드에 도착을 못해서 defaultValue만 값이 지정되었다  
+이유가 뭐였냐면 타임리프에서 form태그에서 th:action을 th:action="login"으로 수동 설정해서 그런거였다. th:action 만하여서 경로를 그대로 post로 보내줬어야했다.  
+그래야지 뒤에 RequestParam까지 경로로 들어간다.
+
+**인터셉터 활용시 주의 사항**  
+클라이언트 부분에서 서버를 통하지 않고 바로 클라이언트나 서버사이드를 통해서 경로를 보낼경우 인터셉터가 작동하지 않는다.  
+어떻게 보면 당연하다. dispatcherServlet에 도달하지 않으니 인터셉트가 작동할 수 없다.
+ex)  
+button th:onclick="|location.href='@{board/add}'|" type="button" ></button  
+는 @{board/add}로 사용하여 서버사이드를 통해서 경로가 전달된다.그래서  
+button th:onclick="|location.href='/board/add'|"></button
+
+얘는 되는 이유가 뭐야?
 
 
 ### 수정해야할 것들
 intercepter 넣을때, requestURL이용해서 checkpw고쳐서 addMemberForm과 editMemberForm에서 비밀번호 확인버튼 동적으로 작동시켜야함.
 jpa랑 쿼리 dsl 재대로  
 
-게시판 추천 수  
-게시판 권한에 따라서 특정 종류 게시판 쓰기,수정 접근 안되게하기  
-게시판 댓글, 답글  
-home에 좋아요 많은 순서대로 상품 보여주기  
+게시판 추천 수 (ajax)
+게시판 댓글, 답글
+home에 좋아요 많은 순서대로 상품 보여주기   
 home에 게시판도 공지사항 맨위로 하고 밑에는 인기 게시판으로 할까??  
 상품 좋아요 버튼 만들기(ajax, api,json) (이건 추후에 orderproduct를 만들어서 하는게 맞는거 같은데)        // 이걸하려면 멤버마다 그 보드에 대한 like를 유지하고 있는지에 대한 db 컬럼이 필요하다.  
 상품검색에서 최대 가격이 최소가격보다 작으면 오류 만들어주기.  
