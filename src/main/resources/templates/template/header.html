@@ -45,7 +45,7 @@
                     <a th:href="@{/board}" class="nav-link">게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/StudyCafeManagement/message/Chat?user_id=${sessionScope.user_id}" class="nav-link">메시지</a>
+                    <a th:href="@{/chat}" class="nav-link">채팅</a>
                 </li>
                 <li class="nav-item">
                     <th:block th:if="${loginMember == null}">

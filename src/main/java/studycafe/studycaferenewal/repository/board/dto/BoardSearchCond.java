@@ -6,11 +6,11 @@ import lombok.Data;
 public class BoardSearchCond {
     private String title;
     private String userName;
-    private String type;
+    private String category;
 
-    public BoardSearchCond(String title, String userName, String type) {
+    public BoardSearchCond(String title, String userName, String category) {
         this.title = title;
         this.userName = userName;
-        this.type = type;
+        this.category = category;
     }
 }

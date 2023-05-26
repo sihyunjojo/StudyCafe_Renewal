@@ -60,10 +60,14 @@ home best 상품에도 상품 카테고리 검색은 만들기
 장바구니에서 빼기
 쟈
 
+## 5/26
+공지사항은 게시판 맨위로
+
+
 ### 수정해야할 것들
-intercepter 넣을때, requestURL이용해서 checkpw고쳐서 addMemberForm과 editMemberForm에서 비밀번호 확인버튼 동적으로 작동시켜야함.  
+intercepter 넣을때, requestURL이용해서 checkpw고쳐서 addMemberForm과 editMemberForm에서 비밀번호 확인버튼 동적으로 작동시켜야함.
 jpa랑 쿼리 dsl 재대로  
-공지사항은 게시판 맨위로   
+
 게시판 추천 수  
 게시판 권한에 따라서 특정 종류 게시판 쓰기,수정 접근 안되게하기  
 게시판 댓글, 답글  

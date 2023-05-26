@@ -27,6 +27,12 @@
                th:value="${board.userName}" readonly>
     </div>
     <div class="form-group">
+        <label for="category">카테고리</label><br>
+        <input type="text"
+               class="form-control" id="category" name="category"
+               th:value="${board.category}" readonly>
+    </div>
+    <div class="form-group">
         <label for="createdTime">작성일자</label><br>
         <input type="text"
                class="form-control" id="createdTime" name="createdTime"

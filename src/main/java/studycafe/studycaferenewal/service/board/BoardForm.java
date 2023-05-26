@@ -10,7 +10,7 @@ public class BoardForm {
 
     private String userName;
     private String title;
-    private String kind;
+    private String category;
     private String content;
     private LocalDateTime createdTime;
     private String attachmentFile;

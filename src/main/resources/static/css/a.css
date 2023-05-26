@@ -12,10 +12,17 @@ table {
     vertical-align: top;
     border-color: var(--bs-table-border-color)
 }
-td{
-    background: #efefef;
-}
+
+
 td a img{
     height: 50px;
     max-width: 100%;
+}
+
+table.type02 td{
+    background: #efefef;
+}
+
+table.table .even{
+    background: #efefef;
 }

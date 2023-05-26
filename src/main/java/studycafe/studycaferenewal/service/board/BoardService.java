@@ -10,8 +10,10 @@ import studycafe.studycaferenewal.repository.board.JpaBoardRepository;
 import studycafe.studycaferenewal.repository.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,11 +29,40 @@ public class BoardService {
 
     public List<Board> findBoards() {
         List<Board> boards = boardRepository.findAll();
+        List<Board> notices = new ArrayList<>();
+
+        Iterator<Board> iterator = boards.iterator(); // 이걸 사용하지 않으면 반복문이 돌면서 사라지는 것때문에 오류 일으킴.
+        while (iterator.hasNext()) {
+            Board board = iterator.next();
+            if (board.getCategory().equals("공지사항")) {
+                iterator.remove();
+                notices.add(0, board);
+            }
+        }
+
+        boards.addAll(0, notices);
+
         return boards;
     }
 
     public List<Board> findSearchBoards(BoardSearchCond cond) {
         List<Board> boards = boardQueryRepository.findAll(cond);
+        List<Board> notices = new ArrayList<>();
+
+        Iterator<Board> iterator = boards.iterator(); // 이걸 사용하지 않으면 반복문이 돌면서 사라지는 것때문에 오류 일으킴.
+        while (iterator.hasNext()) {
+            Board board = iterator.next();
+            if (board.getCategory().equals("공지사항")) {
+                iterator.remove();
+                notices.add(0, board);
+            }
+        }
+
+        boards.addAll(0, notices);
+
+        log.info("notice={}", notices);
+        log.info("boards={}", boards);
+
         return boards;
     }
 
@@ -81,7 +112,7 @@ public class BoardService {
             boardForm.setUserName(memberRepository.findById(board.getUserId()).orElseThrow().getName());
 
             boardForm.setTitle(board.getTitle());
-            boardForm.setKind(board.getKind());
+            boardForm.setCategory(board.getCategory());
             boardForm.setContent(board.getContent());
             boardForm.setCreatedTime(board.getCreatedTime());
             boardForm.setAttachmentFile(board.getAttachmentFile());
@@ -101,7 +132,7 @@ public class BoardService {
         boardForm.setUserName(memberRepository.findById(board.getUserId()).orElseThrow().getName());
 
         boardForm.setTitle(board.getTitle());
-        boardForm.setKind(board.getKind());
+        boardForm.setCategory(board.getCategory());
         boardForm.setContent(board.getContent());
         boardForm.setCreatedTime(board.getCreatedTime());
         boardForm.setAttachmentFile(board.getAttachmentFile());
@@ -120,7 +151,7 @@ public class BoardService {
         board.setUserId(boardRepository.findById(boardForm.getId()).orElseThrow().getUserId()); //boardform의 id와 board의 id가 같으니까 같은 board를 가져와서, board의 getuserid
 
         board.setTitle(boardForm.getTitle());
-        board.setKind(boardForm.getKind());
+        board.setCategory(boardForm.getCategory());
         board.setContent(boardForm.getContent());
         board.setCreatedTime(boardForm.getCreatedTime());
         board.setAttachmentFile(boardForm.getAttachmentFile());

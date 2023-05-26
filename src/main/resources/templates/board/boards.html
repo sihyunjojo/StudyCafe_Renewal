@@ -27,7 +27,10 @@
                         <input type="text" th:field="*{userName}" class="form-control" placeholder="글작성자"/>
                     </div>
                     <div class="col">
-                        <input type="text" th:field="*{type}" class="form-control" placeholder="게시판 종류"/>
+                        <select class="form-select" id = "category" th:field="*{category}" required>
+                            <option th:value="커뮤니티">커뮤니티</option>
+                            <option th:value="공지사항">공지사항</option>
+                        </select>
                     </div>
                     <div class="col">
                         <button type="submit">검색</button>
@@ -40,20 +43,20 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="row">글번호</th>
                     <th scope="row">제목</th>
-                    <th scope="row">글쓴이</th>
+                    <th scope="row">작성자</th>
+                    <th scope="row">카테고리</th>
                     <th scope="row">작성일</th>
                     <th scope="row">조회수</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr th:each="board : ${boards}">
-                    <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.id}"> 0 </a>
-                    </td>
+                <tr th:each="board : ${boards}"
+                    th:class="${board.category == '공지사항'} ? 'even' : ''">
                     <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
                     <td th:text="${board.userName}"> 작성자 </td>
+                    <td th:text="${board.category}"> 카테고리 </td>
                     <td>
                         <input type="datetime-local" class="form-control" style="border: none; outline: none;" th:value="${board.createdTime}" readonly>
                     </td>

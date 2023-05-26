@@ -15,10 +15,10 @@ public class Board {
     private Long userId;
     private String userName;
     private String title;
-    private String kind;
-    private LocalDateTime createdTime;
+    private String category;
     private String content;
     private String attachmentFile;
+    private LocalDateTime createdTime;
     private String popup;
     private Integer readCount;
     private Integer likeCount;
@@ -28,12 +28,12 @@ public class Board {
 
     }
 
-    public Board(Long id, Long userId, String userName, String title, String kind, LocalDateTime createdTime, String content, String attachmentFile, String popup, Integer readCount, Integer likeCount, Integer pageNumber) {
+    public Board(Long id, Long userId, String userName, String title, String category, LocalDateTime createdTime, String content, String attachmentFile, String popup, Integer readCount, Integer likeCount, Integer pageNumber) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.title = title;
-        this.kind = kind;
+        this.category = category;
         this.createdTime = createdTime;
         this.content = content;
         this.attachmentFile = attachmentFile;

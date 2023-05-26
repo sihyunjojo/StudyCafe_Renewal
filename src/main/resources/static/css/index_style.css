@@ -72,6 +72,11 @@ table.type01 .even {
     background: #efefef;
 }
 
+table .even td{
+    background: #efefef;
+}
+
+
 ul {
     list-style: none;
     float: left;

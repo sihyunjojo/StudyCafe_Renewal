@@ -5,7 +5,7 @@ create table board
     user_id integer,
     user_name varchar,
     title varchar,
-    kind     varchar,
+    category varchar,
     created_time timestamp,
     content    varchar,
     attachment_file varchar,

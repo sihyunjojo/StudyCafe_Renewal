@@ -26,7 +26,7 @@ public class JpaBoardQueryRepository {
                 .where(
                         likeBoardTitle(cond.getTitle()),
                         likeBoardCreatedUserName(cond.getUserName()),
-                        eqBoardTitle(cond.getTitle())
+                        eqBoardCategory(cond.getCategory())
                 )
                 .fetch();
     }
@@ -45,9 +45,9 @@ public class JpaBoardQueryRepository {
         return null;
     }
 
-    private Predicate eqBoardTitle(String title) {
-        if (StringUtils.hasText(title)) {
-            return board.title.eq(title);
+    private Predicate eqBoardCategory(String category) {
+        if (StringUtils.hasText(category)) {
+            return board.category.eq(category);
         }
         return null;
     }

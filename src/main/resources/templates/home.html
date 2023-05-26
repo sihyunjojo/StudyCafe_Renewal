@@ -60,7 +60,6 @@
                 <table class="type01">
                     <thead>
                     <tr>
-                        <th scope="row">글번호</th>
                         <th scope="row">제목</th>
                         <th scope="row">글쓴이</th>
                         <th scope="row">작성일</th>
@@ -68,15 +67,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="board : ${boards}">
-                        <td class="even"><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.id}">
-                            0 </a>
-                        </td>
-                        <td class="even"><a href="board.html" th:href="@{|/board/${board.id}|}"
-                                            th:text="${board.title}">제목</a></td>
-                        <td class="even" th:text="${board.userName}"> 작성자</td>
-                        <td class="even" th:text="${board.createdTime}"> 작성일</td>
-                        <th class="even" th:text="${board.readCount}"> 1</th>
+                    <tr th:each="board : ${boards}"
+                        th:class="${board.category == '공지사항'} ? 'even' : ''">
+                        <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
+                        <td th:text="${board.userName}"> 작성자</td>
+                        <td th:text="${board.createdTime}"> 작성일</td>
+                        <th th:text="${board.readCount}"> 1</th>
                     </tr>
                     </tbody>
                 </table>
