@@ -1,11 +1,11 @@
-package studycafe.studycaferenewal.repository.board;
+package studycafe.studycaferenewal.repository.board.board;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.util.StringUtils;
 import studycafe.studycaferenewal.domain.Board;
-import studycafe.studycaferenewal.repository.board.dto.BoardSearchCond;
+import studycafe.studycaferenewal.repository.board.board.dto.BoardSearchCond;
 
 import javax.persistence.EntityManager;
 import java.util.List;

@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.repository.board.dto;
+package studycafe.studycaferenewal.repository.board.board.dto;
 
 import lombok.Data;
 

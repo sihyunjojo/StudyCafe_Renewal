@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.repository.board;
+package studycafe.studycaferenewal.repository.board.board;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import studycafe.studycaferenewal.domain.Board;

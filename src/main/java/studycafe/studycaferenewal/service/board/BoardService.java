@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Board;
-import studycafe.studycaferenewal.repository.board.JpaBoardQueryRepository;
-import studycafe.studycaferenewal.repository.board.JpaBoardRepository;
-import studycafe.studycaferenewal.repository.board.dto.BoardSearchCond;
+import studycafe.studycaferenewal.repository.board.board.JpaBoardQueryRepository;
+import studycafe.studycaferenewal.repository.board.board.JpaBoardRepository;
+import studycafe.studycaferenewal.repository.board.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
 
 import java.time.LocalDateTime;
