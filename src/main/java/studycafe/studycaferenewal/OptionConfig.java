@@ -30,10 +30,8 @@ public class OptionConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns
                         ("/", "/login", "/logout",
-                                "/board", "/board/{boardId}", "/member/**", "/product", "/product/{productId}",
-                                "/css/**", "/*.ico", "/error", "/**/*.jpg", "/template/template/**")
-                .excludePathPatterns("member/info");
-
+                                "/board", "/member/**", "/board/{boardId}", "board/add", "/product", "/product/{productId}",
+                                "/css/**", "/*.ico", "/error", "/**/*.jpg", "/template/template/**");
     }
 
 }

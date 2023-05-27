@@ -13,6 +13,7 @@ import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
@@ -46,9 +47,9 @@ public class BoardController {
 
     @GetMapping("/add")
     public String addForm(@Login Member loginMember, Model model) {
-        //        if (member == null) {
-//            return "redirect:/login";
-//        }
+        if (loginMember == null) {
+            return "redirect:/login?redirectURL=/board/add/";
+        }
         model.addAttribute("board", new Board());
         model.addAttribute(LOGIN_MEMBER, loginMember);
         log.info("loginMember={}", loginMember);

@@ -40,9 +40,9 @@ public class ProductController {
 
     @GetMapping("/add")
     public String addForm(@Login Member member, Model model) {
-//        if (member == null) {
-//            return "redirect:/login";
-//        }
+        if (member == null) {
+            return "redirect:/login?redirectURL=/product/add/";
+        }
         model.addAttribute("product", new Product());
         model.addAttribute("loginMember", member);
         log.info("loginMember={}", member);

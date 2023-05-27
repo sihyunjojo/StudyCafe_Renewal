@@ -7,13 +7,10 @@
 </head>
 <body>
 <header th:insert="~{template/header :: header_copy}"></header>
-
 <div class="container">
-
-    <div class="py-5 text-center">
+<!--    <div class="py-5 text-center">-->
 <!--        <h2 th:text="#{}">회원 상세</h2>-->
-    </div>
-
+<!--    </div>-->
 <!--    메시지 국제화 코드 포함시켜보자 나중에 th:text="#{label.member.userId}"-->
     <div> 추후 메시지 국제화 코드도 포함시켜보자. </div>
     <div>
@@ -54,13 +51,12 @@
     <div class="row">
         <div class="col">
             <button class="w-100 btn btn-primary btn-lg"
-                    th:onclick="|location.href='@{/member/edit}'|" class="btn-light"
+                    th:onclick="|location.href='@{/member/edit}'|"
                     type="button">수정</button>
-
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
-                    th:onclick="|location.href='@{/}'|" class="btn-light"
+                    th:onclick="|location.href='@{/}'|"
                     type="button">메인화면</button>
         </div>
     </div>

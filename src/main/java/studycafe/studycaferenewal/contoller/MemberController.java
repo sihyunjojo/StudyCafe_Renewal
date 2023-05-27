@@ -26,7 +26,7 @@ public class MemberController {
     @GetMapping("/new")
     public String JoinForm(Model model) {
         model.addAttribute("member", new Member());
-        return "/member/addMemberForm";
+        return "member/addMemberForm";
     }
 
     @PostMapping("/new")
@@ -35,8 +35,8 @@ public class MemberController {
         log.info(userId);
         if (userId == null) {
             model.addAttribute("error", "이미 사용 중인 아이디입니다.");
-            model.addAttribute("member", member);
-            return "/member/addMemberForm";
+//            model.addAttribute("member", member);
+            return "member/addMemberForm";
         }
         return "redirect:/";
     }
@@ -47,11 +47,11 @@ public class MemberController {
     }
 
     @PostMapping("/idquiry")
-    public String findUserId(Member member, Model model){
+    public String findUserId(Member member, Model model) {
         Optional<Member> result = memberService.findMemberByNameAndPhone(member);
         model.addAttribute("member", result);
 
-        return "/member/findIdResult";
+        return "member/findIdResult";
         // 예외처리할때, 일치하는 회원 없으면 없다고 보여주기
     }
 
@@ -65,7 +65,7 @@ public class MemberController {
         Optional<Member> result = memberService.findByUserId(member);
         model.addAttribute("member", result);
 
-        return "/member/findPasswordResult";
+        return "member/findPasswordResult";
     }
 
     @GetMapping("/edit")
@@ -74,7 +74,7 @@ public class MemberController {
 //            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
 //        }
         model.addAttribute(LOGIN_MEMBER, member);
-        return "/member/editMemberForm";
+        return "member/editMemberForm";
     }
 
     @PostMapping("/edit")
@@ -104,23 +104,21 @@ public class MemberController {
         if (form.getCheckPassword().equals(form.getUserPassword())) {
             model.addAttribute("same_password", "비밀번호 일치");
             model.addAttribute("updateMember", form);
-        }
-        else{
+        } else {
             model.addAttribute("different_password", "비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
         }
 
-        return "/member/editMemberForm";
+        return "member/editMemberForm";
     }
 
     @GetMapping("/info")
     public String InfoForm(@Login Member member, Model model) {
-        log.info("member = {}", member);
+        if (member == null) {
+            return "redirect:/login?redirectURL=/member/info/";
+        }
 
-//        if (member == null) {
-//            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
-//        }
         model.addAttribute(LOGIN_MEMBER, member);
-        return "/member/memberInfo";
+        return "member/memberInfo";
     }
 
 

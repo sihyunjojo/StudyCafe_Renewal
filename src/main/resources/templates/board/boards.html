@@ -13,29 +13,12 @@
     <div class="container">
         <h3> 메인 게시판 </h3>
         <hr>
-
+<!--        <button class="btn btn-primary" onclick="location.href='/board/add'" type="button" >글 작성</button>-->
 
         <div>
-            <button class="btn btn-primary float-end"
-                    onclick="location.href='addBoardForm.html'"
-                    th:onclick="|location.href='@{board/add}'|"
-                    type="button">글 작성</button>
-            <div class="row">
-                <div class="col">
-                    <button class="btn btn-primary float-end"
-                            onclick="location.href='addForm.html'"
-                            th:onclick="|location.href='@{board/add}'|"
-                            type="button" th:text="#{page.addItem}">상품 등록</button>
-                </div>
-            </div>
-<!--            button th:onclick="|location.href='@{board/add}'|" type="button" ></button-->
-
-            <!--            <button class="btn btn-primary float-end"-->
-<!--                    onclick="location.href='addForm.html'"-->
-<!--                    th:onclick="|location.href='@{/items/add}'|"-->
-<!--                    type="button" th:text="#{page.addItem}">상품 등록</button>-->
-
             <form th:object="${boardSearch}" method="get" class="form-inline">
+                <button class="btn btn-primary" onclick="location.href='/board/add'" type="button" >글 작성</button>
+<!--                <button th:onclick="|location.href='@{board/add}'|"  type="button">글글 작성</button>-->
                 <div class="row" style="float: right; margin-right: 0px">
                     <div class="col">
                         <input type="text" th:field="*{title}" class="form-control" placeholder="제목"/>
@@ -44,7 +27,8 @@
                         <input type="text" th:field="*{userName}" class="form-control" placeholder="글작성자"/>
                     </div>
                     <div class="col">
-                        <select class="form-select" id = "category" th:field="*{category}" required>
+                        <select class="form-select" id = "category" th:field="*{category}">
+                            <option th:value></option>
                             <option th:value="커뮤니티">커뮤니티</option>
                             <option th:value="공지사항">공지사항</option>
                         </select>
@@ -67,16 +51,15 @@
                     <th scope="row">조회수</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr th:each="board : ${boards}"
                     th:class="${board.category == '공지사항'} ? 'even' : ''">
-                    <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
-                    <td th:text="${board.userName}"> 작성자 </td>
-                    <td th:text="${board.category}"> 카테고리 </td>
-                    <td>
+                    <th><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></th>
+                    <th th:text="${board.userName}"> 작성자 </th>
+                    <th th:text="${board.category}"> 카테고리 </th>
+                    <th>
                         <input type="datetime-local" class="form-control" style="border: none; outline: none;" th:value="${board.createdTime}" readonly>
-                    </td>
+                    </th>
                     <th th:text="${board.readCount}"> 1 </th>
                 </tr>
                 </tbody>

@@ -32,10 +32,10 @@
                                 <br>
                                 <button type="submit" class="btn-light mb-2"> 로그인</button>
                                 <span class="bar" aria-hidden="true">|</span>
-                                <button th:onclick="|location.href='@{/member/new}'|"
+                                <button onclick="location.href='/member/new'"
+                                        th:onclick="|location.href='@{member/new}'|"
                                         type="button" class="btn-light mb-2">회원가입
                                 </button>
-
                             </fieldset>
                         </form>
                     </th:block>
@@ -116,9 +116,11 @@
                 <tbody>
                 <tr>
                     <td></td>
-                    <td th:each="prduct, iterationStat : ${products}" th:text="'BEST-' + ${iterationStat.count}">
-                        10000
-                    </td>
+                    <a href="product.html" th:href="@{|/product/${product.id}|}">
+                        <td th:each="prduct, iterationStat : ${products}" th:text="'BEST-' + ${iterationStat.count}">
+                            Best
+                        </td>
+                    </a>
                 </tr>
                 <tr>
                     <td></td>
@@ -130,7 +132,9 @@
                 </tr>
                 <tr>
                     <td>상품명</td>
-                    <td th:each="product : ${products}" th:text="${product.name}">상품명</td>
+                    <a href="product.html" th:href="@{|/product/${product.id}|}">
+                        <td th:each="product : ${products}" th:text="${product.name}">상품명</td>
+                    </a>
                 </tr>
                 <tr>
                     <td>가격</td>
@@ -148,7 +152,7 @@
         <div class="temp-box">
             <h3>좌석</h3>
             <hr>
-            <img src="img/seat.JPG" class="Seat_image" width=230px height=230px
+            <img src="img/seat.jpg" class="Seat_image" width=230px height=230px
                  style="margin: 50px;"> <input type="button" value="예약"
                                                onclick="fn_res_form()"
                                                style="float: center; margin: 50px; font-size: 50px;">
