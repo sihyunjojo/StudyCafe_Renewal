@@ -39,4 +39,12 @@ public class ReplyService {
     public void deleteReply(long replyId) {
         replyRepository.deleteById(replyId);
     }
+
+    public List<Reply> findByCommentId(Long commentId) {
+        return replyRepository.findByCommentId(commentId);
+    }
+
+    public List<Reply> getRepliesByCommentId(Long commentId) {
+        return replyRepository.getRepliesByCommentId(commentId);
+    }
 }

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Board;
+import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.domain.Reply;
 import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
@@ -31,21 +33,27 @@ public class ReplyController {
     @GetMapping("/{commentId}")
     public String reply(@PathVariable long commentId, Model model) {
         List<Reply> replys = replyService.findReplys();
-        return "board/board";
+
+        return "redirect:/board/" + replys.get(0).getComment().getBoardId();
     }
 
     // 댓글 생성
     @PostMapping()
-    public String add(Reply reply) {
+    public String add(@Login Member loginMember, Reply reply) {
+        log.info("loginMember = {}", loginMember);
+        log.info("reply = {}", reply);
+        if (loginMember == null) {
+            return "redirect:/login?redirectURL=/board/" + reply.getComment().getBoardId();
+        }
         replyService.addReply(reply);
-        return "redirect:/board"; // 일단 home으로 보내주자 나중에 board목록으로 보내주고
+        return "redirect:/board/" + reply.getComment().getBoardId();
     }
 
     // 댓글 수정
     @PostMapping("/{replyId}/edit")
-    public String edit(Reply Reply, @PathVariable Long replyId) {
-        replyService.editReply(replyId, Reply);
-        return "redirect:/board";
+    public String edit(Reply reply, @PathVariable Long replyId) {
+        replyService.editReply(replyId, reply);
+        return "redirect:/board/" + reply.getComment().getBoardId();
     }
 
 //    @PostMapping("/{boardId}/edit/likeCount")

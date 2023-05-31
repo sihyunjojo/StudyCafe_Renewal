@@ -14,5 +14,7 @@ create table board
     like_count integer,
     page_number  integer,
 
+    FOREIGN KEY (user_id) REFERENCES member (id),
+
     primary key (id)
 );

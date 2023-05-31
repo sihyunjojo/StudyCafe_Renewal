@@ -41,7 +41,7 @@ public class CommentService {
     }
 
 
-
-
-
+    public List<Comment> findByBoardId(Long boardId) {
+        return  commentRepository.findByBoardId(boardId);
+    }
 }

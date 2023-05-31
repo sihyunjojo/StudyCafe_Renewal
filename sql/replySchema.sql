@@ -9,5 +9,8 @@ create table reply
     updated_time timestamp,
     like_count integer,
 
+    FOREIGN KEY (comment_id) REFERENCES comment (id),
+    FOREIGN KEY (user_id) REFERENCES member (id),
+
     primary key (id)
 );

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,29 +17,35 @@ public class Comment {
     private Long boardId;
     private String userName;
     private String content;
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
     private Integer pageNumber;
     private Integer likeCount;
 
-    public Comment() {
+    @OneToMany(mappedBy = "comment")
+    private List<Reply> replies;
+
+    @PrePersist
+    public void prePersist() {
+        this.updatedTime = LocalDateTime.now();
     }
 
-    public Comment(Long id, Long userId, Long boardId, String userName, String content, LocalDateTime updateTime, Integer pageNumber, Integer likeCount) {
+
+
+    public Comment() {
+
+    }
+
+    public Comment(Long id, Long userId, Long boardId, String userName, String content, LocalDateTime updatedTime, Integer pageNumber, Integer likeCount) {
         this.id = id;
         this.userId = userId;
         this.boardId = boardId;
         this.userName = userName;
         this.content = content;
-        this.updateTime = updateTime;
+        this.updatedTime = updatedTime;
         this.pageNumber = pageNumber;
         this.likeCount = likeCount;
     }
 
-    @PrePersist
-    public void prePersist() {
-        if (this.updateTime == null) {
-            this.updateTime = LocalDateTime.now();
-        }
-    }
+
 
 }

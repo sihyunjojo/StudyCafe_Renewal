@@ -17,24 +17,24 @@ public class CartProduct {
     private Long productId;
     private Integer quantity;
     private Integer totalPrice;
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
 
     public CartProduct() {
     }
 
-    public CartProduct(Long id, Long cartId, Long productId, Integer quantity, Integer totalPrice, LocalDateTime updateTime) {
+    public CartProduct(Long id, Long cartId, Long productId, Integer quantity, Integer totalPrice, LocalDateTime updatedTime) {
         this.id = id;
         this.cartId = cartId;
         this.productId = productId;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
-        this.updateTime = updateTime;
+        this.updatedTime = updatedTime;
     }
 
     @PrePersist
     public void prePersist() {
-        if (this.updateTime == null) {
-            this.updateTime = LocalDateTime.now();
+        if (this.updatedTime == null) {
+            this.updatedTime = LocalDateTime.now();
         }
     }
 }

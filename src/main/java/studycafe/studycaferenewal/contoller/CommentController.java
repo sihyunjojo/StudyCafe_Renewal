@@ -35,16 +35,21 @@ public class CommentController {
 
     // 댓글 생성
     @PostMapping()
-    public String add(Comment comment) { // comment 먼가 잘못됬을시 다시 돌려줘야하니까 있어야함.
+    public String add(@Login Member loginMember, Comment comment) { // comment 먼가 잘못됬을시 다시 돌려줘야하니까 있어야함.
+        log.info("loginMember = {}", loginMember);
+        log.info("comment = {}", comment);
+        if (loginMember == null) {
+            return "redirect:/login?redirectURL=/board/" + comment.getBoardId();
+        }
         commentService.addComment(comment);
-        return "redirect:/board"; // 일단 home으로 보내주자 나중에 board목록으로 보내주고
+        return "redirect:/board/" + comment.getBoardId();
     }
 
     // 댓글 수정
     @PostMapping("/{commentId}/edit")
     public String edit(Comment comment, @PathVariable Long commentId) {
         commentService.editComment(commentId, comment);
-        return "redirect:/board";
+        return "redirect:/board/" + comment.getBoardId();
     }
 
 //    @PostMapping("/{boardId}/edit/likeCount")

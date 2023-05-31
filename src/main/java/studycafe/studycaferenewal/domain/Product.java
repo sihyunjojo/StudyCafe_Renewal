@@ -21,13 +21,13 @@ public class Product {
     private String description;
     private Integer readCount;
     private Integer likeCount;
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
 
     public Product() {
 
     }
 
-    public Product(Long id, String name, String category, String image, Integer quantity, Integer price, String description, Integer readCount, Integer likeCount, LocalDateTime updateTime) {
+    public Product(Long id, String name, String category, String image, Integer quantity, Integer price, String description, Integer readCount, Integer likeCount, LocalDateTime updatedTime) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -37,13 +37,13 @@ public class Product {
         this.description = description;
         this.readCount = readCount;
         this.likeCount = likeCount;
-        this.updateTime = updateTime;
+        this.updatedTime = updatedTime;
     }
 
     @PrePersist
     public void prePersist() {
-        if (this.updateTime == null) {
-            this.updateTime = LocalDateTime.now();
+        if (this.updatedTime == null) {
+            this.updatedTime = LocalDateTime.now();
         }
     }
 }

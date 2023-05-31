@@ -13,31 +13,36 @@ public class Reply {
     private Long id;
 
     private Long userId;
-    private Long boardId;
     private String userName;
     private String content;
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
     private Integer likeCount;
+
+    @ManyToOne
+    @JoinColumn(name = "commentId")
+    private Comment comment;
+
+
+    @PrePersist
+    public void prePersist() {
+        this.updatedTime = LocalDateTime.now();
+    }
+
 
     public Reply() {
 
     }
 
-    public Reply(Long id, Long userId, Long boardId, String userName, String content, LocalDateTime updateTime, Integer likeCount) {
-        this.id = id;
-        this.userId = userId;
-        this.boardId = boardId;
-        this.userName = userName;
-        this.content = content;
-        this.updateTime = updateTime;
-        this.likeCount = likeCount;
+    @Override
+    public String toString() {
+        return "Reply{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", content='" + content + '\'' +
+                ", updatedTime=" + updatedTime +
+                ", likeCount=" + likeCount +
+                ", comment=" + comment.getId() +
+                '}';
     }
-
-    @PrePersist
-    public void prePersist() {
-        if (this.updateTime == null) {
-            this.updateTime = LocalDateTime.now();
-        }
-    }
-
 }

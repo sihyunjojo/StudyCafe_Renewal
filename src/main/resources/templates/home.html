@@ -116,24 +116,22 @@
                 <tbody>
                 <tr>
                     <td></td>
-                    <a href="product.html" th:href="@{|/product/${product.id}|}">
-                        <td th:each="prduct, iterationStat : ${products}" th:text="'BEST-' + ${iterationStat.count}">
-                            Best
-                        </td>
+                    <td th:each="product,iterationStat : ${products}">
+                        <a href="product.html" th:href="@{|/product/${product.id}|}" th:text="'BEST-' + ${iterationStat.count}">
                     </a>
                 </tr>
                 <tr>
                     <td></td>
                     <td th:each="product : ${products}">
-                        <a href="product.html" th:href="@{|/product/${product.id}|}">
+                    <a href="product.html" th:href="@{|/product/${product.id}|}">
                             <img th:src="@{|/img/${product.image}|}" th:alt="${product.image}" alt="이미지">
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <td>상품명</td>
-                    <a href="product.html" th:href="@{|/product/${product.id}|}">
-                        <td th:each="product : ${products}" th:text="${product.name}">상품명</td>
+                    <td th:each="product : ${products}">
+                    <a href="product.html" th:href="@{|/product/${product.id}|}" th:text="${product.name}">
                     </a>
                 </tr>
                 <tr>

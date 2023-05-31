@@ -30,3 +30,25 @@ table.type02 td{
 table.table .even{
     background: #efefef;
 }
+p{
+    opacity: 1;
+}
+
+
+textarea {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    resize: vertical;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #6c757d;
+    box-shadow: 0 0 5px rgba(108, 117, 125, 0.5);
+}
+``
+

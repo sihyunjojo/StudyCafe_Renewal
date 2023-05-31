@@ -8,5 +8,8 @@ create table cart_product
     total_price integer,
     update_time timestamp, --장바구니 내 상품의 수량이 변경된 날짜 및 시간
 
-    primary key (id)
+    FOREIGN KEY (cart_id) REFERENCES cart (id),
+    FOREIGN KEY (product_id) REFERENCES product (id),
+
+        primary key (id)
 );

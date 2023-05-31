@@ -7,11 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Board;
+import studycafe.studycaferenewal.domain.Comment;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.domain.Reply;
 import studycafe.studycaferenewal.repository.board.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
+import studycafe.studycaferenewal.service.board.CommentService;
+import studycafe.studycaferenewal.service.board.ReplyService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
@@ -23,6 +28,8 @@ import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
+    private final ReplyService replyService;
 
     @GetMapping
     public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
@@ -34,12 +41,22 @@ public class BoardController {
     }
 
     @GetMapping("/{boardId}")
-    public String board(@PathVariable long boardId, Model model) {
+    public String board(@Login Member loginMember, @PathVariable long boardId, Model model) {
         Board board = boardService.findById(boardId).orElseThrow();
         boardService.increaseReadCount(board);
         BoardForm boardForm = boardService.boardToBoardForm(board);
-        model.addAttribute("board", boardForm);
 
+        List<Comment> comments = commentService.findByBoardId(boardId);
+
+        List<Reply> AllReplys= new ArrayList<>();
+        for (Comment comment : comments) {
+            List<Reply> replies = replyService.getRepliesByCommentId(comment.getId()); // 해당 댓글에 대한 답변 목록 조회
+            comment.setReplies(replies); // 댓글 객체에 답변 목록 설정
+        }
+
+        model.addAttribute("loginMember", loginMember);
+        model.addAttribute("board", boardForm);
+        model.addAttribute("comments", comments);
         return "board/board";
     }
 

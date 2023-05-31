@@ -10,6 +10,8 @@ create table comment
     page_number integer,
     like_count integer,
 
+    FOREIGN KEY (board_id) REFERENCES board (id),
+    FOREIGN KEY (user_id) REFERENCES member (id),
 
     primary key (id)
 );
