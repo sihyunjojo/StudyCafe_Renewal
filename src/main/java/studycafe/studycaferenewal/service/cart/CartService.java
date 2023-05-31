@@ -45,6 +45,7 @@ public class CartService {
         Cart cart = new Cart();
         cart.setUserId(memberRepository.findFirstByUserId(member.getUserId()).orElseThrow().getId());
 
+        log.info("cart ={}", cart);
         cartRepository.save(cart);
         return cart;
     }

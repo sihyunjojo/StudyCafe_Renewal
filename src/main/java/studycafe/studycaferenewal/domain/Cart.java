@@ -14,21 +14,19 @@ public class Cart {
     private Long id;
 
     private Long userId;;
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedTime;
 
     public Cart() {
     }
 
-    public Cart(Long id, Long userId, LocalDateTime updateTime) {
+    public Cart(Long id, Long userId, LocalDateTime updatedTime) {
         this.id = id;
         this.userId = userId;
-        this.updateTime = updateTime;
+        this.updatedTime = updatedTime;
     }
 
     @PrePersist
     public void prePersist() {
-        if (this.updateTime == null) {
-            this.updateTime = LocalDateTime.now();
-        }
+        this.updatedTime = LocalDateTime.now();
     }
 }

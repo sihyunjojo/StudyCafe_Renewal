@@ -23,7 +23,11 @@
                         <input type="text" th:field="*{name}" class="form-control" placeholder="상품명"/>
                     </div>
                     <div class="col">
-                        <input type="text" th:field="*{category}" class="form-control" placeholder="카테고리"/>
+                        <select class="form-select" id = "category" th:field="*{category}">
+                            <option th:value></option>
+                            <option th:value="음료">음료</option>
+                            <option th:value="과자">과자</option>
+                        </select>
                     </div>
                     <div class="col">
                         <input type="text" th:field="*{minPrice}" class="form-control" placeholder="최소 가격"/>

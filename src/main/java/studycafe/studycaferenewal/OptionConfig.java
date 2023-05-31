@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import studycafe.studycaferenewal.argumentresolver.LoginMemberArgumentResolver;
 import studycafe.studycaferenewal.interceptor.LoginCheckInterceptor;
+import studycafe.studycaferenewal.interceptor.SessionInterceptor;
 
 import java.util.List;
 
@@ -34,6 +35,11 @@ public class OptionConfig implements WebMvcConfigurer {
                                 "/comment/**", "/reply/**","/comment",
                                 "/css/**", "/*.ico", "/error", "/**/*.jpg", "/template/template/**")
                 .addPathPatterns("/member/info");
+
+        registry.addInterceptor(new SessionInterceptor())
+                .addPathPatterns("/**") // 인터셉터를 적용할 URL 패턴 지정
+                .excludePathPatterns("/login"); // 예외 처리할 URL 패턴 지정
+
     }
 
 }

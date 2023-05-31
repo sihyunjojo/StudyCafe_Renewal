@@ -29,7 +29,6 @@ public class CartController {
         if (member == null) {
             return "redirect:/login";
         }
-        model.addAttribute(LOGIN_MEMBER, member);
 
         List<CartProduct> cartProducts = cartService.findCartProducts(member);
         List<CartProductForm> cartProductForms = cartService.cartProductToCartProductForm(cartProducts);
