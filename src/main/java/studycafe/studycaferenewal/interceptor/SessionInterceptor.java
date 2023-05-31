@@ -23,12 +23,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 
         if (session != null) {
             Member loginMember = (Member) session.getAttribute(LOGIN_MEMBER);
-            log.info("loginmember={}", loginMember);
-            // 모델에 세션 값을 추가합니다
             request.setAttribute("loginMember", loginMember);
-            log.info("request={}", request);
-
-
         }
         return true;
     }
