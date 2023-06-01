@@ -31,12 +31,28 @@ public class BoardController {
     private final CommentService commentService;
     private final ReplyService replyService;
 
-    @GetMapping
-    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
-        //boardSearch 검색할때 쓰일것
-        List<Board> boards = boardService.findSearchBoards(boardSearch);
+//    1. cond를 통해서 검색하기
+//    2. 그냥 초기 board가져오기
+//    3. click시 sort해주기
+
+    @GetMapping()
+    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, name = "sort") String sort, Model model) {
+        List<Board> boards;
+
+        if (sort == null) {
+            boards = boardService.findSearchBoards(boardSearch);
+        } else{
+            boards = boardService.findSearchedAndSortedBoards(boardSearch, sort);
+        }
+
+        log.info("sort = {}", sort);
+        log.info("boardSearch ={}", boardSearch);
+        log.info("boards = {}", boards);
+
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
         model.addAttribute("boards", boardForms);
+        model.addAttribute("boardSearch", boardSearch);
+
         return "board/boards";
     }
 
@@ -63,7 +79,7 @@ public class BoardController {
     @GetMapping("/add")
     public String addForm(@Login Member loginMember, Model model) {
         if (loginMember == null) {
-            return "redirect:/login?redirectURL=/board/add/";
+            return "redirect:/login?redirectURL=/board/add";
         }
         model.addAttribute("board", new Board());
         model.addAttribute(LOGIN_MEMBER, loginMember);

@@ -10,7 +10,7 @@
 <body>
 <header th:insert="~{template/header :: header_copy}"></header>
 <div class="border">
-  <form th:action="@{add}" method="POST">
+  <form th:action="@{add}" th:object="${product}" method="POST">
     <h1>상품 등록</h1>
     <!--        <th:block th:if="${error == '이미 사용 중인 아이디입니다.'}">-->
     <!--            <h2 th:text="${error}"></h2>-->
@@ -18,41 +18,38 @@
     <div class="form-group">
       <label for="name">상품명</label><br>
       <input type="text"
-             class="form-control" id="name" name="name" placeholder="name"
+             class="form-control" id="name" th:field="*{name}" placeholder="name"
              required>
     </div>
     <div class="form-group">
       <label for="category">종류</label><br>
-      <select class="form-select" id = "category" name="category" required>
+      <select class="form-select" id = "category" th:field="*{category}" required>
         <option th:value="음료">음료</option>
         <option th:value="과자">과자</option>
       </select>
-      <!--            <input type="text"-->
-      <!--                   class="form-control" id="category" name="category"-->
-      <!--                   placeholder="종류(그 내려주는 걸로보여주면)" required>-->
     </div>
     <div class="form-group">
       <label for="quantity">수량</label><br>
       <input type="text"
-             class="form-control" id="quantity" name="quantity"
+             class="form-control" id="quantity" th:field="*{quantity}"
              placeholder="수량" required>
     </div>
     <div class="form-group">
       <label for="price">가격</label><br>
       <input type="text"
-             class="form-control" id="price" name="price"
+             class="form-control" id="price" th:field="*{price}"
              placeholder="가격" required>
     </div>
     <div class="form-group">
       <label for="description">설명</label><br>
       <input type="text"
-             class="form-control" id="description" name="description"
+             class="form-control" id="description" th:field="*{description}"
              placeholder="설명">
     </div>
     <div class="form-group">
       <label for="image">이미지</label><br>
       <input type="text"
-             class="form-control" id="image" name="image"
+             class="form-control" id="image" th:field="*{image}"
              placeholder="이미지">
     </div>
     <button type="submit">등록</button>

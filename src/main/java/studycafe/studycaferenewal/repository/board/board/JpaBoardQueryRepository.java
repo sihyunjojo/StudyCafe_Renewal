@@ -1,5 +1,6 @@
 package studycafe.studycaferenewal.repository.board.board;
 
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -29,6 +30,31 @@ public class JpaBoardQueryRepository {
                         eqBoardCategory(cond.getCategory())
                 )
                 .fetch();
+    }
+
+    public List<Board> findAll(BoardSearchCond cond, String sort) {
+        return query.select(board)
+                .from(board)
+                .where(
+                        likeBoardTitle(cond.getTitle()),
+                        likeBoardCreatedUserName(cond.getUserName()),
+                        eqBoardCategory(cond.getCategory())
+                )
+                .orderBy(
+                        sortedBoardBySort(sort)
+                )
+                .fetch();
+    }
+
+    public OrderSpecifier<Integer> sortedBoardBySort(String sort) {
+        if (StringUtils.hasText(sort)) {
+            if ("readCount".equalsIgnoreCase(sort)) {
+                return board.readCount.desc();
+            } else if ("likeCount".equalsIgnoreCase(sort)) {
+                return board.likeCount.desc();
+            }
+        }
+        return null;
     }
 
     private BooleanExpression likeBoardTitle(String boardName) {

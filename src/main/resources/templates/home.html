@@ -102,9 +102,15 @@
             <hr>
 
             <form th:object="${productSearch}" method="get" class="form-inline" style="margin: 0; padding: 0;">
-                <div class="row" style="margin: auto">
+                <div class="row">
+                    <div class="col-auto">
+                        <label for="category">종류</label>
+                    </div>
                     <div class="col">
-                        <input type="text" th:field="*{category}" class="form-control" placeholder="카테고리"/>
+                        <select class="form-select" id="category" th:field="*{category}" required>
+                            <option th:value="음료">음료</option>
+                            <option th:value="과자">과자</option>
+                        </select>
                     </div>
                     <div class="col">
                         <button type="submit" class="btn btn-secondary mb-2">검색</button>
@@ -117,13 +123,14 @@
                 <tr>
                     <td></td>
                     <td th:each="product,iterationStat : ${products}">
-                        <a href="product.html" th:href="@{|/product/${product.id}|}" th:text="'BEST-' + ${iterationStat.count}">
-                    </a>
+                        <a href="product.html" th:href="@{|/product/${product.id}|}"
+                           th:text="'BEST-' + ${iterationStat.count}">
+                        </a>
                 </tr>
                 <tr>
                     <td></td>
                     <td th:each="product : ${products}">
-                    <a href="product.html" th:href="@{|/product/${product.id}|}">
+                        <a href="product.html" th:href="@{|/product/${product.id}|}">
                             <img th:src="@{|/img/${product.image}|}" th:alt="${product.image}" alt="이미지">
                         </a>
                     </td>
@@ -131,8 +138,8 @@
                 <tr>
                     <td>상품명</td>
                     <td th:each="product : ${products}">
-                    <a href="product.html" th:href="@{|/product/${product.id}|}" th:text="${product.name}">
-                    </a>
+                        <a href="product.html" th:href="@{|/product/${product.id}|}" th:text="${product.name}">
+                        </a>
                 </tr>
                 <tr>
                     <td>가격</td>

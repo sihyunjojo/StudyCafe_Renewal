@@ -33,7 +33,7 @@ public class OptionConfig implements WebMvcConfigurer {
                         ("/", "/login", "/logout",
                                 "/board", "/member/**", "/board/{boardId}", "board/add", "/product", "/product/{productId}","product/add",
                                 "/comment/**", "/reply/**","/comment",
-                                "/css/**", "/*.ico", "/error", "/**/*.jpg", "/template/template/**")
+                                "/css/**", "/*.ico", "/error", "/img/**", "/template/template/**")
                 .addPathPatterns("/member/info");
 
         registry.addInterceptor(new SessionInterceptor())

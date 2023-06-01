@@ -26,26 +26,30 @@ public class BoardService {
     private final JpaMemberRepository memberRepository;
     private final JpaBoardQueryRepository boardQueryRepository;
 
+    // home에서 사용
     public List<Board> findBoards() {
         List<Board> boards = boardRepository.findAll();
-        List<Board> notices = new ArrayList<>();
-
-        Iterator<Board> iterator = boards.iterator(); // 이걸 사용하지 않으면 반복문이 돌면서 사라지는 것때문에 오류 일으킴.
-        while (iterator.hasNext()) {
-            Board board = iterator.next();
-            if (board.getCategory().equals("공지사항")) {
-                iterator.remove();
-                notices.add(0, board);
-            }
-        }
-
-        boards.addAll(0, notices);
+        boardsToUpNoticeBoards(boards);
 
         return boards;
     }
 
+    //boards에서 사용
     public List<Board> findSearchBoards(BoardSearchCond cond) {
         List<Board> boards = boardQueryRepository.findAll(cond);
+        boardsToUpNoticeBoards(boards);
+
+        return boards;
+    }
+
+    public List<Board> findSearchedAndSortedBoards(BoardSearchCond searchCond, String sortCond) {
+        List<Board> boards = boardQueryRepository.findAll(searchCond, sortCond);
+        boardsToUpNoticeBoards(boards);
+
+        return boards;
+    }
+
+    private void boardsToUpNoticeBoards(List<Board> boards) {
         List<Board> notices = new ArrayList<>();
 
         Iterator<Board> iterator = boards.iterator(); // 이걸 사용하지 않으면 반복문이 돌면서 사라지는 것때문에 오류 일으킴.
@@ -53,17 +57,12 @@ public class BoardService {
             Board board = iterator.next();
             if (board.getCategory().equals("공지사항")) {
                 iterator.remove();
-                notices.add(0, board);
+                notices.add(notices.size(), board);
             }
         }
-
         boards.addAll(0, notices);
-
-
-
-
-        return boards;
     }
+
 
     public void addBoard(Board board) {
         board.setLikeCount(0);
