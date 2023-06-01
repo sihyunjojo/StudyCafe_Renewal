@@ -45,10 +45,6 @@ public class BoardController {
             boards = boardService.findSearchedAndSortedBoards(boardSearch, sort);
         }
 
-        log.info("sort = {}", sort);
-        log.info("boardSearch ={}", boardSearch);
-        log.info("boards = {}", boards);
-
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
         model.addAttribute("boards", boardForms);
         model.addAttribute("boardSearch", boardSearch);

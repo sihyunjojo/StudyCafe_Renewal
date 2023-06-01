@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static studycafe.studycaferenewal.domain.QProduct.product;
-
 @Slf4j
 @Service
 @Transactional
@@ -28,12 +26,16 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public List<Product> findSearchProducts(ProductSearchCond cond) {
-        return productQueryRepository.findAll(cond);
+    public List<Product> findSearchedProducts(ProductSearchCond cond) {
+        return productQueryRepository.findSearchedProducts(cond);
+    }
+
+    public List<Product> findSearchedAndSortedProducts(ProductSearchCond cond, String sort) {
+        return productQueryRepository.findSearchedAndSortedProducts(cond, sort);
     }
 
     public List<Product> findProductsTop5LikeCount(ProductSearchCond cond){
-        return productQueryRepository.findTop5LikeCount(cond);}
+        return productQueryRepository.findTop5LikeCountProducts(cond);}
 
     public Optional<Product> findById(long productId) {
         return productRepository.findById(productId);

@@ -14,8 +14,6 @@
         <h3> 메인 상품 </h3>
         <div style="float: right;"> <button th:onclick="|location.href='@{/cart}'|" type="button" class="btn btn-secondary mb-2">장바구니</button> </div>
         <hr>
-
-
         <div>
             <form th:object="${productSearch}" method="get" class="form-inline">
                 <div class="row" style="float: right; margin-right: 0px">
@@ -24,7 +22,7 @@
                     </div>
                     <div class="col">
                         <select class="form-select" id = "category" th:field="*{category}">
-                            <option th:value></option>
+                            <option th:value>-</option>
                             <option th:value="음료">음료</option>
                             <option th:value="과자">과자</option>
                         </select>
@@ -37,12 +35,25 @@
                         <input type="text" th:field="*{maxPrice}" class="form-control" placeholder="최대 가격"/>
                     </div>
                     <div class="col">
-                        <input type="text" th:field="*{like_count}" class="form-control" placeholder="좋아요 수"/>
+                        <input type="text" th:field="*{minLikeCount}" class="form-control" placeholder="최소 좋아요 수"/>
                     </div>
                     <div class="col">
                         <button type="submit" class="btn btn-secondary mb-2">검색</button>
                     </div>
                 </div>
+            </form>
+        </div>
+        <br>
+        <br>
+        <div style="float:right">
+            <form th:href="@{/product}" th:object="${productSearch}" method="get">
+                <input type="hidden" th:name="name" th:field="*{name}"/>
+                <input type="hidden" th:name="minPrice" th:field="*{minPrice}"/>
+                <input type="hidden" th:name="maxPrice" th:field="*{maxPrice}"/>
+                <input type="hidden" th:name="category" th:field="*{category}"/>
+                <input type="hidden" th:name="minLikeCount" th:field="*{minLikeCount}"/>
+                <input type="hidden" th:name="sort" th:value="readCount"/>
+                <button class="btn btn-outline-secondary mb-2" type="submit" th:text="조회수순" />
             </form>
         </div>
 

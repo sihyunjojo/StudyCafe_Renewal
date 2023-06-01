@@ -21,7 +21,7 @@ public class JpaBoardQueryRepository {
     }
 
 
-    public List<Board> findAll(BoardSearchCond cond) {
+    public List<Board> findSearchedBoards(BoardSearchCond cond) {
         return query.select(board)
                 .from(board)
                 .where(
@@ -32,7 +32,7 @@ public class JpaBoardQueryRepository {
                 .fetch();
     }
 
-    public List<Board> findAll(BoardSearchCond cond, String sort) {
+    public List<Board> findSearchedAndSortedBoards(BoardSearchCond cond, String sort) {
         return query.select(board)
                 .from(board)
                 .where(
@@ -46,7 +46,7 @@ public class JpaBoardQueryRepository {
                 .fetch();
     }
 
-    public OrderSpecifier<Integer> sortedBoardBySort(String sort) {
+    public OrderSpecifier<?> sortedBoardBySort(String sort) {
         if (StringUtils.hasText(sort)) {
             if ("readCount".equalsIgnoreCase(sort)) {
                 return board.readCount.desc();

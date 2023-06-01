@@ -22,10 +22,17 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public String products(@ModelAttribute("productSearch") ProductSearchCond productSearch, Model model) {
-        //productSearch 검색할때 쓰일것
-        List<Product> products = productService.findSearchProducts(productSearch);
+    public String products(@ModelAttribute("productSearch") ProductSearchCond productSearch, @RequestParam(name = "sort", required = false) String sort, Model model) {
+        List<Product> products;
+
+        if (sort == null) {
+            products = productService.findSearchedProducts(productSearch);
+        } else {
+            products = productService.findSearchedAndSortedProducts(productSearch, sort);
+        }
+
         model.addAttribute("products", products);
+        model.addAttribute("productSearch", productSearch);
         return "product/products";
     }
 
@@ -50,7 +57,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String add(Product product, Model model) {
+    public String add(Product product) {
         log.info("product={}", product);
         productService.addProduct(product);
         return "redirect:/product"; // 일단 home으로 보내주자 나중에 product목록으로 보내주고

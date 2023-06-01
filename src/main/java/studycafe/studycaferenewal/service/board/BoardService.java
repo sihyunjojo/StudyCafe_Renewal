@@ -36,14 +36,14 @@ public class BoardService {
 
     //boards에서 사용
     public List<Board> findSearchBoards(BoardSearchCond cond) {
-        List<Board> boards = boardQueryRepository.findAll(cond);
+        List<Board> boards = boardQueryRepository.findSearchedBoards(cond);
         boardsToUpNoticeBoards(boards);
 
         return boards;
     }
 
     public List<Board> findSearchedAndSortedBoards(BoardSearchCond searchCond, String sortCond) {
-        List<Board> boards = boardQueryRepository.findAll(searchCond, sortCond);
+        List<Board> boards = boardQueryRepository.findSearchedAndSortedBoards(searchCond, sortCond);
         boardsToUpNoticeBoards(boards);
 
         return boards;

@@ -16,7 +16,7 @@
         <div>
             <form th:object="${boardSearch}" method="get" class="form-inline">
                 <button class="btn btn-primary" onclick="location.href='/board/add'" type="button" >글 작성</button>
-                <div class="row" style="float: right; margin-right: 0px">
+                <div class="row" style="float: right;">
                     <div class="col">
                         <input class="form-control" type="text" id = "title" th:field="*{title}" placeholder="제목"/>
                     </div>
@@ -31,18 +31,22 @@
                         </select>
                     </div>
                     <div class="col">
-                        <button type="submit">검색</button>
+                        <button type="submit" class="btn btn-secondary mb-2">검색</button>
                     </div>
                 </div>
             </form>
-            <form th:href="@{/board}" th:object="${boardSearch}" method="get" style="float:right">
+        </div>
+        <div style="float:right">
+            <form th:href="@{/board}" th:object="${boardSearch}" method="get">
                 <input type="hidden" th:name="userName" th:field="*{userName}"/>
                 <input type="hidden" th:name="title" th:field="*{title}"/>
                 <input type="hidden" th:name="category" th:field="*{category}"/>
                 <input type="hidden" th:name="sort" th:value="readCount"/>
-                <input type="submit" th:value="조회수순" style="font-weight: bold; background-color: white" />
+                <button class="btn btn-outline-secondary mb-2" type="submit" th:text="조회수순" />
             </form>
         </div>
+        <br>
+
 
         <section>
             <table class="table">

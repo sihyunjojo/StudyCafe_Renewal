@@ -8,13 +8,12 @@ public class ProductSearchCond {
     private String category;
     private Integer maxPrice;
     private Integer minPrice;
-    private Integer like_count;
-
-    public ProductSearchCond(String name, String category, Integer maxPrice, Integer minPrice, Integer like_count) {
+    private Integer minLikeCount;
+    public ProductSearchCond(String name, String category, Integer maxPrice, Integer minPrice, Integer minLikeCount) {
         this.name = name;
         this.category = category;
         this.maxPrice = maxPrice;
         this.minPrice = minPrice;
-        this.like_count = like_count;
+        this.minLikeCount = minLikeCount;
     }
 }

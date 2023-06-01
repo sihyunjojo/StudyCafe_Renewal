@@ -1,5 +1,6 @@
 package studycafe.studycaferenewal.repository.product;
 
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -20,7 +21,7 @@ public class JpaProductQueryRepository  {
     }
 
 
-    public List<Product> findAll(ProductSearchCond cond) {
+    public List<Product> findSearchedProducts(ProductSearchCond cond) {
         return query.select(product)
                 .from(product)
                 .where(
@@ -28,12 +29,28 @@ public class JpaProductQueryRepository  {
                         eqProductCategory(cond.getCategory()),
                         leMaxPrice(cond.getMaxPrice()),
                         geMinPrice(cond.getMinPrice()),
-                        geLikeCount(cond.getLike_count())
+                        geLikeCount(cond.getMinLikeCount())
                 )
                 .fetch();
     }
 
-    public List<Product> findTop5LikeCount(ProductSearchCond cond) {
+    public List<Product> findSearchedAndSortedProducts(ProductSearchCond cond, String sort) {
+        return query.select(product)
+                .from(product)
+                .where(
+                        likeProductName(cond.getName()),
+                        eqProductCategory(cond.getCategory()),
+                        leMaxPrice(cond.getMaxPrice()),
+                        geMinPrice(cond.getMinPrice()),
+                        geLikeCount(cond.getMinLikeCount())
+                )
+                .orderBy(
+                        sortedProductBySort(sort)
+                )
+                .fetch();
+    }
+
+    public List<Product> findTop5LikeCountProducts(ProductSearchCond cond) {
         return query.select(product)
                 .from(product)
                 .where(
@@ -42,6 +59,17 @@ public class JpaProductQueryRepository  {
                 .orderBy(product.likeCount.desc())
                 .limit(5)
                 .fetch();
+    }
+
+    private OrderSpecifier<?> sortedProductBySort(String sort) {
+        if (StringUtils.hasText(sort)) {
+            if ("readCount".equalsIgnoreCase(sort)) {
+                return product.readCount.desc();
+            } else if ("likeCount".equalsIgnoreCase(sort)) {
+                return product.likeCount.desc();
+            }
+        }
+        return null;
     }
 
     private BooleanExpression likeProductName(String productName) {
