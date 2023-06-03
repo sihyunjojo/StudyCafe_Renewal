@@ -4,6 +4,7 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import studycafe.studycaferenewal.domain.Board;
 import studycafe.studycaferenewal.repository.board.board.dto.BoardSearchCond;
@@ -52,6 +53,8 @@ public class JpaBoardQueryRepository {
                 return board.readCount.desc();
             } else if ("likeCount".equalsIgnoreCase(sort)) {
                 return board.likeCount.desc();
+            } else if ("createdTime".equalsIgnoreCase(sort)) {
+                return board.createdTime.desc();
             }
         }
         return null;

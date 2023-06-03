@@ -83,7 +83,12 @@ button th:onclick="|location.href='/board/add'|"></button
 게시판 댓글, 답글 (DB고쳐야함)
 
 ## 6/1
-게시판에서 좋아요순,조회순,이런거 만들어주기
+게시판,상품(boards,products)에서 좋아요순,조회순,이런거 만들어주기
+
+## 6/2 
+팝업
+formatter로 datetime바꾸기
+
 
 ### 수정해야할 것들
 장바구니 넣고 원하면 상품페이지 그대로 두고, 아니면 장바구니로 가게 해주는 기능만들가

@@ -23,7 +23,7 @@ public class ProductService {
     private final JpaProductQueryRepository productQueryRepository;
 
     public List<Product> findProducts() {
-        return productRepository.findAll();
+        return productRepository.findAllByOrderByUpdatedTimeDesc();
     }
 
     public List<Product> findSearchedProducts(ProductSearchCond cond) {

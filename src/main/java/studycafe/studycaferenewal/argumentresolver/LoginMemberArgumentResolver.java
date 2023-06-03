@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
-    public boolean supportsParameter(MethodParameter parameter) { //@Login Member loginMember이였으니까
+    public boolean supportsParameter(MethodParameter parameter) {//@Login Member loginMember이였으니까
         log.info("supportsParameter 실행");
 
         boolean hasLoginAnnotation = parameter.hasParameterAnnotation(Login.class); //@Login인지 확인

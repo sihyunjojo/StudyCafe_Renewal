@@ -14,6 +14,8 @@ import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
 import studycafe.studycaferenewal.service.product.ProductService;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
@@ -26,16 +28,18 @@ public class HomeController {
     private final BoardService boardService;
     private final ProductService productService;
 
-//    @GetMapping("/")
-    public String homeForm(@SessionAttribute(name = LOGIN_MEMBER, required = false) Member loginMember, Model model) {
-        if (loginMember != null) {
-            model.addAttribute(LOGIN_MEMBER, loginMember);
-        }
-        return "home";
-    }
-
     @GetMapping("/")
-    public String homeLoginV5ArgumentResolver(@Login Member loginMember, @ModelAttribute("productSearch") ProductSearchCond productSearch, Model model) {
+    public String home(HttpServletRequest request, @Login Member loginMember, @ModelAttribute("productSearch") ProductSearchCond productSearch, Model model) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("popupShown") && cookie.getValue().equals("true")) {
+                    // 이미 팝업을 보았으면 홈 화면으로 이동
+                    log.info("cookie={},{}",cookie.getValue(), cookie.getName());
+                }
+            }
+        }
+
         if (loginMember != null) {
             model.addAttribute(LOGIN_MEMBER, loginMember);
         }

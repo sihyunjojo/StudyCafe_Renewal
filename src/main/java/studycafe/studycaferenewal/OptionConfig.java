@@ -7,6 +7,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import studycafe.studycaferenewal.argumentresolver.LoginMemberArgumentResolver;
+import studycafe.studycaferenewal.formatter.LocalDateTimeFormatter;
 import studycafe.studycaferenewal.interceptor.LoginCheckInterceptor;
 import studycafe.studycaferenewal.interceptor.SessionInterceptor;
 
@@ -21,7 +22,7 @@ public class OptionConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-//        registry.addFormatter(new DateFormatter());
+        registry.addFormatter(new LocalDateTimeFormatter());
     }
 
     @Override
@@ -30,7 +31,7 @@ public class OptionConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns
-                        ("/", "/login", "/logout",
+                        ("/", "/login", "/logout","/popup/**",
                                 "/board", "/member/**", "/board/{boardId}", "board/add", "/product", "/product/{productId}","product/add",
                                 "/comment/**", "/reply/**","/comment",
                                 "/css/**", "/*.ico", "/error", "/img/**", "/template/template/**")

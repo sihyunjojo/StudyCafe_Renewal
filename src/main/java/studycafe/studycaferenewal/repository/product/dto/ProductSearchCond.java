@@ -9,11 +9,14 @@ public class ProductSearchCond {
     private Integer maxPrice;
     private Integer minPrice;
     private Integer minLikeCount;
-    public ProductSearchCond(String name, String category, Integer maxPrice, Integer minPrice, Integer minLikeCount) {
+    private String sort;
+
+    public ProductSearchCond(String name, String category, Integer maxPrice, Integer minPrice, Integer minLikeCount, String sort) {
         this.name = name;
         this.category = category;
         this.maxPrice = maxPrice;
         this.minPrice = minPrice;
         this.minLikeCount = minLikeCount;
+        this.sort = sort;
     }
 }

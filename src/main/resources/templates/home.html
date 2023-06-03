@@ -3,6 +3,12 @@
 <head>
     <title>Home</title>
     <div th:insert="~{template/styleCss :: css_copy}"></div>
+    <script>
+        // 홈 화면 로딩 시 팝업 창 열기
+        window.onload = function() {
+            window.open("/popup", "mainPopUp", "width=500, height=650, status=no, scrollbars=no, toolbar=no, location=no, menubar=no");
+        }
+    </script>
 </head>
 
 <body>
@@ -70,7 +76,7 @@
                         th:class="${board.category == '공지사항'} ? 'even' : ''">
                         <td><a href="board.html" th:href="@{|/board/${board.id}|}" th:text="${board.title}">제목</a></td>
                         <td th:text="${board.userName}"> 작성자</td>
-                        <td th:text="${board.createdTime}"> 작성일</td>
+                        <td th:text="${{board.createdTime}}"> 작성일</td>
                         <th th:text="${board.readCount}"> 1</th>
                     </tr>
                     </tbody>

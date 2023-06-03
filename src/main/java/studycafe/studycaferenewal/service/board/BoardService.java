@@ -28,7 +28,8 @@ public class BoardService {
 
     // home에서 사용
     public List<Board> findBoards() {
-        List<Board> boards = boardRepository.findAll();
+//        List<Board> boards = boardRepository.findAll();
+        List<Board> boards = boardRepository.findAllByOrderByCreatedTimeDesc();
         boardsToUpNoticeBoards(boards);
 
         return boards;

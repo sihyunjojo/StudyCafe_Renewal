@@ -36,10 +36,18 @@ public class BoardController {
 //    3. click시 sort해주기
 
     @GetMapping()
-    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, name = "sort") String sort, Model model) {
+    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
+        List<Board> boards = boardService.findBoards();
+        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
+        model.addAttribute("boards", boardForms);
+        return "board/boards";
+    }
+
+    @GetMapping("/search")
+    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false) String sort, Model model) {
         List<Board> boards;
 
-        if (sort == null) {
+        if (sort.isEmpty()) {
             boards = boardService.findSearchBoards(boardSearch);
         } else{
             boards = boardService.findSearchedAndSortedBoards(boardSearch, sort);

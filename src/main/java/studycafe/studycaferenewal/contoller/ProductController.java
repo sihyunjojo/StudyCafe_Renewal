@@ -21,11 +21,18 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping
-    public String products(@ModelAttribute("productSearch") ProductSearchCond productSearch, @RequestParam(name = "sort", required = false) String sort, Model model) {
+    @GetMapping()
+    public String products(@ModelAttribute("productSearch") ProductSearchCond productSearch, Model model) {
+        List<Product> products = productService.findProducts();
+        model.addAttribute("products", products);
+        return "product/products";
+
+    }
+    @GetMapping("/search")
+    public String products(@ModelAttribute("productSearch") ProductSearchCond productSearch, @RequestParam(name = "sort") String sort, Model model) {
         List<Product> products;
 
-        if (sort == null) {
+        if (sort.isEmpty()) {
             products = productService.findSearchedProducts(productSearch);
         } else {
             products = productService.findSearchedAndSortedProducts(productSearch, sort);
