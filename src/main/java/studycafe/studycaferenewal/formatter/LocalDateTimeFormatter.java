@@ -12,9 +12,10 @@ import java.util.Locale;
 public class LocalDateTimeFormatter implements Formatter<LocalDateTime> {
     @Override
     public LocalDateTime parse(String text, Locale locale) throws ParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        return LocalDateTime.parse(text, formatter);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//
+//        return LocalDateTime.parse(text, formatter);
+        return null;
     }
 
     @Override

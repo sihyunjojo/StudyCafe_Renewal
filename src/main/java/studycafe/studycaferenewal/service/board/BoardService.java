@@ -27,6 +27,15 @@ public class BoardService {
     private final JpaBoardQueryRepository boardQueryRepository;
 
     // home에서 사용
+
+    // 실험중
+    public List<Board> getBoardList(int page, int perPageNum) { // 현재페이지, 페이지당 몇개를 보여주는지
+        List<Board> boards = boardRepository.findAllByOrderByCreatedTimeDesc();
+
+
+        return boards.subList(page-1, page-1 + perPageNum);
+    }
+
     public List<Board> findBoards() {
 //        List<Board> boards = boardRepository.findAll();
         List<Board> boards = boardRepository.findAllByOrderByCreatedTimeDesc();
@@ -70,7 +79,11 @@ public class BoardService {
         board.setReadCount(0);
         board.setUserName(memberRepository.findById(board.getUserId()).orElseThrow().getName());
         boardRepository.save(board);
-    }
+        try {
+            Thread.sleep(500); // 1초 동안 스레드 일시 정지
+        } catch (InterruptedException e) {
+            // 예외 처리
+        }    }
 
     public Optional<Board> findById(long boardId) {
         return boardRepository.findById(boardId);

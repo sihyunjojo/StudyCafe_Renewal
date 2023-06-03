@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
-import studycafe.studycaferenewal.domain.Board;
-import studycafe.studycaferenewal.domain.Comment;
-import studycafe.studycaferenewal.domain.Member;
-import studycafe.studycaferenewal.domain.Reply;
+import studycafe.studycaferenewal.domain.*;
 import studycafe.studycaferenewal.repository.board.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
@@ -31,11 +28,30 @@ public class BoardController {
     private final CommentService commentService;
     private final ReplyService replyService;
 
-//    1. cond를 통해서 검색하기
-//    2. 그냥 초기 board가져오기
-//    3. click시 sort해주기
-
+    private static final int DISPLAY_PAGE_NUM = 2;    // 페이지 번호 표시 개수, 나중에 값 바꾸는 기능 넣기
+    // 실험중
     @GetMapping()
+    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, Model model) {
+        List<Board> boards = boardService.findBoards();
+
+        List<Board> boardList = boardService.getBoardList(page, DISPLAY_PAGE_NUM); //이게 맞나?
+
+        List<BoardForm> boardForms = boardService.boardsToBoardForms(boardList);
+        model.addAttribute("boards", boardForms);
+
+        // service
+        log.info("page = {}", page);
+
+        int totalCount = boards.size();
+
+        PageMaker pageMaker = new PageMaker(totalCount, page, DISPLAY_PAGE_NUM);
+        log.info("pagemarker = {}", pageMaker);
+        model.addAttribute("pageMaker", pageMaker);
+
+        return "board/boards";
+    }
+
+    //@GetMapping()
     public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
         List<Board> boards = boardService.findBoards();
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
