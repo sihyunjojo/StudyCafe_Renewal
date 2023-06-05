@@ -43,7 +43,8 @@
             <input type="hidden" th:name="userName" th:field="*{userName}"/>
             <input type="hidden" th:name="title" th:field="*{title}"/>
             <input type="hidden" th:name="category" th:field="*{category}"/>
-            <button class="btn btn-outline-secondary mb-2" type="submit" name="sort" value="readCount" th:text="조회수순" />
+            <input type="hidden" th:name="sort" th:value="readCount"/>
+            <button class="btn btn-outline-secondary mb-2" type="submit" th:text="조회수순" />
         </form>
         <div>
             <button class="btn btn-primary" onclick="location.href='/board/add'" type="button" >글 작성</button>
@@ -65,8 +66,7 @@
                     </div>
                     <div class="col">
                         <select class="form-select" id="sort" th:field="*{sort}">
-                            <option th:value>정렬순</option>
-                            <option th:value="createdTime">최신순</option>
+                            <option th:value>최신순</option>
                             <option th:value="readCount">조회수순</option>
                             <option th:value="likeCount">좋아요순</option>
                         </select>
@@ -115,42 +115,51 @@
                 <ul>
                     <!-- 이전 페이지로 이동 -->
                     <li class="row" th:if="${pageMaker.startPage > 1}">
-                        <a th:href="@{${'/board?page=' + (pageMaker.startPage - 1)}}">&lt;</a>
+<!--                        <a th:href="@{${'/board?page=' + (pageMaker.startPage - 1)}}">&lt;</a>-->
+<!--                        <a th:href="@{${#httpServletRequest.requestURI + '?page ='+ (pageMaker.startPage - 1)}}">Link</a>-->
+                        <form th:action="@{|${#httpServletRequest.requestURI}}" th:object="${boardSearch}" method="get">
+                            <input type="hidden" name="page" th:value="${pageMaker.startPage -1}" />
+                            <input type="hidden" th:name="userName" th:field="*{userName}"/>
+                            <input type="hidden" th:name="title" th:field="*{title}"/>
+                            <input type="hidden" th:name="category" th:field="*{category}"/>
+                            <input type="hidden" th:name="sort" th:field="*{sort}"/>
+                            <button type="submit" style=" border: none; outline: none; background-color: white; font-weight: bold; color: #0a53be">&lt;</button>
+                        </form>
+<!--                        <a th:href="@{|${#httpServletRequest.requestURI}?page=${pageMaker.startPage - 1}|}">&lt;</a>-->
                     </li>
 
                     <!-- 페이지 번호 출력 -->
                     <li class="row" th:each="page : ${#numbers.sequence(pageMaker.startPage, pageMaker.endPage)}">
-                        <a th:href="@{${'/board?page=' + page}}">[[${page}]]</a>
+<!--                        <a th:href="@{${'/board?page=' + page}}">[[${page}]]</a>-->
+<!--                        <a th:href="@{|${#httpServletRequest.requestURI}?page=${page}|}">[[${page}]]</a>-->
+                        <form th:action="@{${#httpServletRequest.requestURI}}" th:object="${boardSearch}" method="get">
+                            <input type="hidden" name="page" th:value="${page}" />
+                            <input type="hidden" th:name="userName" th:field="*{userName}"/>
+                            <input type="hidden" th:name="title" th:field="*{title}"/>
+                            <input type="hidden" th:name="category" th:field="*{category}"/>
+                            <input type="hidden" th:name="sort" th:field="*{sort}"/>
+                            <button type="submit" style=" border: none; outline: none; background-color: white; font-weight: bold; color: #0a53be">[[${page}]]</button>
+                        </form>
                     </li>
 
                     <!-- 다음 페이지로 이동 -->
                     <li class="row" th:if="${pageMaker.endPage < pageMaker.totalPages}">
-                        <a th:href="@{${'/board?page=' + (pageMaker.endPage + 1)}}">&gt;</a>
+<!--                        <a th:href="@{${'/board?page=' + (pageMaker.endPage + 1)}}">&gt;</a>-->
+                        <form th:action="@{|${#httpServletRequest.requestURI}}" th:object="${boardSearch}" method="get">
+                            <input type="hidden" name="page" th:value="${pageMaker.endPage + 1}" />
+                            <input type="hidden" th:name="userName" th:field="*{userName}"/>
+                            <input type="hidden" th:name="title" th:field="*{title}"/>
+                            <input type="hidden" th:name="category" th:field="*{category}"/>
+                            <input type="hidden" th:name="sort" th:field="*{sort}"/>
+                            <button type="submit" style=" border: none; outline: none; background-color: white; font-weight: bold; color: #0a53be">&gt;</button>
+                        </form>
+<!--                        <a th:href="@{|${#httpServletRequest.requestURI}?page=${pageMaker.endPage + 1}|}">&gt;</a>-->
                     </li>
                 </ul>
             </div>
 
-<!--            페이지 번호-->
-<!--            <div class="col-md-offset-3">-->
-<!--                <ul class="pagination">-->
-<!--                    <c:if test="${pageMaker.prev}">-->
-<!--                        <li><a href="BoardList${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>-->
-<!--                    </c:if>-->
-
-<!--                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">-->
-<!--                        <li>-->
-<!--                            <a href="BoardList${pageMaker.makeQuery(idx)}">${idx}</a>-->
-<!--                        </li>-->
-<!--                    </c:forEach>-->
-
-<!--                    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">-->
-<!--                        <li><a href="BoardList${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>-->
-<!--                    </c:if>-->
-<!--                </ul>-->
-<!--            </div>-->
 
             <div style="float: right;"> <button th:onclick="|location.href='@{/}'|" type="button" class="btn btn-secondary mb-2">메인 화면</button> </div>
-
         </section>
     </div>
 </body>

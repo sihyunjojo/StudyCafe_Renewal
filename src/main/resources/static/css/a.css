@@ -5,6 +5,7 @@ div.image-wrapper {
 a {
     text-decoration: none;
 }
+
 table {
     width: 100%;
     margin-bottom: 1rem;
@@ -33,7 +34,6 @@ table.table .even{
 p{
     opacity: 1;
 }
-
 
 textarea {
     padding: 10px;

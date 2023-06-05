@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.*;
 import studycafe.studycaferenewal.repository.board.board.dto.BoardSearchCond;
@@ -28,53 +29,78 @@ public class BoardController {
     private final CommentService commentService;
     private final ReplyService replyService;
 
-    private static final int DISPLAY_PAGE_NUM = 2;    // 페이지 번호 표시 개수, 나중에 값 바꾸는 기능 넣기
-    // 실험중
+    private static final int DISPLAY_PAGE_NUM = 10;    // 보여줄 아래 페이지 번호 개수
+    private static final int PER_PAGE_NUM = 10;    // 페이지당 보여줄 게시판 개수
+
     @GetMapping()
     public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, Model model) {
-        List<Board> boards = boardService.findBoards();
+        List<Board> communities = boardService.getBoardsByCategoryByCreatedTimeDesc("커뮤니티");
+        List<Board> notices = boardService.getBoardsByCategoryByCreatedTimeDesc("공지사항");
 
-        List<Board> boardList = boardService.getBoardList(page, DISPLAY_PAGE_NUM); //이게 맞나?
+        int communitiesTotalCount = communities.size();
+        List<Board> communityBoardList = boardService.getBoardListByCategory(page, PER_PAGE_NUM, communitiesTotalCount, "커뮤니티"); //이게 맞나?
+
+        List<Board> boardList = communityBoardList;
+        boardList.addAll(0, notices);
 
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boardList);
         model.addAttribute("boards", boardForms);
 
-        // service
-        log.info("page = {}", page);
 
-        int totalCount = boards.size();
-
-        PageMaker pageMaker = new PageMaker(totalCount, page, DISPLAY_PAGE_NUM);
-        log.info("pagemarker = {}", pageMaker);
+        PageMaker pageMaker = new PageMaker(communitiesTotalCount, page, PER_PAGE_NUM, DISPLAY_PAGE_NUM);
         model.addAttribute("pageMaker", pageMaker);
 
-        return "board/boards";
-    }
+        log.info("pagemarker = {}", pageMaker);
 
-    //@GetMapping()
-    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
-        List<Board> boards = boardService.findBoards();
-        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
-        model.addAttribute("boards", boardForms);
         return "board/boards";
     }
 
     @GetMapping("/search")
-    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false) String sort, Model model) {
-        List<Board> boards;
+    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, RedirectAttributes redirectAttributes, Model model) {
 
-        if (sort.isEmpty()) {
-            boards = boardService.findSearchBoards(boardSearch);
-        } else{
-            boards = boardService.findSearchedAndSortedBoards(boardSearch, sort);
+        List<Board> findBoards = boardService.findSearchedAndSortedBoards(boardSearch);
+        List<Board> notices = boardService.getBoardsByCategoryByCreatedTimeDesc("공지사항");
+
+        List<Board> findBoardList = boardService.getBoardListByFindBoards(page, PER_PAGE_NUM, findBoards.size(), boardSearch);
+        List<Board> boardList = findBoardList;
+
+        // 공지사항을 검색했을 시에 2번 안 띄우게
+        if (!boardSearch.getCategory().equals("공지사항")) {
+            log.info("findBoard  ={}", boardSearch.getCategory());
+            boardList.addAll(0, notices);
         }
 
-        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
+        PageMaker pageMaker = new PageMaker(findBoards.size(), page, PER_PAGE_NUM, DISPLAY_PAGE_NUM);
+
+        List<BoardForm> boardForms = boardService.boardsToBoardForms(boardList);
+        model.addAttribute("pageMaker", pageMaker);
         model.addAttribute("boards", boardForms);
         model.addAttribute("boardSearch", boardSearch);
+        log.info("pagemaker = {}", pageMaker);
 
         return "board/boards";
     }
+
+
+//    //@GetMapping()
+//    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
+//        List<Board> boards = boardService.findBoards();
+//        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
+//        model.addAttribute("boards", boardForms);
+//        return "board/boards";
+//    }
+//
+//    //    @GetMapping("/search")
+//    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false) String sort, Model model) {
+//        List<Board> boards = boardService.findSearchedAndSortedBoards(boardSearch);
+//
+//        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
+//        model.addAttribute("boards", boardForms);
+//        model.addAttribute("boardSearch", boardSearch);
+//
+//        return "board/boards";
+//    }
+
 
     @GetMapping("/{boardId}")
     public String board(@Login Member loginMember, @PathVariable long boardId, Model model) {
@@ -84,7 +110,7 @@ public class BoardController {
 
         List<Comment> comments = commentService.findByBoardId(boardId);
 
-        List<Reply> AllReplys= new ArrayList<>();
+        List<Reply> AllReplys = new ArrayList<>();
         for (Comment comment : comments) {
             List<Reply> replies = replyService.getRepliesByCommentId(comment.getId()); // 해당 댓글에 대한 답변 목록 조회
             comment.setReplies(replies); // 댓글 객체에 답변 목록 설정

@@ -22,18 +22,8 @@ public class JpaBoardQueryRepository {
     }
 
 
-    public List<Board> findSearchedBoards(BoardSearchCond cond) {
-        return query.select(board)
-                .from(board)
-                .where(
-                        likeBoardTitle(cond.getTitle()),
-                        likeBoardCreatedUserName(cond.getUserName()),
-                        eqBoardCategory(cond.getCategory())
-                )
-                .fetch();
-    }
-
-    public List<Board> findSearchedAndSortedBoards(BoardSearchCond cond, String sort) {
+    // 기본이 최신순임.
+    public List<Board> findSearchedAndSortedBoards(BoardSearchCond cond) {
         return query.select(board)
                 .from(board)
                 .where(
@@ -42,7 +32,8 @@ public class JpaBoardQueryRepository {
                         eqBoardCategory(cond.getCategory())
                 )
                 .orderBy(
-                        sortedBoardBySort(sort)
+                        sortedBoardBySort(cond.getSort()),
+                        board.createdTime.desc()
                 )
                 .fetch();
     }
@@ -53,11 +44,9 @@ public class JpaBoardQueryRepository {
                 return board.readCount.desc();
             } else if ("likeCount".equalsIgnoreCase(sort)) {
                 return board.likeCount.desc();
-            } else if ("createdTime".equalsIgnoreCase(sort)) {
-                return board.createdTime.desc();
             }
         }
-        return null;
+        return board.createdTime.desc();
     }
 
     private BooleanExpression likeBoardTitle(String boardName) {
@@ -78,7 +67,7 @@ public class JpaBoardQueryRepository {
         if (StringUtils.hasText(category)) {
             return board.category.eq(category);
         }
-        return null;
+        return board.category.eq("커뮤니티");
     }
 
 

@@ -29,15 +29,31 @@ public class BoardService {
     // home에서 사용
 
     // 실험중
-    public List<Board> getBoardList(int page, int perPageNum) { // 현재페이지, 페이지당 몇개를 보여주는지
-        List<Board> boards = boardRepository.findAllByOrderByCreatedTimeDesc();
+    public List<Board> getBoardListByCategory(int page, int perPageNum, int boardsTotalCount, String category) { // 현재페이지, 페이지당 몇개를 보여주는지
+        List<Board> boards = boardRepository.findAllByCategoryOrderByCreatedTimeDesc(category);
+
+        int startBoard = (page - 1) * perPageNum;
+        int endBoard = Math.min(page * perPageNum, boardsTotalCount);
+        return boards.subList(startBoard, endBoard);
+    }
 
 
-        return boards.subList(page-1, page-1 + perPageNum);
+    public List<Board> getBoardListByFindBoards(int page, int perPageNum, int boardsTotalCount, BoardSearchCond cond) {
+        // searchCond의 category에서 아무것도 없으면 커뮤니티가 기본 값임.
+        List<Board> findBoards = boardQueryRepository.findSearchedAndSortedBoards(cond);
+        log.info("findboards ={}", findBoards);
+
+        int startBoard = (page - 1) * perPageNum;
+        int endBoard = Math.min(page * perPageNum, boardsTotalCount);
+        return findBoards.subList(startBoard, endBoard);
+    }
+
+
+    public List<Board> getBoardsByCategoryByCreatedTimeDesc(String category){
+        return boardRepository.findAllByCategoryOrderByCreatedTimeDesc(category);
     }
 
     public List<Board> findBoards() {
-//        List<Board> boards = boardRepository.findAll();
         List<Board> boards = boardRepository.findAllByOrderByCreatedTimeDesc();
         boardsToUpNoticeBoards(boards);
 
@@ -45,16 +61,8 @@ public class BoardService {
     }
 
     //boards에서 사용
-    public List<Board> findSearchBoards(BoardSearchCond cond) {
-        List<Board> boards = boardQueryRepository.findSearchedBoards(cond);
-        boardsToUpNoticeBoards(boards);
-
-        return boards;
-    }
-
-    public List<Board> findSearchedAndSortedBoards(BoardSearchCond searchCond, String sortCond) {
-        List<Board> boards = boardQueryRepository.findSearchedAndSortedBoards(searchCond, sortCond);
-        boardsToUpNoticeBoards(boards);
+    public List<Board> findSearchedAndSortedBoards(BoardSearchCond cond) {
+        List<Board> boards = boardQueryRepository.findSearchedAndSortedBoards(cond);
 
         return boards;
     }
@@ -74,16 +82,14 @@ public class BoardService {
     }
 
 
-    public void addBoard(Board board) {
+    public Optional<Board> addBoard(Board board) {
         board.setLikeCount(0);
         board.setReadCount(0);
         board.setUserName(memberRepository.findById(board.getUserId()).orElseThrow().getName());
         boardRepository.save(board);
-        try {
-            Thread.sleep(500); // 1초 동안 스레드 일시 정지
-        } catch (InterruptedException e) {
-            // 예외 처리
-        }    }
+
+        return Optional.of(board);
+    }
 
     public Optional<Board> findById(long boardId) {
         return boardRepository.findById(boardId);
@@ -116,7 +122,6 @@ public class BoardService {
 
     public List<BoardForm> boardsToBoardForms(List<Board> boards) {
         List<BoardForm> boardForms = new ArrayList<>();
-
 
         for (Board board : boards) {
             BoardForm boardForm = new BoardForm();

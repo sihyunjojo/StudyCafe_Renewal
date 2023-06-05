@@ -6,7 +6,10 @@ import studycafe.studycaferenewal.domain.Board;
 import java.util.List;
 
 
+
 public interface JpaBoardRepository extends JpaRepository<Board, Long> {
     List<Board> findAllByOrderByCreatedTimeDesc();
+    List<Board> findAllByCategoryOrderByCreatedTimeDesc(String category);
+
 
 }

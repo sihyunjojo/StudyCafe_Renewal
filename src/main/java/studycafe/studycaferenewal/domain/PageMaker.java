@@ -1,29 +1,41 @@
 package studycafe.studycaferenewal.domain;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
+@Slf4j
 // 이건 페이지 그 자체
 public class PageMaker {
 
-    private int totalCount; // 총 몇개의 페이지로 이루워지는지
-    private int startPage; // 현재 페이지 ex) 보여주는 10개 중에서 맨 처음
-    private int endPage;    // 10개중에서 맨 마지막
-    private int currentPage; // 현재 페이지
-    private int totalPages; // 10개가 몇개 있는지
-    private int displayPageNum; // 보여줄 페이지 개수
+    private int totalBoardCount; // 총 몇개의 게시판이 있는지 ex)200
+    private int startPage; // 현재 페이지 ex) 보여주는 10개 중에서 맨 처음 // 1,11,12
+    private int endPage;    // ex) 10개중에서 맨 마지막 //10,20,30
+    private int currentPage; // 현재 보여주는 페이지
+    private int totalPages; // 페이지의 마지막 ex) 200/10
 
-    public PageMaker(int totalCount, int currentPage, int displayPageNum) {
-        this.totalCount = totalCount;
+    // 페이지의 마지막이 어디인지는 알필요가 없나? to
+    private int perPageNum; // 한 페이지에 보여줄 게시판 개수 ex)10
+    private int displayPageNum; // view에서 보여줄 아래 번호의 개수
+
+
+    public PageMaker(int totalBoardCount, int currentPage, int perPageNum, int displayPageNum) {
+        this.totalBoardCount = totalBoardCount;
         this.currentPage = currentPage;
+        this.perPageNum = perPageNum;
         this.displayPageNum = displayPageNum;
         calcData();
     }
 
     private void calcData() {
-        totalPages = (int) Math.ceil((double) totalCount / displayPageNum);
+        totalPages = (int) Math.ceil((double) totalBoardCount / perPageNum);
+
         endPage = ((int) Math.ceil((double) currentPage / displayPageNum)) * displayPageNum;
         startPage = endPage - displayPageNum + 1;
+
+        if (totalPages <= 0){
+            totalPages = 1;
+        }
 
         if (endPage > totalPages) {
             endPage = totalPages;
