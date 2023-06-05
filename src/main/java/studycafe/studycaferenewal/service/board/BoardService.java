@@ -26,46 +26,33 @@ public class BoardService {
     private final JpaMemberRepository memberRepository;
     private final JpaBoardQueryRepository boardQueryRepository;
 
-    // home에서 사용
 
-    // 실험중
-    public List<Board> getBoardListByCategory(int page, int perPageNum, int boardsTotalCount, String category) { // 현재페이지, 페이지당 몇개를 보여주는지
-        List<Board> boards = boardRepository.findAllByCategoryOrderByCreatedTimeDesc(category);
+    public List<Board> getHomeBoards() {
+        List<Board> boardsWithoutNotice = boardRepository.findAllByCategoryNotOrderByCreatedTimeDesc("공지사항");
+        List<Board> notices = boardRepository.findAllByCategoryOrderByCreatedTimeDesc("공지사항");
+        List<Board> Top3Notices = notices.subList(0, 3);
 
+        List<Board> homeBoards = boardsWithoutNotice;
+        homeBoards.addAll(0, Top3Notices);
+
+        return homeBoards;
+    }
+
+    public List<Board> getBoardList(int page, int perPageNum, List<Board> boards) { // 현재페이지, 페이지당 몇개를 보여주는지
         int startBoard = (page - 1) * perPageNum;
-        int endBoard = Math.min(page * perPageNum, boardsTotalCount);
+        int endBoard = Math.min(page * perPageNum, boards.size());
+
         return boards.subList(startBoard, endBoard);
     }
 
-
-    public List<Board> getBoardListByFindBoards(int page, int perPageNum, int boardsTotalCount, BoardSearchCond cond) {
-        // searchCond의 category에서 아무것도 없으면 커뮤니티가 기본 값임.
-        List<Board> findBoards = boardQueryRepository.findSearchedAndSortedBoards(cond);
-        log.info("findboards ={}", findBoards);
-
-        int startBoard = (page - 1) * perPageNum;
-        int endBoard = Math.min(page * perPageNum, boardsTotalCount);
-        return findBoards.subList(startBoard, endBoard);
+    public List<Board> getBoardsByCategoryNotOrderByCreatedTimeDesc(String category) {
+        return boardRepository.findAllByCategoryNotOrderByCreatedTimeDesc(category);
     }
 
-
-    public List<Board> getBoardsByCategoryByCreatedTimeDesc(String category){
+    public List<Board> getBoardsByCategoryByCreatedTimeDesc(String category) {
         return boardRepository.findAllByCategoryOrderByCreatedTimeDesc(category);
     }
 
-    public List<Board> findBoards() {
-        List<Board> boards = boardRepository.findAllByOrderByCreatedTimeDesc();
-        boardsToUpNoticeBoards(boards);
-
-        return boards;
-    }
-
-    //boards에서 사용
-    public List<Board> findSearchedAndSortedBoards(BoardSearchCond cond) {
-        List<Board> boards = boardQueryRepository.findSearchedAndSortedBoards(cond);
-
-        return boards;
-    }
 
     private void boardsToUpNoticeBoards(List<Board> boards) {
         List<Board> notices = new ArrayList<>();
@@ -81,14 +68,17 @@ public class BoardService {
         boards.addAll(0, notices);
     }
 
+    //boards에서 사용
+    public List<Board> getSearchedAndSortedBoards(BoardSearchCond cond) {
+        return boardQueryRepository.findSearchedAndSortedBoards(cond);
+    }
 
-    public Optional<Board> addBoard(Board board) {
+
+    public void addBoard(Board board) {
         board.setLikeCount(0);
         board.setReadCount(0);
         board.setUserName(memberRepository.findById(board.getUserId()).orElseThrow().getName());
         boardRepository.save(board);
-
-        return Optional.of(board);
     }
 
     public Optional<Board> findById(long boardId) {
@@ -161,22 +151,22 @@ public class BoardService {
         return boardForm;
     }
 
-    public Board boardFormToBoard(BoardForm boardForm) {
-
-        Board board = new Board();
-        board.setId(boardForm.getId());
-        board.setUserId(boardRepository.findById(boardForm.getId()).orElseThrow().getUserId()); //boardform의 id와 board의 id가 같으니까 같은 board를 가져와서, board의 getuserid
-
-        board.setTitle(boardForm.getTitle());
-        board.setCategory(boardForm.getCategory());
-        board.setContent(boardForm.getContent());
-        board.setCreatedTime(boardForm.getCreatedTime());
-        board.setAttachmentFile(boardForm.getAttachmentFile());
-        board.setPopup(boardForm.getPopup());
-        board.setReadCount(boardForm.getReadCount());
-        board.setLikeCount(boardForm.getLikeCount());
-        board.setPageNumber(boardForm.getPageNumber());
-
-        return board;
-    }
+//    public Board boardFormToBoard(BoardForm boardForm) {
+//
+//        Board board = new Board();
+//        board.setId(boardForm.getId());
+//        board.setUserId(boardRepository.findById(boardForm.getId()).orElseThrow().getUserId()); //boardform의 id와 board의 id가 같으니까 같은 board를 가져와서, board의 getuserid
+//
+//        board.setTitle(boardForm.getTitle());
+//        board.setCategory(boardForm.getCategory());
+//        board.setContent(boardForm.getContent());
+//        board.setCreatedTime(boardForm.getCreatedTime());
+//        board.setAttachmentFile(boardForm.getAttachmentFile());
+//        board.setPopup(boardForm.getPopup());
+//        board.setReadCount(boardForm.getReadCount());
+//        board.setLikeCount(boardForm.getLikeCount());
+//        board.setPageNumber(boardForm.getPageNumber());
+//
+//        return board;
+//    }
 }

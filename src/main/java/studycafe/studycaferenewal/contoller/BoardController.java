@@ -29,78 +29,50 @@ public class BoardController {
     private final CommentService commentService;
     private final ReplyService replyService;
 
-    private static final int DISPLAY_PAGE_NUM = 10;    // 보여줄 아래 페이지 번호 개수
     private static final int PER_PAGE_NUM = 10;    // 페이지당 보여줄 게시판 개수
 
     @GetMapping()
-    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, Model model) {
-        List<Board> communities = boardService.getBoardsByCategoryByCreatedTimeDesc("커뮤니티");
+    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int perPageNum, Model model) {
+        List<Board> boardsWithoutNotice = boardService.getBoardsByCategoryNotOrderByCreatedTimeDesc("공지사항");
         List<Board> notices = boardService.getBoardsByCategoryByCreatedTimeDesc("공지사항");
 
-        int communitiesTotalCount = communities.size();
-        List<Board> communityBoardList = boardService.getBoardListByCategory(page, PER_PAGE_NUM, communitiesTotalCount, "커뮤니티"); //이게 맞나?
-
-        List<Board> boardList = communityBoardList;
+        log.info("per={}", perPageNum);
+        List<Board> boardList = boardService.getBoardList(page, perPageNum, boardsWithoutNotice);
         boardList.addAll(0, notices);
 
+        PageMaker pageMaker = new PageMaker(boardsWithoutNotice.size(), page, perPageNum);
+
+        // 클라이언트 처리
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boardList);
         model.addAttribute("boards", boardForms);
-
-
-        PageMaker pageMaker = new PageMaker(communitiesTotalCount, page, PER_PAGE_NUM, DISPLAY_PAGE_NUM);
         model.addAttribute("pageMaker", pageMaker);
-
-        log.info("pagemarker = {}", pageMaker);
+        model.addAttribute("perPageNum", perPageNum);
 
         return "board/boards";
     }
 
     @GetMapping("/search")
-    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, RedirectAttributes redirectAttributes, Model model) {
-
-        List<Board> findBoards = boardService.findSearchedAndSortedBoards(boardSearch);
+    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int perPageNum, Model model) {
+        List<Board> findBoards = boardService.getSearchedAndSortedBoards(boardSearch);
         List<Board> notices = boardService.getBoardsByCategoryByCreatedTimeDesc("공지사항");
 
-        List<Board> findBoardList = boardService.getBoardListByFindBoards(page, PER_PAGE_NUM, findBoards.size(), boardSearch);
-        List<Board> boardList = findBoardList;
+        List<Board> findBoardList = boardService.getBoardList(page, perPageNum, findBoards);
 
         // 공지사항을 검색했을 시에 2번 안 띄우게
         if (!boardSearch.getCategory().equals("공지사항")) {
-            log.info("findBoard  ={}", boardSearch.getCategory());
-            boardList.addAll(0, notices);
+            findBoardList.addAll(0, notices);
         }
 
-        PageMaker pageMaker = new PageMaker(findBoards.size(), page, PER_PAGE_NUM, DISPLAY_PAGE_NUM);
+        PageMaker pageMaker = new PageMaker(findBoards.size(), page, perPageNum);
 
-        List<BoardForm> boardForms = boardService.boardsToBoardForms(boardList);
+        // 클라이언트 처리
+        List<BoardForm> boardForms = boardService.boardsToBoardForms(findBoardList);
         model.addAttribute("pageMaker", pageMaker);
         model.addAttribute("boards", boardForms);
         model.addAttribute("boardSearch", boardSearch);
-        log.info("pagemaker = {}", pageMaker);
-
+        model.addAttribute("perPageNum", perPageNum);
         return "board/boards";
     }
-
-
-//    //@GetMapping()
-//    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
-//        List<Board> boards = boardService.findBoards();
-//        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
-//        model.addAttribute("boards", boardForms);
-//        return "board/boards";
-//    }
-//
-//    //    @GetMapping("/search")
-//    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false) String sort, Model model) {
-//        List<Board> boards = boardService.findSearchedAndSortedBoards(boardSearch);
-//
-//        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
-//        model.addAttribute("boards", boardForms);
-//        model.addAttribute("boardSearch", boardSearch);
-//
-//        return "board/boards";
-//    }
-
 
     @GetMapping("/{boardId}")
     public String board(@Login Member loginMember, @PathVariable long boardId, Model model) {
@@ -156,16 +128,38 @@ public class BoardController {
         return "redirect:/board";
     }
 
-//    @PostMapping("/{boardId}/edit/likeCount")
-//    public String editLikeCount(BoardForm boardForm, @PathVariable Long boardId) {
-//        // 이걸하려면 멤버마다 그 보드에 대한 like를 유지하고 있는지에 대한 db 컬럼이 필요하다.
-//        return "redirect:/board";
-//    }
-
     @GetMapping("/{boardId}/delete")
     public String delete(@PathVariable long boardId) {
 
         boardService.deleteBoard(boardId);
         return "redirect:/board"; // 삭제 후 목록 페이지로 리다이렉트
     }
+
+
+    //    @PostMapping("/{boardId}/edit/likeCount")
+//    public String editLikeCount(BoardForm boardForm, @PathVariable Long boardId) {
+//        // 이걸하려면 멤버마다 그 보드에 대한 like를 유지하고 있는지에 대한 db 컬럼이 필요하다.
+//        return "redirect:/board";
+//    }
+
+
+
+    //    //@GetMapping()
+//    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, Model model) {
+//        List<Board> boards = boardService.findBoards();
+//        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
+//        model.addAttribute("boards", boardForms);
+//        return "board/boards";
+//    }
+//
+//    //    @GetMapping("/search")
+//    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false) String sort, Model model) {
+//        List<Board> boards = boardService.findSearchedAndSortedBoards(boardSearch);
+//
+//        List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
+//        model.addAttribute("boards", boardForms);
+//        model.addAttribute("boardSearch", boardSearch);
+//
+//        return "board/boards";
+//    }
 }

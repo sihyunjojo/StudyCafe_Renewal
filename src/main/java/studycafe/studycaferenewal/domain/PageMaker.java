@@ -16,14 +16,14 @@ public class PageMaker {
 
     // 페이지의 마지막이 어디인지는 알필요가 없나? to
     private int perPageNum; // 한 페이지에 보여줄 게시판 개수 ex)10
-    private int displayPageNum; // view에서 보여줄 아래 번호의 개수
+    private int displayPageNum;
 
 
-    public PageMaker(int totalBoardCount, int currentPage, int perPageNum, int displayPageNum) {
+    public PageMaker(int totalBoardCount, int currentPage, int perPageNum) {
         this.totalBoardCount = totalBoardCount;
         this.currentPage = currentPage;
         this.perPageNum = perPageNum;
-        this.displayPageNum = displayPageNum;
+        this.displayPageNum = 10;
         calcData();
     }
 

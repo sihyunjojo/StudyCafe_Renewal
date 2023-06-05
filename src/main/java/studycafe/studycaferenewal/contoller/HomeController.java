@@ -30,21 +30,13 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(HttpServletRequest request, @Login Member loginMember, @ModelAttribute("productSearch") ProductSearchCond productSearch, Model model) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("popupShown") && cookie.getValue().equals("true")) {
-                    // 이미 팝업을 보았으면 홈 화면으로 이동
-                    log.info("cookie={},{}",cookie.getValue(), cookie.getName());
-                }
-            }
-        }
+        setupPopup(request);
 
         if (loginMember != null) {
             model.addAttribute(LOGIN_MEMBER, loginMember);
         }
 
-        List<Board> boards = boardService.findBoards();
+        List<Board> boards = boardService.getHomeBoards();
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boards);
         model.addAttribute("boards", boardForms);
 
@@ -54,93 +46,16 @@ public class HomeController {
         return "home";
     }
 
-    //view.render(model,request,response);
-//        response.setContentType("text/html; charset=UTF-8");
-//        PrintWriter out = response.getWriter();
+    private static void setupPopup(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("popupShown") && cookie.getValue().equals("true")) {
+                    // 이미 팝업을 보았으면 홈 화면으로 이동
+                    log.info("cookie={},{}", cookie.getValue(), cookie.getName());
+                }
+            }
+        }
+    }
 
-//        if (result != 1) {
-//            out.println("<script>alert('���!! �Է��Ͻ� ������ ��ġ���� �ʽ��ϴ�.');</script>");
-//            out.flush();
-//        }
 }
-
-//}
-
-
-
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public ModelAndView Login(@RequestParam("id") String id, @RequestParam("password") String password,
-//                              HttpSession session, HttpServletResponse response) throws Exception {
-//        ModelAndView mav = new ModelAndView();
-//        Criteria boardCri = new Criteria();
-//        Criteria noticeCri = new Criteria();
-//
-//        mav.addObject("boardList", boardService.getBoardList(boardCri));
-//        mav.addObject("noticeList", noticeService.getNoticeList(noticeCri));
-//
-//        PageMaker boardPageMaker = new PageMaker();
-//        PageMaker noticePageMaker = new PageMaker();
-//
-//        boardPageMaker.setCri(boardCri);
-//        noticePageMaker.setCri(noticeCri);
-//        boardPageMaker.setTotalCount(boardService.getBoardListCount());
-//        noticePageMaker.setTotalCount(noticeService.getNoticeListCount());
-//
-//        mav.addObject("boardPageMaker", boardPageMaker);
-//        mav.addObject("noticePageMaker", noticePageMaker);
-//
-//        MemberVO member = new MemberVO();
-//        member.setUser_id(id);
-//        member.setUser_password(password);
-//
-//        int result = memberService.checkMember(member, session);
-//        response.setContentType("text/html; charset=UTF-8");
-//        PrintWriter out = response.getWriter();
-//
-//        if (result != 1) {
-//            out.println("<script>alert('���!! �Է��Ͻ� ������ ��ġ���� �ʽ��ϴ�.');</script>");
-//            out.flush();
-//        }
-//
-//        mav.setViewName("common/LoginMain");
-//
-//        return mav;
-//    }
-
-
-//    @RequestMapping(value = "/LoginMain", method = RequestMethod.GET)
-//    public ModelAndView LoginMain(@RequestParam(defaultValue = "null") String page,
-//                                  @RequestParam(defaultValue = "null") String perPageNum, @RequestParam(defaultValue = "null") String kind)
-//            throws Exception {
-//        ModelAndView mav = new ModelAndView();
-//        Criteria boardCri = new Criteria();
-//        Criteria noticeCri = new Criteria();
-//
-//        if (kind.equals("board")) {
-//            boardCri.setPage(Integer.parseInt(page));
-//            boardCri.setPerPageNum(Integer.parseInt(perPageNum));
-//        } else if (kind.equals("notice")) {
-//            noticeCri.setPage(Integer.parseInt(page));
-//            noticeCri.setPerPageNum(Integer.parseInt(perPageNum));
-//        }
-//
-//        mav.addObject("boardList", boardService.getBoardList(boardCri));
-//        mav.addObject("noticeList", noticeService.getNoticeList(noticeCri));
-//
-//        PageMaker boardPageMaker = new PageMaker();
-//        PageMaker noticePageMaker = new PageMaker();
-//
-//        boardPageMaker.setCri(boardCri);
-//        noticePageMaker.setCri(noticeCri);
-//        boardPageMaker.setTotalCount(boardService.getBoardListCount());
-//        noticePageMaker.setTotalCount(noticeService.getNoticeListCount());
-//
-//        mav.addObject("boardPageMaker", boardPageMaker);
-//        mav.addObject("noticePageMaker", noticePageMaker);
-//
-//        mav.setViewName("common/LoginMain");
-//
-//        return mav;
-//    }
-//
-
