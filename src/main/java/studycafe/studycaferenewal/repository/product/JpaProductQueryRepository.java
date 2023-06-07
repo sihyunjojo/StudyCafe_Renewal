@@ -20,21 +20,7 @@ public class JpaProductQueryRepository  {
         this.query = new JPAQueryFactory(em);
     }
 
-
-    public List<Product> findSearchedProducts(ProductSearchCond cond) {
-        return query.select(product)
-                .from(product)
-                .where(
-                        likeProductName(cond.getName()),
-                        eqProductCategory(cond.getCategory()),
-                        leMaxPrice(cond.getMaxPrice()),
-                        geMinPrice(cond.getMinPrice()),
-                        geLikeCount(cond.getMinLikeCount())
-                )
-                .fetch();
-    }
-
-    public List<Product> findSearchedAndSortedProducts(ProductSearchCond cond, String sort) {
+    public List<Product> findSearchedAndSortedProducts(ProductSearchCond cond) {
         return query.select(product)
                 .from(product)
                 .where(
@@ -45,7 +31,8 @@ public class JpaProductQueryRepository  {
                         geLikeCount(cond.getMinLikeCount())
                 )
                 .orderBy(
-                        sortedProductBySort(sort)
+                        sortedProductBySort(cond.getSort()),
+                        product.likeCount.desc()
                 )
                 .fetch();
     }
@@ -69,7 +56,7 @@ public class JpaProductQueryRepository  {
                 return product.likeCount.desc();
             }
         }
-        return null;
+        return product.likeCount.desc();
     }
 
     private BooleanExpression likeProductName(String productName) {

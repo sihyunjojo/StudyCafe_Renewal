@@ -26,10 +26,6 @@ public class CartController {
     // 장바구니 보여주기
     @GetMapping
     public String cart(@Login Member member, Model model) {
-        if (member == null) {
-            return "redirect:/login";
-        }
-
         List<CartProduct> cartProducts = cartService.findCartProducts(member);
         List<CartProductForm> cartProductForms = cartService.cartProductToCartProductForm(cartProducts);
         model.addAttribute("cartProducts", cartProductForms);
@@ -40,23 +36,12 @@ public class CartController {
     // 장바구니에 상품 추가
     @GetMapping("/{itemId}/add")
     public String addCartProduct(@Login Member member, @PathVariable long itemId) {
-//        if (member == null) {
-//            return "redirect:/login";
-//        }
-
         cartService.addCartProduct(member, itemId);
-
-        // 원할때는 장바구니로 보내주는 코드
-        // 원하지 않으면 상품 페이지 그대로
-        return "redirect:/cart";
+        return "redirect:/product/" + itemId;
     }
 
     @GetMapping("/{itemId}/edit/up")
     public String editUp(@Login Member member, @PathVariable long itemId) {
-//        if (member == null) {
-//            return "redirect:/login";
-//        }
-
         cartService.editUpQuantityCartProduct(member, itemId);
         return "redirect:/cart";
         // 여기도 비동기 코드도 해야할거 같기도하고,,
@@ -65,10 +50,6 @@ public class CartController {
 
     @GetMapping("/{itemId}/edit/down")
     public String editDown(@Login Member member, @PathVariable long itemId) {
-        if (member == null) {
-            return "redirect:/login";
-        }
-
         cartService.editDownQuantityCartProduct(member, itemId);
         return "redirect:/cart";
         // 여기도 비동기 코드도 해야할거 같기도하고,,
@@ -77,10 +58,6 @@ public class CartController {
 
     @GetMapping("/{itemId}/delete")
     public String delete(@Login Member member,@PathVariable long itemId) {
-        if (member == null) {
-            return "redirect:/login";
-        }
-
         cartService.deleteCartProduct(member, itemId);
         return "redirect:/cart";
         // 여기도 비동기 코드도 해야할거 같기도하고,,

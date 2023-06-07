@@ -5,7 +5,7 @@
     <div th:insert="~{template/styleCss :: css_copy}"></div>
     <script>
         // 홈 화면 로딩 시 팝업 창 열기
-        window.onload = function() {
+        window.onload = function () {
             window.open("/popup", "mainPopUp", "width=500, height=650, status=no, scrollbars=no, toolbar=no, location=no, menubar=no");
         }
     </script>
@@ -109,11 +109,9 @@
 
             <form th:object="${productSearch}" method="get" class="form-inline" style="margin: 0; padding: 0;">
                 <div class="row">
-                    <div class="col-auto">
-                        <label for="category">종류</label>
-                    </div>
                     <div class="col">
                         <select class="form-select" id="category" th:field="*{category}" required>
+                            <option th:value>종류</option>
                             <option th:value="음료">음료</option>
                             <option th:value="과자">과자</option>
                         </select>

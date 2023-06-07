@@ -10,11 +10,14 @@ public class BoardSearchCond {
     private String userName;
     private String category;
     private String sort;
+    private Integer perPageNum;
 
-    public BoardSearchCond(String title, String userName, String category, String sort) {
+
+    public BoardSearchCond(String title, String userName, String category, String sort, Integer perPageNum) {
         this.title = title;
         this.userName = userName;
         this.category = category;
         this.sort = sort;
+        this.perPageNum = perPageNum;
     }
 }

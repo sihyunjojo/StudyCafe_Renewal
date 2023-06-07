@@ -11,8 +11,11 @@
 <header th:insert="~{template/header :: header_copy}"></header>
 <div class="border">
     <h1>상품</h1>
-    <button th:onclick="|location.href='/cart/${productId}/add'|">장바구니에 넣기</button>
-    <hr>
+    <div style="float: right;">
+        <button class="btn btn-primary" th:onclick="|location.href='/cart/${productId}/add'|">장바구니에 넣기</button>
+        <button class="btn btn-primary" th:onclick="|location.href='@{/cart}'|">장바구니</button>
+    </div>
+    <hr style="margin: 2em">
     <!--        <th:block th:if="${error == '이미 사용 중인 아이디입니다.'}">-->
     <!--            <h2 th:text="${error}"></h2>-->
     <!--        </th:block>-->
@@ -71,7 +74,8 @@
                th:value="${{product.updatedTime}}" readonly>
     </div>
     <button th:onclick="|location.href='/product/${productId}/edit'|">수정하기</button>
-    <button th:onclick="|location.href='/product/${productId}/delete'|" onclick="return confirm('정말로 삭제하겠습니까?')">삭제하기</button>
+    <button th:onclick="|location.href='/product/${productId}/delete'|" onclick="return confirm('정말로 삭제하겠습니까?')">삭제하기
+    </button>
     <button th:onclick="|location.href='@{/product}'|">메인 상품</button>
 </div>
 </body>

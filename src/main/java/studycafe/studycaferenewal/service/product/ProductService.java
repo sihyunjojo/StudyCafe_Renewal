@@ -26,12 +26,8 @@ public class ProductService {
         return productRepository.findAllByOrderByUpdatedTimeDesc();
     }
 
-    public List<Product> findSearchedProducts(ProductSearchCond cond) {
-        return productQueryRepository.findSearchedProducts(cond);
-    }
-
-    public List<Product> findSearchedAndSortedProducts(ProductSearchCond cond, String sort) {
-        return productQueryRepository.findSearchedAndSortedProducts(cond, sort);
+    public List<Product> findSearchedAndSortedProducts(ProductSearchCond cond) {
+        return productQueryRepository.findSearchedAndSortedProducts(cond);
     }
 
     public List<Product> findProductsTop5LikeCount(ProductSearchCond cond){
@@ -78,5 +74,12 @@ public class ProductService {
         if (findProduct.getLikeCount() > 0) {
             findProduct.setLikeCount(findProduct.getLikeCount() - 1);
         }
+    }
+
+    public List<Product> getProductList(int page, int perPageNum, List<Product> products) {
+        int startProduct = (page - 1) * perPageNum;
+        int endProduct = Math.min(page * perPageNum, products.size());
+
+        return products.subList(startProduct, endProduct);
     }
 }

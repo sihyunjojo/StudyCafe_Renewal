@@ -29,48 +29,49 @@ public class BoardController {
     private final CommentService commentService;
     private final ReplyService replyService;
 
-    private static final int PER_PAGE_NUM = 10;    // 페이지당 보여줄 게시판 개수
+    private static final int BASIC_PER_PAGE_NUM = 10;    // 페이지당 보여줄 게시판 개수
 
     @GetMapping()
-    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int perPageNum, Model model) {
+    public String boards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, Model model) {
         List<Board> boardsWithoutNotice = boardService.getBoardsByCategoryNotOrderByCreatedTimeDesc("공지사항");
         List<Board> notices = boardService.getBoardsByCategoryByCreatedTimeDesc("공지사항");
+        boardSearch.setPerPageNum(BASIC_PER_PAGE_NUM);
 
-        log.info("per={}", perPageNum);
-        List<Board> boardList = boardService.getBoardList(page, perPageNum, boardsWithoutNotice);
+        List<Board> boardList = boardService.getBoardList(page, BASIC_PER_PAGE_NUM, boardsWithoutNotice);
         boardList.addAll(0, notices);
 
-        PageMaker pageMaker = new PageMaker(boardsWithoutNotice.size(), page, perPageNum);
+        PageMaker pageMaker = new PageMaker(boardsWithoutNotice.size(), page, BASIC_PER_PAGE_NUM);
 
         // 클라이언트 처리
         List<BoardForm> boardForms = boardService.boardsToBoardForms(boardList);
         model.addAttribute("boards", boardForms);
         model.addAttribute("pageMaker", pageMaker);
-        model.addAttribute("perPageNum", perPageNum);
 
         return "board/boards";
     }
 
     @GetMapping("/search")
-    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int perPageNum, Model model) {
+    public String searchBoards(@ModelAttribute("boardSearch") BoardSearchCond boardSearch, @RequestParam(required = false, defaultValue = "1") int page, Model model) {
         List<Board> findBoards = boardService.getSearchedAndSortedBoards(boardSearch);
         List<Board> notices = boardService.getBoardsByCategoryByCreatedTimeDesc("공지사항");
 
-        List<Board> findBoardList = boardService.getBoardList(page, perPageNum, findBoards);
+        log.info("search={}", boardSearch);
+
+        List<Board> findBoardList = boardService.getBoardList(page, boardSearch.getPerPageNum(), findBoards);
 
         // 공지사항을 검색했을 시에 2번 안 띄우게
         if (!boardSearch.getCategory().equals("공지사항")) {
             findBoardList.addAll(0, notices);
         }
 
-        PageMaker pageMaker = new PageMaker(findBoards.size(), page, perPageNum);
+        PageMaker pageMaker = new PageMaker(findBoards.size(), page, boardSearch.getPerPageNum());
 
         // 클라이언트 처리
         List<BoardForm> boardForms = boardService.boardsToBoardForms(findBoardList);
         model.addAttribute("pageMaker", pageMaker);
         model.addAttribute("boards", boardForms);
         model.addAttribute("boardSearch", boardSearch);
-        model.addAttribute("perPageNum", perPageNum);
+
         return "board/boards";
     }
 
