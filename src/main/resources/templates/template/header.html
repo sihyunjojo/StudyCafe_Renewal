@@ -36,22 +36,20 @@
         <header class = "d-flex justify-content-center py-3">
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a href="/StudyCafeManagement/seat/register?user_id=${sessionScope.user_id}" class="nav-link">좌석</a>
+                    <a href="/StudyCafeManagement/seat/register?user_id=${sessionScope.user_id}" class="nav-link">좌석 예약(예정)</a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/product}" class="nav-link">상품</a>
+                    <a th:href="@{/product}" class="nav-link">상품(완)</a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/board}" class="nav-link">게시판</a>
+                    <a th:href="@{/board}" class="nav-link">게시판(완)</a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/chat}" class="nav-link">채팅</a>
+                    <a th:href="@{/chat}" class="nav-link">채팅(-ing)</a>
                 </li>
                 <li class="nav-item">
                     <th:block th:if="${loginMember == null}">
-                        <a th:href="@{/login}"  class="nav-link"> 로그인 </a>
-                        </button>
-                        </button>
+                        <a th:href="@{/login}"  class="nav-link">로그인(완)</a>
                     </th:block>
                     <th:block th:unless="${loginMember == null}">
                         <a th:href= "@{/member/info}" th:text="|${loginMember.name}의 정보|" class="nav-link"> member 정보 </a>
