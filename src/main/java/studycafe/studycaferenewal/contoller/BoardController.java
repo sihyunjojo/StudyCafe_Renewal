@@ -102,12 +102,15 @@ public class BoardController {
         }
         model.addAttribute("board", new Board());
         model.addAttribute(LOGIN_MEMBER, loginMember);
-        log.info("loginMember={}", loginMember);
         return "board/addBoardForm";
     }
 
     @PostMapping("/add")
     public String add(Board board) {
+        if (board.getUserId() == null) {
+            return "redirect:/login?redirectURL=/board/add";
+        }
+
         log.info("board={}", board);
         boardService.addBoard(board);
         return "redirect:/board"; // 일단 home으로 보내주자 나중에 board목록으로 보내주고
@@ -117,13 +120,14 @@ public class BoardController {
     public String editForm(@PathVariable Long boardId, Model model) {
         Board board = boardService.findById(boardId).orElseThrow();
         BoardForm boardForm = boardService.boardToBoardForm(board);
+
         model.addAttribute("board", boardForm);
         return "board/editBoardForm";
     }
 
     @PostMapping("/{boardId}/edit")
     public String edit(BoardForm boardForm, @PathVariable Long boardId) {
-//        Board board = boardService.boardFormToBoard(boardForm);
+
         boardService.updateBoard(boardId, boardForm);
 
         return "redirect:/board";

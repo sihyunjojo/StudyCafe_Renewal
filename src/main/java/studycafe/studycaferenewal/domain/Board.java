@@ -22,25 +22,23 @@ public class Board {
     private String popup;
     private Integer readCount;
     private Integer likeCount;
-    private Integer pageNumber;
 
     public Board() {
 
     }
 
-    public Board(Long id, Long userId, String userName, String title, String category, LocalDateTime createdTime, String content, String attachmentFile, String popup, Integer readCount, Integer likeCount, Integer pageNumber) {
+    public Board(Long id, Long userId, String userName, String title, String category, String content, String attachmentFile, LocalDateTime createdTime, String popup, Integer readCount, Integer likeCount) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.title = title;
         this.category = category;
-        this.createdTime = createdTime;
         this.content = content;
         this.attachmentFile = attachmentFile;
+        this.createdTime = createdTime;
         this.popup = popup;
         this.readCount = readCount;
         this.likeCount = likeCount;
-        this.pageNumber = pageNumber;
     }
 
     @PrePersist

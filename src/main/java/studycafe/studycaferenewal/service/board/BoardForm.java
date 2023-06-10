@@ -17,5 +17,4 @@ public class BoardForm {
     private String popup;
     private Integer readCount;
     private Integer likeCount;
-    private Integer pageNumber;
 }

@@ -30,10 +30,19 @@ public class BoardService {
     public List<Board> getHomeBoards() {
         List<Board> boardsWithoutNotice = boardRepository.findAllByCategoryNotOrderByCreatedTimeDesc("공지사항");
         List<Board> notices = boardRepository.findAllByCategoryOrderByCreatedTimeDesc("공지사항");
-        List<Board> Top3Notices = notices.subList(0, 3);
 
         List<Board> homeBoards = boardsWithoutNotice;
-        homeBoards.addAll(0, Top3Notices);
+
+        if (notices.size() > 3) {
+            List<Board> Top3Notices = notices.subList(0, 3);
+            homeBoards.addAll(0, Top3Notices);
+        }
+        else{
+            homeBoards.addAll(0, notices);
+        }
+
+
+
 
         return homeBoards;
     }
@@ -126,7 +135,6 @@ public class BoardService {
             boardForm.setPopup(board.getPopup());
             boardForm.setReadCount(board.getReadCount());
             boardForm.setLikeCount(board.getLikeCount());
-            boardForm.setPageNumber(board.getPageNumber());
             boardForms.add(boardForm);
         }
 
@@ -146,7 +154,6 @@ public class BoardService {
         boardForm.setPopup(board.getPopup());
         boardForm.setReadCount(board.getReadCount());
         boardForm.setLikeCount(board.getLikeCount());
-        boardForm.setPageNumber(board.getPageNumber());
 
         return boardForm;
     }

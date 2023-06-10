@@ -17,7 +17,7 @@ public class Comment {
     private Long boardId;
     private String userName;
     private String content;
-    private LocalDateTime updatedTime;
+    private LocalDateTime createdTime;
     private Integer pageNumber;
     private Integer likeCount;
 
@@ -26,7 +26,7 @@ public class Comment {
 
     @PrePersist
     public void prePersist() {
-        this.updatedTime = LocalDateTime.now();
+        this.createdTime = LocalDateTime.now();
     }
 
 
@@ -35,13 +35,13 @@ public class Comment {
 
     }
 
-    public Comment(Long id, Long userId, Long boardId, String userName, String content, LocalDateTime updatedTime, Integer pageNumber, Integer likeCount) {
+    public Comment(Long id, Long userId, Long boardId, String userName, String content, LocalDateTime createdTime, Integer pageNumber, Integer likeCount) {
         this.id = id;
         this.userId = userId;
         this.boardId = boardId;
         this.userName = userName;
         this.content = content;
-        this.updatedTime = updatedTime;
+        this.createdTime = createdTime;
         this.pageNumber = pageNumber;
         this.likeCount = likeCount;
     }

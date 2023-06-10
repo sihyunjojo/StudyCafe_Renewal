@@ -52,7 +52,7 @@ public class JpaQueryMemberRepository implements MemberRepository {
         List<Member> result = query
             .select(member) //static import QItem. 지운거임
             .from(member)
-            .where(member.userId.eq(userId))
+            .where(member.userLoginId.eq(userId))
             .fetch();
 
 //        List<Member> result = em.createQuery("select m from Member m where m.userId = :userId", Member.class)

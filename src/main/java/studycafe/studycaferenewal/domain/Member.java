@@ -13,7 +13,7 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
+    private String userLoginId;
     private String userPassword;
     private String name;
     private String gender;
@@ -26,8 +26,8 @@ public class Member {
 
     }
 
-    public Member(String userId, String userPassword, String name, String gender, String phone, String address, String email, String birth) {
-        this.userId = userId;
+    public Member(String userLoginId, String userPassword, String name, String gender, String phone, String address, String email, String birth) {
+        this.userLoginId = userLoginId;
         this.userPassword = userPassword;
         this.name = name;
         this.gender = gender;

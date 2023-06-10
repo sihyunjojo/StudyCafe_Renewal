@@ -25,7 +25,7 @@ public class JpaMemberService implements MemberService {
             return null;
         }
         memberRepository.save(member); // db에 멤버값 넣어줌
-        return member.getUserId();
+        return member.getUserLoginId();
     }
 
     //public Member viewMember(Member member);
@@ -37,7 +37,7 @@ public class JpaMemberService implements MemberService {
     }
 
     public Optional<Member> findByUserId(Member member){
-        return memberRepository.findByUserId(member.getUserId());
+        return memberRepository.findByUserId(member.getUserLoginId());
     }
 
     public Optional<Member> findMemberByNameAndPhone(Member member){
@@ -58,8 +58,8 @@ public class JpaMemberService implements MemberService {
 
     // memeber의 이름과 같은걸 찾아서
     private void validateDuplicatedMember(Member member) {
-        log.info("userId = {}", member.getUserId());
-        memberRepository.findByUserId(member.getUserId())// member과 같은 이름이 있는지 찾앗을때
+        log.info("userId = {}", member.getUserLoginId());
+        memberRepository.findByUserId(member.getUserLoginId())// member과 같은 이름이 있는지 찾앗을때
                 .ifPresent(member1 -> {    // null이 아니니까(값이존재하면 ifPresent()인자 함수 실행
                     throw new IllegalStateException("이미 존재하는 회원입니다.");  //
                 });

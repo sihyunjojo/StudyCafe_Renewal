@@ -6,7 +6,7 @@ create table comment
     board_id integer,
     user_name varchar,
     content varchar,
-    updated_time timestamp,
+    created_time timestamp,
     page_number integer,
     like_count integer,
 

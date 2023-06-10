@@ -15,7 +15,7 @@ public class Reply {
     private Long userId;
     private String userName;
     private String content;
-    private LocalDateTime updatedTime;
+    private LocalDateTime createdTime;
     private Integer likeCount;
 
     @ManyToOne
@@ -25,7 +25,7 @@ public class Reply {
 
     @PrePersist
     public void prePersist() {
-        this.updatedTime = LocalDateTime.now();
+        this.createdTime = LocalDateTime.now();
     }
 
 
@@ -40,7 +40,7 @@ public class Reply {
                 ", userId=" + userId +
                 ", userName='" + userName + '\'' +
                 ", content='" + content + '\'' +
-                ", updatedTime=" + updatedTime +
+                ", createdTime=" + createdTime +
                 ", likeCount=" + likeCount +
                 ", comment=" + comment.getId() +
                 '}';
