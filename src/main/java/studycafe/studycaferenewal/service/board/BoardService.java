@@ -100,7 +100,7 @@ public class BoardService {
         board.setTitle(boardForm.getTitle());
         board.setContent(boardForm.getContent());
         board.setAttachmentFile(boardForm.getAttachmentFile());
-        board.setCreatedTime(LocalDateTime.now());
+//        board.setCreatedTime(LocalDateTime.now());
     }
 
     public void deleteBoard(long boardId) {

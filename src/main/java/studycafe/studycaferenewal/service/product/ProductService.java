@@ -52,7 +52,6 @@ public class ProductService {
         product.setQuantity(updateproduct.getQuantity());
         product.setPrice(updateproduct.getPrice());
         product.setImage(updateproduct.getImage());
-        product.setUpdatedTime(LocalDateTime.now());
 
     }
 

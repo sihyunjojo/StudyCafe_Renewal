@@ -1,13 +1,18 @@
 package studycafe.studycaferenewal.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-public class Reply {
+public class Reply extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,7 +20,6 @@ public class Reply {
     private Long userId;
     private String userName;
     private String content;
-    private LocalDateTime createdTime;
     private Integer likeCount;
 
     @ManyToOne
@@ -23,26 +27,4 @@ public class Reply {
     private Comment comment;
 
 
-    @PrePersist
-    public void prePersist() {
-        this.createdTime = LocalDateTime.now();
-    }
-
-
-    public Reply() {
-
-    }
-
-    @Override
-    public String toString() {
-        return "Reply{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", content='" + content + '\'' +
-                ", createdTime=" + createdTime +
-                ", likeCount=" + likeCount +
-                ", comment=" + comment.getId() +
-                '}';
-    }
 }

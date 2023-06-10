@@ -1,32 +1,22 @@
 package studycafe.studycaferenewal.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-public class Cart {
+public class Cart extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long userId;;
-    private LocalDateTime updatedTime;
-
-    public Cart() {
-    }
-
-    public Cart(Long id, Long userId, LocalDateTime updatedTime) {
-        this.id = id;
-        this.userId = userId;
-        this.updatedTime = updatedTime;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.updatedTime = LocalDateTime.now();
-    }
 }

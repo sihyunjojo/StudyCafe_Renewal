@@ -44,7 +44,6 @@ public class PopupController {
     @GetMapping()
     public String home(Model model, HttpServletRequest request) {
         // 쿠키 확인
-        log.info("popup");
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {

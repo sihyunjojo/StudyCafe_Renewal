@@ -25,6 +25,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             Member loginMember = (Member) session.getAttribute(LOGIN_MEMBER);
             request.setAttribute("loginMember", loginMember);
         }
+
         return true;
     }
 }

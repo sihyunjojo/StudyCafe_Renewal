@@ -42,7 +42,6 @@ public class LocalDateTimeFormatter implements Formatter<LocalDateTime> {
 
     @Override
     public String print(LocalDateTime dateTime, Locale locale) {
-        log.info("start format print");
         DateTimeFormatter formatter;
 
         LocalDateTime now = LocalDateTime.now();

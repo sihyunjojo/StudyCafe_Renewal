@@ -1,6 +1,7 @@
 package studycafe.studycaferenewal;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

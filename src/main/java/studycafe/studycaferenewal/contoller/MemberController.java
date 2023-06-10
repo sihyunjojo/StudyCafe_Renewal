@@ -38,6 +38,7 @@ public class MemberController {
 //            model.addAttribute("member", member);
             return "member/addMemberForm";
         }
+
         return "redirect:/";
     }
 
