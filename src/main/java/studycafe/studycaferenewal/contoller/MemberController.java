@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
@@ -30,12 +32,12 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String Join(Member member, Model model) {
+    public String Join(@Validated Member member, BindingResult bindingResult, Model model) {
         String userId = memberService.join(member);
-        log.info(userId);
+        log.info("userId = {}", userId);
+
         if (userId == null) {
-            model.addAttribute("error", "이미 사용 중인 아이디입니다.");
-//            model.addAttribute("member", member);
+            bindingResult.reject("usedUserId","이미 사용중인 아이디입니다.");
             return "member/addMemberForm";
         }
 

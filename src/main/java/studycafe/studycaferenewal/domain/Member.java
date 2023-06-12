@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
@@ -18,13 +20,21 @@ public class Member extends BaseTimeEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     private String userLoginId;
+    @NotEmpty
     private String userPassword;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String gender;
+    @NotEmpty
     private String phone;
-    private String address;
+
+    @Email
     private String email;
+
+    private String address;
     private String birth;
 
 }

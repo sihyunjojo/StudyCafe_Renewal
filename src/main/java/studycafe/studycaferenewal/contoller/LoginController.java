@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import studycafe.studycaferenewal.contoller.form.LoginForm;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.service.login.LoginService;
 
@@ -30,23 +31,16 @@ public class LoginController {
     public String login(@Valid @ModelAttribute LoginForm form, BindingResult bindingResult,
                         @RequestParam(required = false, defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
-
         log.info("login start");
         //redirectUrl은 인터셉트를 통해서 얻어지는거 였음.
 
-        log.info("redirectUrL={}", redirectURL);
-        log.info("redirectUrL={}", form);
-
         if (bindingResult.hasErrors()) {
-            log.info("Error = {}", bindingResult);
             return "/login/loginForm";
         }
 
         Member loginMember = loginService.login(form.getUserLoginId(), form.getUserPassword());
 
         if (loginMember == null) {
-            // 클라이언트에 에러 보여줄 때 사용하자!!!!
-            log.info("아이디 또는 비밀번호가 맞지 않습니다");
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다");
             return "/login/loginForm";
         }

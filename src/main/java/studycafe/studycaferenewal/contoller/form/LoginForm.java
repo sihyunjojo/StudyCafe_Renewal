@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.contoller;
+package studycafe.studycaferenewal.contoller.form;
 
 import lombok.Data;
 
