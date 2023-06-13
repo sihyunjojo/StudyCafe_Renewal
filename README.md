@@ -114,10 +114,14 @@ mysql
   OAuth2.0 (2) 감이 안잡히
 
 ## 6/11
+bindResult를 통한 error controll(member)
+
+## 6/12
+editmember 잘 작동하나 체크해야함.
 
 ### 수정해야할 것들
 OAuth2.0
-비밀번호 중복체크
+비밀번호 중복체크(ajax) , 비밀번호 특수문자 넣는것도 해보기
 
 상품검색에서 최대 가격이 최소가격보다 작으면 오류 만들어주기.  (exception,bindingResult)
 

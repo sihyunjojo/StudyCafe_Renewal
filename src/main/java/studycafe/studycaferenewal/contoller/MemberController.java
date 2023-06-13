@@ -7,9 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import studycafe.studycaferenewal.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
-import studycafe.studycaferenewal.repository.member.dto.UpdateMemberDto;
+import studycafe.studycaferenewal.repository.member.dto.MemberUpdateForm;
 import studycafe.studycaferenewal.service.member.MemberService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,12 +33,17 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String Join(@Validated Member member, BindingResult bindingResult, Model model) {
+    public String Join(@Validated Member member, BindingResult bindingResult) {
         String userId = memberService.join(member);
         log.info("userId = {}", userId);
 
         if (userId == null) {
             bindingResult.reject("usedUserId","이미 사용중인 아이디입니다.");
+            return "member/addMemberForm";
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("회원가입 실패");
             return "member/addMemberForm";
         }
 
@@ -72,41 +78,40 @@ public class MemberController {
     }
 
     @GetMapping("/edit")
-    public String EditForm(@Login Member member, Model model) {
-//        if (member == null) {
-//            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
-//        }
-        model.addAttribute(LOGIN_MEMBER, member);
+    public String EditForm(@Login Member loginMember, Model model) {
+        model.addAttribute(LOGIN_MEMBER, loginMember);
+        model.addAttribute("memberId", loginMember.getId());
         return "member/editMemberForm";
     }
 
     @PostMapping("/edit")
-    public String Edit(@Login Member loginmember, UpdateMemberDto updateMember, HttpServletRequest request) {
-        log.info("updateMember = {}", updateMember);
-        Member loginMember = memberService.findById(loginmember).orElseThrow();
-        Member updatedMember = memberService.update(loginMember, updateMember).orElseThrow();
+    public String Edit(@Login Member loginMember, @Validated @ModelAttribute(LOGIN_MEMBER) MemberUpdateForm updateForm, BindingResult bindingResult, Model model, HttpServletRequest request) {
+        log.info("bindingResult ={}", bindingResult);
+        log.info("updateFOrm = {}", updateForm);
+
+        if (bindingResult.hasErrors()) {
+            log.info("수정 실패");
+            model.addAttribute("memberId", loginMember.getId());
+            return "member/editMemberForm";
+        }
+
+        Member updatedMember = memberService.update(loginMember.getId(), updateForm).orElseThrow();
+        log.info("updatedMember = {}", updatedMember);
 
         HttpSession session = request.getSession();
         session.setAttribute(LOGIN_MEMBER, updatedMember);
 
-        log.info("교체 성공 session member ={}", session.getAttribute(LOGIN_MEMBER));
-
         return "redirect:/member/info";
     }
 
+    // ajax로 다시만들ㅡ
     @PostMapping("/checkPw")
-    public String CheckPw(@Login Member member, @ModelAttribute UpdateMemberDto form, Model model) {
-//        if (member == null) {
-//            return "redirect:/"; //이런 코드 각각 넣어줘야하나??
-//        }
-        model.addAttribute("loginMember", member);
+    public String CheckPw(@Login Member loginMember, MemberUpdateForm updateForm, Model model) {
+        model.addAttribute("loginMember", loginMember);
 
-        log.info("same = {}", form.getCheckPassword().equals(form.getUserPassword()));
-        log.info("{},{}", form.getCheckPassword().getClass(), form.getUserPassword().getClass());
-
-        if (form.getCheckPassword().equals(form.getUserPassword())) {
+        if (updateForm.getCheckPassword().equals(updateForm.getUserPassword())) {
             model.addAttribute("same_password", "비밀번호 일치");
-            model.addAttribute("updateMember", form);
+            model.addAttribute("updateMember", updateForm);
         } else {
             model.addAttribute("different_password", "비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
         }
@@ -115,12 +120,12 @@ public class MemberController {
     }
 
     @GetMapping("/info")
-    public String InfoForm(@Login Member member, Model model) {
-        if (member == null) {
+    public String InfoForm(@Login Member loginMember, Model model) {
+        if (loginMember == null) {
             return "redirect:/login?redirectURL=/member/info/";
         }
 
-        model.addAttribute(LOGIN_MEMBER, member);
+        model.addAttribute(LOGIN_MEMBER, loginMember);
         return "member/memberInfo";
     }
 

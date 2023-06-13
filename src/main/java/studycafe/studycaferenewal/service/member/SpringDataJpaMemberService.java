@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
-import studycafe.studycaferenewal.repository.member.dto.UpdateMemberDto;
+import studycafe.studycaferenewal.repository.member.dto.MemberUpdateForm;
 
 import java.util.Optional;
 
@@ -47,16 +47,16 @@ public class SpringDataJpaMemberService implements MemberService {
     }
 
     @Override
-    public Optional<Member> update(Member loginMember, UpdateMemberDto updateMember) {
-        Member findMember = memberRepository.findFirstByUserLoginId(loginMember.getUserLoginId()).orElseThrow(); //값이 없으며 에러를 내라. 요고군
+    public Optional<Member> update(long memberId, MemberUpdateForm updateForm) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow(); //값이 없으며 에러를 내라. 요고군
 
-        findMember.setUserPassword(updateMember.getUserPassword());
-        findMember.setName(updateMember.getName());
-        findMember.setGender(updateMember.getGender());
-        findMember.setPhone(updateMember.getPhone());
-        findMember.setBirth(updateMember.getBirth());
-        findMember.setAddress(updateMember.getAddress());
-        findMember.setEmail(updateMember.getEmail());
+        findMember.setUserPassword(updateForm.getUserPassword());
+        findMember.setName(updateForm.getName());
+        findMember.setGender(updateForm.getGender());
+        findMember.setPhone(updateForm.getPhone());
+        findMember.setBirth(updateForm.getBirth());
+        findMember.setAddress(updateForm.getAddress());
+        findMember.setEmail(updateForm.getEmail());
 
         log.info("findMember ={}", findMember);
 

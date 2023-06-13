@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.repository.member.MemberRepository;
-import studycafe.studycaferenewal.repository.member.dto.UpdateMemberDto;
+import studycafe.studycaferenewal.repository.member.dto.MemberUpdateForm;
 
 import java.util.Optional;
 
@@ -45,8 +45,7 @@ public class JpaMemberService implements MemberService {
     }
 
     @Override
-    public Optional<Member> update(Member loginMember, UpdateMemberDto UpdateMember) {
-
+    public Optional<Member> update(long memberId, MemberUpdateForm updateForm) {
         return null;
     }
 

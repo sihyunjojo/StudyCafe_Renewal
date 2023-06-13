@@ -38,10 +38,6 @@ public class OptionConfig implements WebMvcConfigurer {
                                 "/css/**", "/*.ico", "/error", "/img/**", "/template/template/**")
                 .addPathPatterns("/member/info");
 
-        registry.addInterceptor(new SessionInterceptor())
-                .addPathPatterns("/**") // 인터셉터를 적용할 URL 패턴 지정
-                .excludePathPatterns("/login"); // 예외 처리할 URL 패턴 지정
-
     }
 
 }

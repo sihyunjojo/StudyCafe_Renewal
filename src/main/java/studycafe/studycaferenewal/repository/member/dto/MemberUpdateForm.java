@@ -1,29 +1,19 @@
-package studycafe.studycaferenewal.domain;
+package studycafe.studycaferenewal.repository.member.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@Entity
-public class Member extends BaseTimeEntity{
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Data
+public class MemberUpdateForm {
 
     @NotEmpty
     private String userLoginId;
     @NotEmpty
     private String userPassword;
+    @NotEmpty
+    private String checkPassword;
     @NotEmpty
     private String name;
     @NotEmpty
@@ -39,16 +29,16 @@ public class Member extends BaseTimeEntity{
 
     @Override
     public String toString() {
-        return "Member{" +
-                "id=" + id +
-                ", userLoginId='" + userLoginId + '\'' +
+        return "MemberUpdateForm{" +
+                "userLoginId='" + userLoginId + '\'' +
                 ", userPassword='" + userPassword + '\'' +
+                ", checkPassword='" + checkPassword + '\'' +
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
-                ", birth='" + birth + '\'' +
+                ", birth='" + birth + '\'' +기
                 '}';
     }
 }

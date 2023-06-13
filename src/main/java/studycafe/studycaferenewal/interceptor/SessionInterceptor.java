@@ -15,15 +15,19 @@ import java.util.Map;
 
 import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
 
+// 안쓰는걸로
 @Slf4j
 public class SessionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
+        log.info("session = {}", session.getAttribute(LOGIN_MEMBER));
 
-        if (session != null) {
+        if (session != null && session.getAttribute(LOGIN_MEMBER) != null) {
             Member loginMember = (Member) session.getAttribute(LOGIN_MEMBER);
-            request.setAttribute("loginMember", loginMember);
+            request.setAttribute(LOGIN_MEMBER, loginMember);
+            // loginMember를 어디든지 꺼내 쓸 수 있는거?
+            // 근데 이거 쓰려면 @Login쓰던걸 httpServletRequest 이 큰걸 가져와야하는데??
         }
 
         return true;

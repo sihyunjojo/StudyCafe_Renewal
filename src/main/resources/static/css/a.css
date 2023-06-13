@@ -92,3 +92,8 @@ div.image-wrapper {
     text-align: center;
     background: white;
 }
+
+.field-error {
+    margin: auto;
+    font-weight: bold;
+}
