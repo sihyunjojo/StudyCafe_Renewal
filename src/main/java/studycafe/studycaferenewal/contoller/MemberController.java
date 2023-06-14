@@ -7,8 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import studycafe.studycaferenewal.argumentresolver.Login;
+import studycafe.studycaferenewal.resolver.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.repository.member.dto.MemberUpdateForm;
 import studycafe.studycaferenewal.service.member.MemberService;
@@ -81,17 +80,22 @@ public class MemberController {
     public String EditForm(@Login Member loginMember, Model model) {
         model.addAttribute(LOGIN_MEMBER, loginMember);
         model.addAttribute("memberId", loginMember.getId());
+        log.info("loginmember={}", loginMember);
         return "member/editMemberForm";
     }
 
+    //updateform의 필드들이 어자피 login
     @PostMapping("/edit")
     public String Edit(@Login Member loginMember, @Validated @ModelAttribute(LOGIN_MEMBER) MemberUpdateForm updateForm, BindingResult bindingResult, Model model, HttpServletRequest request) {
         log.info("bindingResult ={}", bindingResult);
         log.info("updateFOrm = {}", updateForm);
+        log.info("loginmember={}", loginMember);
 
         if (bindingResult.hasErrors()) {
             log.info("수정 실패");
             model.addAttribute("memberId", loginMember.getId());
+//            log.info("loginmember={}", loginMember);
+
             return "member/editMemberForm";
         }
 

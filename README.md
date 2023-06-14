@@ -113,13 +113,17 @@ mysql
 + DB바꾸고 처음부터하니 몇몇 오류 수정
   OAuth2.0 (2) 감이 안잡히
 
-## 6/11
-bindResult를 통한 error controll(member)
-
 ## 6/12
+bindResult를 통한 error controll(member)
+ㅁ
+## 6/13
 editmember 잘 작동하나 체크해야함.
 
+## 6/14
+
 ### 수정해야할 것들
+에러코드 통합 처리
+파일 업로드
 OAuth2.0
 비밀번호 중복체크(ajax) , 비밀번호 특수문자 넣는것도 해보기
 

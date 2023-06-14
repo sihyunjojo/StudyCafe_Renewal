@@ -1,21 +1,27 @@
 package studycafe.studycaferenewal;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import studycafe.studycaferenewal.argumentresolver.LoginMemberArgumentResolver;
+import studycafe.studycaferenewal.resolver.argumentresolver.LoginMemberArgumentResolver;
 import studycafe.studycaferenewal.formatter.LocalDateTimeFormatter;
 import studycafe.studycaferenewal.interceptor.LoginCheckInterceptor;
-import studycafe.studycaferenewal.interceptor.SessionInterceptor;
+import studycafe.studycaferenewal.resolver.exceptionResolver.MyHandlerExceptionResolver;
+import studycafe.studycaferenewal.resolver.exceptionResolver.UserHandlerExceptionResolver;
 
 import java.util.List;
 
 @Configuration
 public class OptionConfig implements WebMvcConfigurer {
+    @Override
+    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        resolvers.add(new MyHandlerExceptionResolver());
+        resolvers.add(new UserHandlerExceptionResolver());
+    }
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginMemberArgumentResolver());
@@ -32,10 +38,12 @@ public class OptionConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns
-                        ("/", "/login", "/logout","/popup/**",
-                                "/board", "/member/**", "/board/{boardId}", "board/add", "/product", "/product/{productId}","product/add",
-                                "/comment/**", "/reply/**","/comment",
-                                "/css/**", "/*.ico", "/error", "/img/**", "/template/template/**")
+                        ("/", "/login", "/logout",
+                                "/board", "/board/{boardId}", "board/add",
+                                "/product", "/product/{productId}","product/add",
+                                "/comment/**", "/reply/**",
+                                "/popup/**","/css/**", "/*.ico", "/error", "/img/**", "/template/template/**",
+                                "/member/**")
                 .addPathPatterns("/member/info");
 
     }

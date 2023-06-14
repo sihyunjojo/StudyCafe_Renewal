@@ -5,17 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import studycafe.studycaferenewal.argumentresolver.Login;
-import studycafe.studycaferenewal.domain.Board;
+import studycafe.studycaferenewal.resolver.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Comment;
 import studycafe.studycaferenewal.domain.Member;
-import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
 import studycafe.studycaferenewal.service.board.CommentService;
 
 import java.util.List;
-
-import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
 
 @Slf4j
 @Controller

@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import studycafe.studycaferenewal.argumentresolver.Login;
+import studycafe.studycaferenewal.resolver.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
 import studycafe.studycaferenewal.domain.PageMaker;
 import studycafe.studycaferenewal.domain.Product;

@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.argumentresolver;
+package studycafe.studycaferenewal.resolver.argumentresolver;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -7,11 +7,11 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import studycafe.studycaferenewal.SessionConst;
+import studycafe.studycaferenewal.resolver.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Member;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 
 @Slf4j
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {

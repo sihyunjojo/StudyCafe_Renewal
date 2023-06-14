@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,11 +19,12 @@ public class Comment extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     private Long userId;
+    @NotEmpty
     private Long boardId;
     private String userName;
     private String content;
-    private Integer pageNumber;
     private Integer likeCount;
 
     @OneToMany(mappedBy = "comment")

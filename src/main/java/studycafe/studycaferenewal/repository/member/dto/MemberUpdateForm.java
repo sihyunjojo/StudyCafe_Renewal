@@ -38,7 +38,7 @@ public class MemberUpdateForm {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
-                ", birth='" + birth + '\'' +기
+                ", birth='" + birth + '\'' +
                 '}';
     }
 }
