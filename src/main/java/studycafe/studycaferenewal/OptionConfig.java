@@ -9,18 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import studycafe.studycaferenewal.resolver.argumentresolver.LoginMemberArgumentResolver;
 import studycafe.studycaferenewal.formatter.LocalDateTimeFormatter;
 import studycafe.studycaferenewal.interceptor.LoginCheckInterceptor;
-import studycafe.studycaferenewal.resolver.exceptionResolver.MyHandlerExceptionResolver;
-import studycafe.studycaferenewal.resolver.exceptionResolver.UserHandlerExceptionResolver;
 
 import java.util.List;
 
 @Configuration
 public class OptionConfig implements WebMvcConfigurer {
-    @Override
-    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
-        resolvers.add(new MyHandlerExceptionResolver());
-        resolvers.add(new UserHandlerExceptionResolver());
-    }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
