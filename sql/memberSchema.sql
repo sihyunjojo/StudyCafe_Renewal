@@ -10,6 +10,9 @@ create table member
     address varchar,
     email     varchar,
     birth       varchar,
+    provider     varchar,
+    nickname     varchar,
+
 
     primary key (id)
 );

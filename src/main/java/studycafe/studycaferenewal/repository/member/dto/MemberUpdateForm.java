@@ -26,6 +26,8 @@ public class MemberUpdateForm {
 
     private String address;
     private String birth;
+    private String nickname;
+
 
     @Override
     public String toString() {
@@ -39,6 +41,7 @@ public class MemberUpdateForm {
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", birth='" + birth + '\'' +
+                ", nickname='" + nickname + '\'' +
                 '}';
     }
 }

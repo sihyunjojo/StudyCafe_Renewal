@@ -29,12 +29,21 @@ dependencies {
 
 	//websocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//websocket json
 	implementation group: 'org.json', name: 'json', version: '20230227'
 
 	//JPA, 스프링 데이터 JPA 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	//security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	//oauth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 
 	//Querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa'

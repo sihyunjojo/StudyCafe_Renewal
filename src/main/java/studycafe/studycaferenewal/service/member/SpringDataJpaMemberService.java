@@ -57,6 +57,7 @@ public class SpringDataJpaMemberService implements MemberService {
         findMember.setBirth(updateForm.getBirth());
         findMember.setAddress(updateForm.getAddress());
         findMember.setEmail(updateForm.getEmail());
+        findMember.setNickname(updateForm.getNickname());
 
         log.info("findMember ={}", findMember);
 

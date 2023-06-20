@@ -26,6 +26,10 @@
         <input type="text" id="name" name="name" class="form-control" value="10" th:value="${loginMember.name}" readonly>
     </div>
     <div>
+        <label for="nickname">닉네임</label>
+        <input type="text" id="nickname" name="nickname" class="form-control" th:value="${loginMember.nickname}" readonly>
+    </div>
+    <div>
         <label for="gender">성별</label>
         <input type="text" id="gender" name="gender" class="form-control" value="10" th:value="${loginMember.gender}" readonly>
     </div>

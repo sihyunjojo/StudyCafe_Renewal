@@ -36,6 +36,9 @@ public class Member extends BaseTimeEntity{
 
     private String address;
     private String birth;
+    private String provider;
+    private String nickname;
+
 
     @Override
     public String toString() {
@@ -49,6 +52,8 @@ public class Member extends BaseTimeEntity{
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", birth='" + birth + '\'' +
+                ", provider='" + provider + '\'' +
+                ", nickname='" + nickname + '\'' +
                 '}';
     }
 }
