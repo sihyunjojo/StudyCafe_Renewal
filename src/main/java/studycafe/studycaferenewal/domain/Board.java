@@ -4,30 +4,32 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@ToString
 public class Board extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotNull
     private Long userId;
     private String userName;
 
-    @NotEmpty
+    @NotNull
     private String title;
     private String category;
     private String content;
     private String attachmentFile;
     private String popup;
-    @NotEmpty
+    @NotNull
     private Integer readCount;
-    @NotEmpty
+    @NotNull
     private Integer likeCount;
 
 }

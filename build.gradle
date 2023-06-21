@@ -45,6 +45,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 
+	//aop사용(자동 빈 후처리기(advisor)
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
 	//Querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa'
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"

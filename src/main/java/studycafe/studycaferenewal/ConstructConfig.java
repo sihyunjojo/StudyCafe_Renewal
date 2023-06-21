@@ -8,6 +8,7 @@ import studycafe.studycaferenewal.repository.member.JpaMemberRepository;
 import studycafe.studycaferenewal.repository.member.JpaQueryMemberRepository;
 import studycafe.studycaferenewal.repository.member.MemberRepository;
 import studycafe.studycaferenewal.repository.product.JpaProductQueryRepository;
+import studycafe.studycaferenewal.service.oauth.OAuthService;
 import studycafe.studycaferenewal.service.login.LoginService;
 import studycafe.studycaferenewal.service.login.SpringDataJpaLoginService;
 import studycafe.studycaferenewal.service.member.MemberService;
@@ -26,6 +27,11 @@ public class ConstructConfig {
     @Bean
     public MemberService memberService(){
         return new SpringDataJpaMemberService(jpaMemberRepository);
+    }
+
+    @Bean
+    public OAuthService oAuthService(){
+        return new OAuthService(jpaMemberRepository);
     }
 
     @Bean

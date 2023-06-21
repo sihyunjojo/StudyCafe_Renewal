@@ -26,6 +26,7 @@ public class CommentService {
 
 
     public void addComment(Comment comment) {
+        comment.setLikeCount(0);
         commentRepository.save(comment);
     }
 

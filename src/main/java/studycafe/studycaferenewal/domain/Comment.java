@@ -1,12 +1,10 @@
 package studycafe.studycaferenewal.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,14 +12,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
+@ToString
 public class Comment extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotNull
     private Long userId;
-    @NotEmpty
+    @NotNull
     private Long boardId;
     private String userName;
     private String content;

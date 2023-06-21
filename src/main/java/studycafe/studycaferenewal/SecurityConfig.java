@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import studycafe.studycaferenewal.service.OAuthService;
+import studycafe.studycaferenewal.service.oauth.OAuthService;
+
+
+//스프링 시큐리티를 사용하면 /oauth2/authorization/{OAuth 서비스 이름} 형식으로 요청만 보내면 알아서 다 해결해줍니다.
 
 @EnableWebSecurity //spring security 설정을 활성화시켜주는 어노테이션
 @RequiredArgsConstructor //final 필드 생성자 만들어줌

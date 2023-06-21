@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -27,11 +28,11 @@ public class Product extends BaseTimeEntity{
     private String image;
     private Integer quantity;
 
-    @NotEmpty
+    @NotNull
     @Range(max = 100000000)
     private Integer price;
     private String description;
-    @NotEmpty
+    @NotNull
     private Integer readCount;
     private Integer likeCount;
 

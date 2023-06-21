@@ -77,6 +77,7 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public String board(@Login Member loginMember, @PathVariable long boardId, Model model) {
         Board board = boardService.findById(boardId).orElseThrow();
+        log.info("board ={}", board);
         boardService.increaseReadCount(board);
         BoardForm boardForm = boardService.boardToBoardForm(board);
 

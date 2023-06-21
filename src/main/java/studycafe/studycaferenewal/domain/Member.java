@@ -1,9 +1,7 @@
 package studycafe.studycaferenewal.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -28,7 +27,7 @@ public class Member extends BaseTimeEntity{
     private String name;
     @NotEmpty
     private String gender;
-    @NotEmpty
+    @NotNull
     private String phone;
 
     @Email
@@ -38,6 +37,16 @@ public class Member extends BaseTimeEntity{
     private String birth;
     private String provider;
     private String nickname;
+
+
+    @Builder //생성을 Builder 패턴으로 하기 위해서
+    public Member(Long id, String name, String email, String provider, String nickname) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.provider = provider;
+        this.nickname = nickname;
+    }
 
 
     @Override
