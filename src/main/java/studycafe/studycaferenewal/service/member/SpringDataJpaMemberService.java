@@ -42,6 +42,11 @@ public class SpringDataJpaMemberService implements MemberService {
         return memberRepository.findFirstByUserLoginId(member.getUserLoginId());
     }
 
+    @Override
+    public Optional<Member> findByEmailAndProvider(Object email,Object provider) {
+        return memberRepository.findByEmailAndProvider((String)email,(String)provider);
+    }
+
     public Optional<Member> findMemberByNameAndPhone(Member member){
         return memberRepository.findFirstByNameAndPhone(member.getName(), member.getPhone());
     }

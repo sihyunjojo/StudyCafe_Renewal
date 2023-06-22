@@ -40,6 +40,11 @@ public class JpaMemberService implements MemberService {
         return memberRepository.findByUserId(member.getUserLoginId());
     }
 
+    @Override
+    public Optional<Member> findByEmailAndProvider(Object email, Object provider) {
+        return Optional.empty();
+    }
+
     public Optional<Member> findMemberByNameAndPhone(Member member){
         return memberRepository.findByNameAndPhone(member.getName(), member.getPhone());
     }
