@@ -15,6 +15,7 @@
         <!--        <th:block th:if="${error == '이미 사용 중인 아이디입니다.'}">-->
         <!--            <h2 th:text="${error}"></h2>-->
         <!--        </th:block>-->
+        <input type="hidden" id="userId" name="userId" th:value="${loginMember.id}"/>
         <div class="form-group">
             <label for="title">제목</label><br>
             <input type="text"
@@ -22,8 +23,8 @@
                    required>
         </div>
         <div class="form-group">
-            <label for="userId">작성자</label><br>
-            <input type="text" class="form-control" id="userId" name="userId" th:value="${loginMember.userId}" readonly>
+            <label for="userName">작성자</label><br>
+            <input type="text" class="form-control" id="userName" name="userName" th:value="${loginMember.name}" readonly>
         </div>
         <div class="form-group">
             <label for="category">종류</label><br>

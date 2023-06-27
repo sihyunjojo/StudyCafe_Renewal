@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import studycafe.studycaferenewal.contoller.form.LoginForm;
 import studycafe.studycaferenewal.domain.Member;
+import studycafe.studycaferenewal.exception.UserException;
 import studycafe.studycaferenewal.service.login.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,19 +35,30 @@ public class LoginController {
         log.info("login start");
         //redirectUrl은 인터셉트를 통해서 얻어지는거 였음.
 
-        log.info("redirectUrL={}", redirectURL);
-
         if (bindingResult.hasErrors()) {
-            log.info("Error = {}", bindingResult);
             return "/login/loginForm";
         }
 
-        Member loginMember = loginService.login(form.getUserId(), form.getUserPassword());
+        Member loginMember = loginService.login(form.getUserLoginId(), form.getUserPassword());
 
         if (loginMember == null) {
-            // 클라이언트에 에러 보여줄 때 사용하자!!!!
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다");
             return "/login/loginForm";
+        }
+
+        //나중에 master, 회원
+//        if (id.equals("ex")) {
+//            throw new RuntimeException("잘못된 사용자");
+//        }
+
+        if (loginMember.getUserLoginId().equals("ex")) {
+            throw new RuntimeException("잘못된 사용자");
+        }
+        if (loginMember.getUserLoginId().equals("bad")) {
+            throw new IllegalArgumentException("잘못된 입력 값");
+        }
+        if (loginMember.getUserLoginId().equals("user-ex")) {
+            throw new UserException("사용자 오류");
         }
 
         HttpSession session = request.getSession();

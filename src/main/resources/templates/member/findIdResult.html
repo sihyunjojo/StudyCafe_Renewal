@@ -12,7 +12,7 @@
 
     <form>
         <th:block th:if="${member.isPresent()}">
-            <h5 th:text="|회원님의 아이디는 ${member.get().getUserId()} 입니다.|"></h5>
+            <h5 th:text="|회원님의 아이디는 ${member.get().getUserLoginId()} 입니다.|"></h5>
         </th:block>
         <th:block th:unless="${member.isPresent()}">
             <h5> 정보에 맞는 아이디를 찾을 수 없습니다.</h5>

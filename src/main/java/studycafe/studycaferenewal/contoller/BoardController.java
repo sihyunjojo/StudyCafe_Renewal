@@ -5,8 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import studycafe.studycaferenewal.argumentresolver.Login;
+import studycafe.studycaferenewal.resolver.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.*;
 import studycafe.studycaferenewal.repository.board.board.dto.BoardSearchCond;
 import studycafe.studycaferenewal.service.board.BoardForm;
@@ -78,6 +77,7 @@ public class BoardController {
     @GetMapping("/{boardId}")
     public String board(@Login Member loginMember, @PathVariable long boardId, Model model) {
         Board board = boardService.findById(boardId).orElseThrow();
+        log.info("board ={}", board);
         boardService.increaseReadCount(board);
         BoardForm boardForm = boardService.boardToBoardForm(board);
 
@@ -102,12 +102,15 @@ public class BoardController {
         }
         model.addAttribute("board", new Board());
         model.addAttribute(LOGIN_MEMBER, loginMember);
-        log.info("loginMember={}", loginMember);
         return "board/addBoardForm";
     }
 
     @PostMapping("/add")
     public String add(Board board) {
+        if (board.getUserId() == null) {
+            return "redirect:/login?redirectURL=/board/add";
+        }
+
         log.info("board={}", board);
         boardService.addBoard(board);
         return "redirect:/board"; // 일단 home으로 보내주자 나중에 board목록으로 보내주고
@@ -117,13 +120,14 @@ public class BoardController {
     public String editForm(@PathVariable Long boardId, Model model) {
         Board board = boardService.findById(boardId).orElseThrow();
         BoardForm boardForm = boardService.boardToBoardForm(board);
+
         model.addAttribute("board", boardForm);
         return "board/editBoardForm";
     }
 
     @PostMapping("/{boardId}/edit")
     public String edit(BoardForm boardForm, @PathVariable Long boardId) {
-//        Board board = boardService.boardFormToBoard(boardForm);
+
         boardService.updateBoard(boardId, boardForm);
 
         return "redirect:/board";

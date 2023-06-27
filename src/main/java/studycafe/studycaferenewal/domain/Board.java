@@ -1,53 +1,35 @@
 package studycafe.studycaferenewal.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-public class Board {
+@ToString
+public class Board extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private Long userId;
     private String userName;
+
+    @NotNull
     private String title;
     private String category;
     private String content;
     private String attachmentFile;
-    private LocalDateTime createdTime;
     private String popup;
+    @NotNull
     private Integer readCount;
+    @NotNull
     private Integer likeCount;
-    private Integer pageNumber;
-
-    public Board() {
-
-    }
-
-    public Board(Long id, Long userId, String userName, String title, String category, LocalDateTime createdTime, String content, String attachmentFile, String popup, Integer readCount, Integer likeCount, Integer pageNumber) {
-        this.id = id;
-        this.userId = userId;
-        this.userName = userName;
-        this.title = title;
-        this.category = category;
-        this.createdTime = createdTime;
-        this.content = content;
-        this.attachmentFile = attachmentFile;
-        this.popup = popup;
-        this.readCount = readCount;
-        this.likeCount = likeCount;
-        this.pageNumber = pageNumber;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        if (this.createdTime == null) {
-            this.createdTime = LocalDateTime.now();
-        }
-    }
 
 }

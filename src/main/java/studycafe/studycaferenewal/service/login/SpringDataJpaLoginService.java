@@ -14,7 +14,7 @@ public class SpringDataJpaLoginService implements LoginService {
     private final JpaMemberRepository memberRepository;
 
     public Member login(String loginId, String password) {
-        return memberRepository.findFirstByUserId(loginId)
+        return memberRepository.findFirstByUserLoginId(loginId)
                 .filter(m -> m.getUserPassword().equals(password))
                 .orElse(null);
 

@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.contoller;
+package studycafe.studycaferenewal.contoller.form;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class LoginForm {
     @NotEmpty
-    private String userId;
+    private String userLoginId;
 
     @NotEmpty
     private String userPassword;

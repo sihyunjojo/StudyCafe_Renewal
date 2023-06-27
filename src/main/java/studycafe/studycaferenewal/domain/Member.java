@@ -1,40 +1,64 @@
 package studycafe.studycaferenewal.domain;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-public class Member {
+public class Member extends BaseTimeEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userId;
+    @Column(unique = true)
+    private String userLoginId;
     private String userPassword;
+    @NotNull
     private String name;
     private String gender;
     private String phone;
-    private String address;
+
+    @Email
     private String email;
+
+    private String address;
     private String birth;
+    private String provider;
 
-    public Member() {
+    @Column(unique = true)
+    private String nickname;
 
-    }
 
-    public Member(String userId, String userPassword, String name, String gender, String phone, String address, String email, String birth) {
-        this.userId = userId;
-        this.userPassword = userPassword;
+    @Builder //생성을 Builder 패턴으로 하기 위해서
+    public Member(Long id, String name, String email, String provider, String nickname) {
+        this.id = id;
         this.name = name;
-        this.gender = gender;
-        this.phone = phone;
-        this.address = address;
         this.email = email;
-        this.birth = birth;
+        this.provider = provider;
+        this.nickname = nickname;
     }
 
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", userLoginId='" + userLoginId + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", birth='" + birth + '\'' +
+                ", provider='" + provider + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
+    }
 }

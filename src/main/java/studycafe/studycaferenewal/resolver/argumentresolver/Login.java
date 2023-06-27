@@ -1,4 +1,4 @@
-package studycafe.studycaferenewal.argumentresolver;
+package studycafe.studycaferenewal.resolver.argumentresolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -24,18 +24,17 @@
                     <th:block th:if="${loginMember == null}">
                         <form th:action="login" th:object="${loginMember}" method="Post">
                             <fieldset>
-                                <input type="text" id="userId" name="userId" placeholder="아이디" required/><br>
-                                <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호"
-                                       required/>
-                                <br>
+                                <input type="text" id="userLoginId" name="userLoginId" placeholder="아이디" required/><br>
+                                <input type="password" id="userPassword" name="userPassword" placeholder="비밀번호" required/><br>
+
                                 <button th:onclick="|location.href='@{/member/idquiry}'|"
                                         type="button" class="btn-light mb-2">아이디 찾기
                                 </button>
                                 <span class="bar" aria-hidden="true">|</span>
                                 <button th:onclick="|location.href='@{/member/pwquiry}'|"
                                         type="button" class="btn-light mb-2">비밀번호 찾기
-                                </button>
-                                <br>
+                                </button><br>
+
                                 <button type="submit" class="btn-light mb-2"> 로그인</button>
                                 <span class="bar" aria-hidden="true">|</span>
                                 <button onclick="location.href='/member/new'"
@@ -43,6 +42,9 @@
                                         type="button" class="btn-light mb-2">회원가입
                                 </button>
                             </fieldset>
+                            <a href="/oauth2/authorization/google" class="btn btn-sm btn-success active" role="button">Google Login</a>
+                            <a href="/oauth2/authorization/naver" class="btn btn-sm active" role="button">Naver Login</a>
+                            <a href="/oauth2/authorization/kakao" class="btn btn-sm active" role="button">Kakao Login</a>
                         </form>
                     </th:block>
 

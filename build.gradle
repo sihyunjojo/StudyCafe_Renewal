@@ -29,12 +29,24 @@ dependencies {
 
 	//websocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	//websocket json
 	implementation group: 'org.json', name: 'json', version: '20230227'
 
 	//JPA, 스프링 데이터 JPA 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	//security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	//oauth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+
+	//aop사용(자동 빈 후처리기(advisor)
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
 	//Querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa'
@@ -44,6 +56,9 @@ dependencies {
 
 	//h2 database
 	runtimeOnly 'com.h2database:h2'
+
+	//mysql
+	implementation  'mysql:mysql-connector-java:8.0.33'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

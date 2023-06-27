@@ -5,17 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import studycafe.studycaferenewal.argumentresolver.Login;
-import studycafe.studycaferenewal.domain.Board;
+import studycafe.studycaferenewal.resolver.argumentresolver.Login;
 import studycafe.studycaferenewal.domain.Comment;
 import studycafe.studycaferenewal.domain.Member;
-import studycafe.studycaferenewal.service.board.BoardForm;
 import studycafe.studycaferenewal.service.board.BoardService;
 import studycafe.studycaferenewal.service.board.CommentService;
 
 import java.util.List;
-
-import static studycafe.studycaferenewal.SessionConst.LOGIN_MEMBER;
 
 @Slf4j
 @Controller
@@ -30,19 +26,19 @@ public class CommentController {
     @GetMapping("/{boardId}")
     public String comments(@PathVariable long boardId, Model model) {
         List<Comment> comments = commentService.findComments();
-        return "board/board";
+        return "redirect:/board/" + boardId;
     }
 
     // 댓글 생성
-    @PostMapping()
-    public String add(@Login Member loginMember, Comment comment) { // comment 먼가 잘못됬을시 다시 돌려줘야하니까 있어야함.
+    @PostMapping("/{boardId}")
+    public String add(@Login Member loginMember, @PathVariable long boardId, Comment comment) { // comment 먼가 잘못됬을시 다시 돌려줘야하니까 있어야함.
         log.info("loginMember = {}", loginMember);
         log.info("comment = {}", comment);
         if (loginMember == null) {
-            return "redirect:/login?redirectURL=/board/" + comment.getBoardId();
+            return "redirect:/login?redirectURL=/board/" + boardId;
         }
         commentService.addComment(comment);
-        return "redirect:/board/" + comment.getBoardId();
+        return "redirect:/board/" + boardId;
     }
 
     // 댓글 수정

@@ -26,6 +26,7 @@ public class ReplyService {
 
 
     public void addReply(Reply reply) {
+        reply.setLikeCount(0);
         replyRepository.save(reply);
     }
 

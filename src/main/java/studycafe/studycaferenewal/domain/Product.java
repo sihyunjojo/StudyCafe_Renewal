@@ -1,49 +1,39 @@
 package studycafe.studycaferenewal.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-public class Product {
+public class Product extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     private String name;
     private String category;
     private String image;
     private Integer quantity;
+
+    @NotNull
+    @Range(max = 100000000)
     private Integer price;
     private String description;
+    @NotNull
     private Integer readCount;
     private Integer likeCount;
-    private LocalDateTime updatedTime;
 
-    public Product() {
-
-    }
-
-    public Product(Long id, String name, String category, String image, Integer quantity, Integer price, String description, Integer readCount, Integer likeCount, LocalDateTime updatedTime) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.image = image;
-        this.quantity = quantity;
-        this.price = price;
-        this.description = description;
-        this.readCount = readCount;
-        this.likeCount = likeCount;
-        this.updatedTime = updatedTime;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        if (this.updatedTime == null) {
-            this.updatedTime = LocalDateTime.now();
-        }
-    }
 }
